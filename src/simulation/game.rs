@@ -28,8 +28,6 @@ pub struct Game {
     pub stack: Stack,
     /// Maps a CardId to the original ZoneCard for lookup across any zone transition.
     pub card_registry: HashMap<CardId, ZoneCard>,
-    /// Maps StackItemIds to their targeted entities (e.g., Counterspell targeting a spell).
-    pub targets: HashMap<StackItemId, Target>,
     pub turn_order: Vec<PlayerId>,
 }
 
@@ -93,7 +91,6 @@ impl Game {
             zones: Zones::new(),
             stack: Stack::new(),
             card_registry: HashMap::new(),
-            targets: HashMap::new(),
             turn_order: Vec::new(),
         }
     }
@@ -234,8 +231,12 @@ impl Game {
             }
 
             SimInstruction::RegisterTarget { stack_item_id, target } => {
-                self.targets.insert(stack_item_id, target);
-                println!("  -> \x1b[35mTarget Registered:\x1b[0m Stack Item {} targets {:?}", stack_item_id, target);
+                if let Some(item) = self.stack.items.iter_mut().find(|i| i.id == stack_item_id) {
+                    item.targets.push(target);
+                    println!("  -> \x1b[35mTarget Registered on Stack:\x1b[0m Stack Item {} targets {:?}", stack_item_id, target);
+                } else {
+                    println!("  -> \x1b[31mError:\x1b[0m Stack Item ID {} not found on stack to register target!", stack_item_id);
+                }
             }
         }
     }

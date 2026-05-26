@@ -231,12 +231,14 @@ fn print_game_state(game: &Game) {
                     let name = game.get_registered_card_name(card_id);
                     let caster_name = game.players.get(&caster).map(|p| p.name.as_str()).unwrap_or("Unknown");
                     print!("  [{}] Stack Item ID: {} | Card: {} (Card ID: {}) | Caster: {}", idx, item.id, name, card_id, caster_name);
-                    if let Some(target) = game.targets.get(&item.id) {
-                        let target_desc = match target {
-                            Target::Spell(cid) => format!("Spell '{}' (Card ID: {})", game.get_registered_card_name(*cid), cid),
-                            other => format!("{:?}", other),
-                        };
-                        print!(" | Targets: \x1b[1;33m{}\x1b[0m", target_desc);
+                    if !item.targets.is_empty() {
+                        let target_descs: Vec<String> = item.targets.iter().map(|target| {
+                            match target {
+                                Target::Spell(cid) => format!("Spell '{}' (Card ID: {})", game.get_registered_card_name(*cid), cid),
+                                other => format!("{:?}", other),
+                            }
+                        }).collect();
+                        print!(" | Targets: \x1b[1;33m{}\x1b[0m", target_descs.join(", "));
                     }
                     println!();
                 }

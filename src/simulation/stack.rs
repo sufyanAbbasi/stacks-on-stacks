@@ -1,4 +1,4 @@
-use crate::effects::{CardId, PlayerId, OneShotEffect};
+use crate::effects::{CardId, PlayerId, OneShotEffect, Target};
 
 /// Unique identifier for an item currently resting on the stack.
 /// This allows other spells/abilities to target and counter specific stack items.
@@ -16,7 +16,7 @@ pub enum StackObject {
         /// The list of immediate effects that apply when this spell resolves.
         effects: Vec<OneShotEffect>,
     },
-    /// An activated ability on the stack (Rule 405.1 / 602.2).
+    /// Activated ability on the stack (Rule 405.1 / 602.2).
     /// Does not include mana abilities, which resolve immediately without using the stack (Rule 605.1a).
     ActivatedAbility {
         source_id: CardId,
@@ -41,6 +41,7 @@ pub enum StackObject {
 pub struct StackItem {
     pub id: StackItemId,
     pub object: StackObject,
+    pub targets: Vec<Target>,
 }
 
 /// Represents the Stack zone, modeled as a last-in, first-out (LIFO) queue (Section 405).
@@ -65,6 +66,7 @@ impl Stack {
         self.items.push(StackItem {
             id,
             object: StackObject::Spell { card_id, caster, effects },
+            targets: Vec::new(),
         });
         id
     }
@@ -76,6 +78,7 @@ impl Stack {
         self.items.push(StackItem {
             id,
             object: StackObject::ActivatedAbility { source_id, activator, ability_id, effects },
+            targets: Vec::new(),
         });
         id
     }
@@ -87,6 +90,7 @@ impl Stack {
         self.items.push(StackItem {
             id,
             object: StackObject::TriggeredAbility { source_id, controller, ability_id, effects },
+            targets: Vec::new(),
         });
         id
     }
