@@ -1,4 +1,5 @@
-enum Color {
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum Color {
     W,
     U,
     B,
@@ -7,7 +8,8 @@ enum Color {
     C,
 }
 
-enum ManaSymbols {
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum ManaSymbols {
     // Standard mana symbols:
     W,
     U,
@@ -64,7 +66,8 @@ enum ManaSymbols {
     S,
 }
 
-enum PermanentType {
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum PermanentType {
     Artifact,
     Battle,
     Creature,
@@ -73,66 +76,693 @@ enum PermanentType {
     Planeswalker,
 }
 
-enum PermanentStatus {
-    Tapped(bool),
-    Flipped(bool),
-    FaceDown(bool),
-    PhasedOut(bool),
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub struct PermanentStatus {
+    pub tapped: bool,
+    pub flipped: bool,
+    pub face_down: bool,
+    pub phased_out: bool,
 }
 
-enum Card {
+// ==========================================
+// 205.4. SUPERTYPES
+// ==========================================
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum Supertype {
+    Basic,
+    Legendary,
+    Ongoing,
+    Snow,
+    World,
+}
+
+// ==========================================
+// 205.3. SUBTYPES
+// ==========================================
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum ArtifactType {
+    Attraction,
+    Blood,
+    Bobblehead,
+    Book,
+    Clue,
+    Contraption,
+    Equipment,
+    Food,
+    Fortification,
+    Gold,
+    Incubator,
+    Infinity,
+    Junk,
+    Lander,
+    Map,
+    Mutagen,
+    Powerstone,
+    Spacecraft,
+    Stone,
+    Treasure,
+    Vehicle,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum EnchantmentType {
+    Aura,
+    Background,
+    Cartouche,
+    Case,
+    Class,
+    Curse,
+    Role,
+    Room,
+    Rune,
+    Saga,
+    Shard,
+    Shrine,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum LandType {
+    Cave,
+    Desert,
+    Forest,
+    Gate,
+    Island,
+    Lair,
+    Locus,
+    Mine,
+    Mountain,
+    Plains,
+    Planet,
+    PowerPlant, // "Power-Plant"
+    Sphere,
+    Swamp,
+    Tower,
+    Town,
+    Urzas, // "Urza's"
+}
+
+impl LandType {
+    pub fn is_basic(&self) -> bool {
+        matches!(
+            self,
+            LandType::Forest
+                | LandType::Island
+                | LandType::Mountain
+                | LandType::Plains
+                | LandType::Swamp
+        )
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum PlaneswalkerType {
+    Ajani,
+    Aminatou,
+    Angrath,
+    Arlinn,
+    Ashiok,
+    Bahamut,
+    Basri,
+    Bolas,
+    Calix,
+    Chandra,
+    Comet,
+    Dack,
+    Dakkon,
+    Daretti,
+    Davriel,
+    Dellian,
+    Dihada,
+    Domri,
+    Dovin,
+    Ellywick,
+    Elminster,
+    Elspeth,
+    Estrid,
+    Freyalise,
+    Garruk,
+    Gideon,
+    Grist,
+    Guff,
+    Huatli,
+    Jace,
+    Jared,
+    Jaya,
+    Jeska,
+    Kaito,
+    Karn,
+    Kasmina,
+    Kaya,
+    Kiora,
+    Koth,
+    Liliana,
+    Lolth,
+    Lukka,
+    Minsc,
+    Mordenkainen,
+    Nahiri,
+    Narset,
+    Niko,
+    Nissa,
+    Nixilis,
+    Oko,
+    Quintorius,
+    Ral,
+    Rowan,
+    Saheeli,
+    Samut,
+    Sarkhan,
+    Serra,
+    Sivitri,
+    Sorin,
+    Szat,
+    Tamiyo,
+    Tasha,
+    Teferi,
+    Teyo,
+    Tezzeret,
+    Tibalt,
+    Tyvar,
+    Ugin,
+    Urza,
+    Venser,
+    Vivien,
+    Vraska,
+    Vronos,
+    Will,
+    Windgrace,
+    Wrenn,
+    Xenagos,
+    Yanggu,
+    Yanling,
+    Zariel,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum SpellType {
+    Adventure,
+    Arcane,
+    Lesson,
+    Omen,
+    Trap,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum CreatureType {
+    Advisor,
+    Aetherborn,
+    Alien,
+    Ally,
+    Angel,
+    Antelope,
+    Ape,
+    Archer,
+    Archon,
+    Armadillo,
+    Army,
+    Artificer,
+    Assassin,
+    AssemblyWorker, // "Assembly-Worker"
+    Astartes,
+    Atog,
+    Aurochs,
+    Avatar,
+    Azra,
+    Badger,
+    Balloon,
+    Barbarian,
+    Bard,
+    Basilisk,
+    Bat,
+    Bear,
+    Beast,
+    Beaver,
+    Beeble,
+    Beholder,
+    Berserker,
+    Bird,
+    Bison,
+    Blinkmoth,
+    Boar,
+    Bringer,
+    Brushwagg,
+    Camarid,
+    Camel,
+    Capybara,
+    Caribou,
+    Carrier,
+    Cat,
+    Centaur,
+    Child,
+    Chimera,
+    Citizen,
+    Cleric,
+    Clown,
+    Cockatrice,
+    Construct,
+    Coward,
+    Coyote,
+    Crab,
+    Crocodile,
+    Ctan, // "C'tan"
+    Custodes,
+    Cyberman,
+    Cyclops,
+    Dalek,
+    Dauthi,
+    Demigod,
+    Demon,
+    Deserter,
+    Detective,
+    Devil,
+    Dinosaur,
+    Djinn,
+    Doctor,
+    Dog,
+    Dragon,
+    Drake,
+    Dreadnought,
+    Drix,
+    Drone,
+    Druid,
+    Dryad,
+    Dwarf,
+    Echidna,
+    Efreet,
+    Egg,
+    Elder,
+    Eldrazi,
+    Elemental,
+    Elephant,
+    Elf,
+    Elk,
+    Employee,
+    Eye,
+    Faerie,
+    Ferret,
+    Fish,
+    Flagbearer,
+    Fox,
+    Fractal,
+    Frog,
+    Fungus,
+    Gamer,
+    Gargoyle,
+    Germ,
+    Giant,
+    Giraffe,
+    Gith,
+    Glimmer,
+    Gnoll,
+    Gnome,
+    Goat,
+    Goblin,
+    God,
+    Golem,
+    Gorgon,
+    Graveborn,
+    Gremlin,
+    Griffin,
+    Guest,
+    Hag,
+    Halfling,
+    Hamster,
+    Harpy,
+    Hedgehog,
+    Hellion,
+    Hero,
+    Hippo,
+    Hippogriff,
+    Homarid,
+    Homunculus,
+    Horror,
+    Horse,
+    Human,
+    Hydra,
+    Hyena,
+    Illusion,
+    Imp,
+    Incarnation,
+    Inkling,
+    Inquisitor,
+    Insect,
+    Jackal,
+    Jellyfish,
+    Juggernaut,
+    Kangaroo,
+    Kavu,
+    Kirin,
+    Kithkin,
+    Knight,
+    Kobold,
+    Kor,
+    Kraken,
+    Llama,
+    Lamia,
+    Lammasu,
+    Leech,
+    Lemur,
+    Leviathan,
+    Lhurgoyf,
+    Licid,
+    Lizard,
+    Lobster,
+    Manticore,
+    Masticore,
+    Mercenary,
+    Merfolk,
+    Metathran,
+    Minion,
+    Minotaur,
+    Mite,
+    Mole,
+    Monger,
+    Mongoose,
+    Monk,
+    Monkey,
+    Moogle,
+    Moonfolk,
+    Mount,
+    Mouse,
+    Mutant,
+    Myr,
+    Mystic,
+    Nautilus,
+    Necron,
+    Nephilim,
+    Nightmare,
+    Nightstalker,
+    Ninja,
+    Noble,
+    Noggle,
+    Nomad,
+    Nymph,
+    Octopus,
+    Ogre,
+    Ooze,
+    Orb,
+    Orc,
+    Orgg,
+    Otter,
+    Ouphe,
+    Ox,
+    Oyster,
+    Pangolin,
+    Peasant,
+    Pegasus,
+    Pentavite,
+    Performer,
+    Pest,
+    Phelddagrif,
+    Phoenix,
+    Phyrexian,
+    Pilot,
+    Pincher,
+    Pirate,
+    Plant,
+    Platypus,
+    Porcupine,
+    Possum,
+    Praetor,
+    Primarch,
+    Prism,
+    Processor,
+    Qu,
+    Rabbit,
+    Raccoon,
+    Ranger,
+    Rat,
+    Rebel,
+    Reflection,
+    Rhino,
+    Rigger,
+    Robot,
+    Rogue,
+    Sable,
+    Salamander,
+    Samurai,
+    Sand,
+    Saproling,
+    Satyr,
+    Scarecrow,
+    Scientist,
+    Scion,
+    Scorpion,
+    Scout,
+    Sculpture,
+    Seal,
+    Serf,
+    Serpent,
+    Servo,
+    Shade,
+    Shaman,
+    Shapeshifter,
+    Shark,
+    Sheep,
+    Siren,
+    Skeleton,
+    Skunk,
+    Slith,
+    Sliver,
+    Sloth,
+    Slug,
+    Snail,
+    Snake,
+    Soldier,
+    Soltari,
+    Sorcerer,
+    Spawn,
+    Specter,
+    Spellshaper,
+    Sphinx,
+    Spider,
+    Spike,
+    Spirit,
+    Splinter,
+    Sponge,
+    Squid,
+    Squirrel,
+    Starfish,
+    Surrakar,
+    Survivor,
+    Symbiote,
+    Synth,
+    Tentacle,
+    Tetravite,
+    Thalakos,
+    Thopter,
+    Thrull,
+    Tiefling,
+    TimeLord, // "Time Lord"
+    Toy,
+    Treefolk,
+    Trilobite,
+    Triskelavite,
+    Troll,
+    Turtle,
+    Tyranid,
+    Unicorn,
+    Utrom,
+    Vampire,
+    Varmint,
+    Vedalken,
+    Villain,
+    Volver,
+    Wall,
+    Walrus,
+    Warlock,
+    Warrior,
+    Weasel,
+    Weird,
+    Werewolf,
+    Whale,
+    Wizard,
+    Wolf,
+    Wolverine,
+    Wombat,
+    Worm,
+    Wraith,
+    Wurm,
+    Yeti,
+    Zombie,
+    Zubera,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum PlanarType {
+    TheAbyss,
+    Alara,
+    AlfavaMetraxis,
+    Amonkhet,
+    AndrozaniMinor,
+    Antausia,
+    Apalapucia,
+    Arcavios,
+    Arkhos,
+    Avishkar,
+    Azgol,
+    Belenon,
+    BolasMeditationRealm,
+    Capenna,
+    Cridhe,
+    TheDalekAsylum,
+    Darillium,
+    Dominaria,
+    Earth,
+    Echoir,
+    Eldraine,
+    Equilor,
+    Ergamon,
+    Fabacin,
+    Fiora,
+    Gallifrey,
+    Gargantikar,
+    Gobakhan,
+    HorseheadNebula,
+    Ikoria,
+    Innistrad,
+    Iquatana,
+    Ir,
+    Ixalan,
+    Kaldheim,
+    Kamigawa,
+    Kandoka,
+    Karsus,
+    Kephalai,
+    Kinshala,
+    Kolbahan,
+    Kylem,
+    Kyneth,
+    TheLibrary,
+    Lorwyn,
+    Luvion,
+    Mars,
+    Mercadia,
+    Mirrodin,
+    Moag,
+    Mongseng,
+    Moon,
+    Muraganda,
+    Necros,
+    NewEarth,
+    NewPhyrexia,
+    OutsideMuttersSpiral,
+    Phyrexia,
+    Pyrulea,
+    Rabiah,
+    Rath,
+    Ravnica,
+    Regatha,
+    Segovia,
+    SerrasRealm,
+    Shadowmoor,
+    Shandalar,
+    Shenmeng,
+    Skaro,
+    Spacecraft,
+    Tarkir,
+    Theros,
+    Time,
+    Trenzalore,
+    Ulgrotha,
+    UnknownPlanet,
+    Valla,
+    Vryn,
+    Wildfire,
+    Xerex,
+    Zendikar,
+    Zhalfir,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum DungeonType {
+    Undercity,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum BattleType {
+    Siege,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum Subtype {
+    Artifact(ArtifactType),
+    Enchantment(EnchantmentType),
+    Land(LandType),
+    Planeswalker(PlaneswalkerType),
+    Spell(SpellType),
+    Creature(CreatureType),
+    Planar(PlanarType),
+    Dungeon(DungeonType),
+    Battle(BattleType),
+}
+
+// ==========================================
+// CARD & PERMANENT ATTRIBUTES
+// ==========================================
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct CardAttributes {
+    pub name: String,
+    pub supertypes: Vec<Supertype>,
+    pub subtypes: Vec<Subtype>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct PermanentAttributes {
+    pub types: Vec<PermanentType>,
+    pub status: PermanentStatus,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SpellAttributes {
+    pub color: Vec<Color>,
+    pub cost: Vec<ManaSymbols>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct LandAttributes {
+    pub card: CardAttributes,
+    pub permanent: PermanentAttributes,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct PlaneswalkerAttributes {
+    pub card: CardAttributes,
+    pub permanent: PermanentAttributes,
+    pub loyalty_counters: u32,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct LevelerAttributes {
+    pub card: CardAttributes,
+    pub permanent: PermanentAttributes,
+    pub spell: SpellAttributes,
+    pub level_counters: u32,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SagaAttributes {
+    pub card: CardAttributes,
+    pub permanent: PermanentAttributes,
+    pub spell: SpellAttributes,
+    pub lore_counters: u32,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ClassAttributes {
+    pub card: CardAttributes,
+    pub permanent: PermanentAttributes,
+    pub spell: SpellAttributes,
+    pub class_level: u32,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum Card {
     Land(LandAttributes),
     Planeswalker(PlaneswalkerAttributes),
     Leveler(LevelerAttributes),
     Saga(SagaAttributes),
     Class(ClassAttributes),
-}
-
-struct CardAttributes {}
-
-struct PermanentAttributes {
-    types: Vec<PermanentType>,
-    status: (
-        PermanentStatus::Tapped,
-        PermanentStatus::Flipped,
-        PermanentStatus::FaceDown,
-        PermanentStatus::PhasedOut,
-    ),
-}
-
-struct SpellAttributes {
-    color: Vec<Color>,
-    cost: Vec<ManaSymbols>,
-}
-
-struct LandAttributes {
-    card: CardAttributes,
-    permanent: PermanentAttributes,
-}
-
-struct PlaneswalkerAttributes {
-    card: CardAttributes,
-    permanent: PermanentAttributes,
-    loyalty_counters: u32,
-}
-
-struct LevelerAttributes {
-    card: CardAttributes,
-    permanent: PermanentAttributes,
-    spell: SpellAttributes,
-    level_counters: u32,
-}
-
-struct SagaAttributes {
-    card: CardAttributes,
-    permanent: PermanentAttributes,
-    spell: SpellAttributes,
-    lore_counters: u32,
-}
-
-struct ClassAttributes {
-    card: CardAttributes,
-    permanent: PermanentAttributes,
-    spell: SpellAttributes,
-    class_level: u32,
 }
