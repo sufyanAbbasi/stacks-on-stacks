@@ -29,6 +29,8 @@ pub struct Permanent {
     pub damage_marked: u32,
     /// Aura, Equipment, or Fortification attachment target (Rule 301.5 / 303.4 / 305.7).
     pub attached_to: Option<Target>,
+    /// True if this permanent is a token (Rule 111.1).
+    pub is_token: bool,
 }
 
 impl Permanent {
@@ -381,6 +383,24 @@ impl Zones {
         self.graveyards.insert(player_id, Graveyard::new(player_id));
     }
 
+    /// Creates a token permanent on the battlefield (Rule 111).
+    /// Assigns it a unique CardId, is_token: true, and registers its controller as the owner (Rule 111.4).
+    pub fn create_token(&mut self, id: CardId, card: Card, controller: PlayerId) {
+        let timestamp = self.get_next_timestamp();
+        self.battlefield.add_permanent(Permanent {
+            id,
+            card,
+            owner: controller, // Rule 111.4: A token's owner is the player under whose control it entered.
+            controller,
+            status: PermanentStatus::default(),
+            timestamp,
+            counters: HashMap::new(),
+            damage_marked: 0,
+            attached_to: None,
+            is_token: true,
+        });
+    }
+
     /// Extracts a card from its current zone (if found) (Rule 400.7).
     /// Once extracted, the card ceases to exist in that zone.
     pub fn extract_card(&mut self, card_id: CardId, from: Zone) -> Option<ZoneCard> {
@@ -470,6 +490,7 @@ impl Zones {
                     counters: HashMap::new(),
                     damage_marked: 0,
                     attached_to: None,
+                    is_token: false,
                 });
             }
             Zone::Exile => {
