@@ -1,20 +1,19 @@
 import re
 import os
 
+
 # Helper to determine esoteric category
 def get_esoteric_category(rnum):
     if rnum.startswith("123.") or rnum.startswith("717."):
         return "ESOTERIC_CARD_ATTRIBUTES"
     if any(
-        rnum.startswith(prefix)
-        for prefix in ["311.", "312.", "313.", "314.", "315."]
+        rnum.startswith(prefix) for prefix in ["311.", "312.", "313.", "314.", "315."]
     ):
         return "ESOTERIC_CARD_TYPES"
     if rnum.startswith("116.2i") or rnum.startswith("116.2j"):
         return "ESOTERIC_SPECIAL_ACTIONS"
     if any(
-        rnum.startswith(prefix)
-        for prefix in ["719.", "720.", "721.", "722.", "728."]
+        rnum.startswith(prefix) for prefix in ["719.", "720.", "721.", "722.", "728."]
     ):
         return "ESOTERIC_MECHANICS"
     if any(rnum.startswith(prefix) for prefix in ["807.", "809.", "811."]):
@@ -23,78 +22,479 @@ def get_esoteric_category(rnum):
         return "ESOTERIC_CASUAL_VARIANTS"
     return None
 
+
+# Filter out sentences starting with "For example,"
+def filter_example_sentences(text):
+    sentences = re.split(r"(?<=[.!?])\s+", text)
+    filtered = []
+    for s in sentences:
+        s_stripped = s.strip()
+        if s_stripped.lower().startswith("for example,"):
+            continue
+        filtered.append(s)
+    return " ".join(filtered).strip()
+
+
 # Noise words
 noise_words = {
     # Pronouns & Demonstratives
-    "A", "AN", "THE", "IT", "ITS", "THEY", "THEM", "THEIR", "THEIRS", "THEYRE",
-    "HE", "SHE", "HIM", "HER", "HIS", "HIMSELF", "HERSELF", "MY", "MINE", "ME",
-    "WE", "US", "OUR", "OURS", "YOU", "YOUR", "YOURS", "THAT", "THIS", "THESE",
-    "THOSE", "WHO", "WHOM", "WHOSE", "WHICH", "WHAT", "WHATEVER", "WHOEVER",
+    "A",
+    "AN",
+    "THE",
+    "IT",
+    "ITS",
+    "THEY",
+    "THEM",
+    "THEIR",
+    "THEIRS",
+    "THEYRE",
+    "HE",
+    "SHE",
+    "HIM",
+    "HER",
+    "HIS",
+    "HIMSELF",
+    "HERSELF",
+    "MY",
+    "MINE",
+    "ME",
+    "WE",
+    "US",
+    "OUR",
+    "OURS",
+    "YOU",
+    "YOUR",
+    "YOURS",
+    "THAT",
+    "THIS",
+    "THESE",
+    "THOSE",
+    "WHO",
+    "WHOM",
+    "WHOSE",
+    "WHICH",
+    "WHAT",
+    "WHATEVER",
+    "WHOEVER",
+    "EITHER",
+    "NEITHER",
     # Prepositions
-    "OF", "TO", "IN", "ON", "AT", "BY", "FOR", "WITH", "FROM", "ABOUT",
-    "AGAINST", "BETWEEN", "INTO", "THROUGH", "DURING", "BEFORE", "AFTER",
-    "ABOVE", "BELOW", "UP", "DOWN", "OFF", "OVER", "UNDER", "AGAIN", "AMONG",
-    "THROUGHOUT", "UPON", "WITHIN", "WITHOUT", "UNTIL", "SINCE",
+    "OF",
+    "TO",
+    "IN",
+    "ON",
+    "AT",
+    "BY",
+    "FOR",
+    "WITH",
+    "FROM",
+    "ABOUT",
+    "AGAINST",
+    "BETWEEN",
+    "INTO",
+    "THROUGH",
+    "DURING",
+    "BEFORE",
+    "AFTER",
+    "ABOVE",
+    "BELOW",
+    "UP",
+    "DOWN",
+    "OFF",
+    "OVER",
+    "UNDER",
+    "AGAIN",
+    "AMONG",
+    "THROUGHOUT",
+    "UPON",
+    "WITHIN",
+    "WITHOUT",
+    "UNTIL",
+    "SINCE",
+    "ONTO",
+    "OUT",
+    "DUE",
+    "PER",
+    "VIA",
+    "VERSUS",
     # Conjunctions & Transitions
-    "AND", "OR", "BUT", "SO", "YET", "NOR", "ALTHOUGH", "THOUGH", "BECAUSE",
-    "UNLESS", "IF", "WHEN", "WHENEVER", "WHEREAS", "WHETHER", "WHILE", "AS",
-    "ALSO", "THEN", "THUS", "THEREFORE", "HOWEVER", "BESIDES", "FURTHERMORE",
-    "MOREOVER", "INSTEAD",
+    "AND",
+    "OR",
+    "BUT",
+    "SO",
+    "YET",
+    "NOR",
+    "ALTHOUGH",
+    "THOUGH",
+    "BECAUSE",
+    "UNLESS",
+    "IF",
+    "WHEN",
+    "WHENEVER",
+    "WHEREAS",
+    "WHETHER",
+    "WHILE",
+    "AS",
+    "ALSO",
+    "THEN",
+    "THUS",
+    "THEREFORE",
+    "HOWEVER",
+    "BESIDES",
+    "FURTHERMORE",
+    "MOREOVER",
+    "INSTEAD",
+    "WHERE",
+    "HOW",
+    "WHY",
     # Auxiliary & Linking Verbs
-    "IS", "ARE", "WAS", "WERE", "BE", "BEING", "BEEN", "CAN", "COULD", "WOULD",
-    "SHOULD", "MAY", "MIGHT", "MUST", "WILL", "SHALL", "DO", "DOES", "DID",
-    "DONE", "DOING", "HAS", "HAVE", "HAD", "HAVING",
+    "IS",
+    "ARE",
+    "WAS",
+    "WERE",
+    "BE",
+    "BEING",
+    "BEEN",
+    "CAN",
+    "COULD",
+    "WOULD",
+    "SHOULD",
+    "MAY",
+    "MIGHT",
+    "MUST",
+    "WILL",
+    "SHALL",
+    "DO",
+    "DOES",
+    "DID",
+    "DONE",
+    "DOING",
+    "HAS",
+    "HAVE",
+    "HAD",
+    "HAVING",
+    "BECOME",
+    "BECOMES",
+    "BECOMING",
+    "REMAIN",
+    "REMAINS",
+    "REMAINED",
+    "REMAINING",
     # Reference & Procedural Verbs (dangling or introductory)
-    "SEE", "SEES", "SAW", "SEEN", "REFER", "REFERS", "REFERRED", "REFERRING",
-    "MEAN", "MEANS", "MEANT", "MEANING", "DETERMINE", "DETERMINES", "DETERMINED",
-    "DETERMINING", "FOLLOW", "FOLLOWS", "FOLLOWED", "FOLLOWING", "INSTRUCT",
-    "INSTRUCTS", "INSTRUCTED", "INSTRUCTING", "USE", "USES", "USED", "USING",
-    "FIND", "FINDS", "FOUND", "FINDING", "GIVE", "GIVES", "GIVEN", "GIVING",
-    "TAKE", "TAKES", "TAKEN", "TAKING", "MAKE", "MAKES", "MADE", "MAKING",
-    "GET", "GETS", "GOT", "GETTING", "GO", "GOES", "WENT", "GONE", "GOING",
-    "COME", "COMES", "CAME", "COMING", "CALL", "CALLS", "CALLED", "CALLING",
-    "DESCRIBE", "DESCRIBES", "DESCRIBED", "DESCRIBING", "EXPLAIN", "EXPLAINS",
-    "EXPLAINED", "EXPLAINING", "KNOW", "KNOWS", "KNOWN", "KNOWING", "REPRESENT",
-    "REPRESENTS", "REPRESENTED", "REPRESENTING",
+    "ALLOWS",
+    "STATES",
+    "SEE",
+    "SEES",
+    "SAW",
+    "SEEN",
+    "REFER",
+    "REFERS",
+    "REFERRED",
+    "REFERRING",
+    "MEAN",
+    "MEANS",
+    "MEANT",
+    "MEANING",
+    "DETERMINE",
+    "DETERMINES",
+    "DETERMINED",
+    "DETERMINING",
+    "FOLLOW",
+    "FOLLOWS",
+    "FOLLOWED",
+    "FOLLOWING",
+    "INSTRUCT",
+    "INSTRUCTS",
+    "INSTRUCTED",
+    "INSTRUCTING",
+    "USE",
+    "USES",
+    "USED",
+    "USING",
+    "FIND",
+    "FINDS",
+    "FOUND",
+    "FINDING",
+    "GIVE",
+    "GIVES",
+    "GIVEN",
+    "GIVING",
+    "TAKE",
+    "TAKES",
+    "TAKEN",
+    "TAKING",
+    "MAKE",
+    "MAKES",
+    "MADE",
+    "MAKING",
+    "GET",
+    "GETS",
+    "GOT",
+    "GETTING",
+    "GO",
+    "GOES",
+    "WENT",
+    "GONE",
+    "GOING",
+    "COME",
+    "COMES",
+    "CAME",
+    "COMING",
+    "CONTAINS",
+    "CALL",
+    "CALLS",
+    "CALLED",
+    "CALLING",
+    "DESCRIBE",
+    "DESCRIBES",
+    "DESCRIBED",
+    "DESCRIBING",
+    "EXPLAIN",
+    "EXPLAINS",
+    "EXPLAINED",
+    "EXPLAINING",
+    "KNOW",
+    "KNOWS",
+    "KNOWN",
+    "KNOWING",
+    "REPRESENT",
+    "REPRESENTS",
+    "REPRESENTED",
+    "REPRESENTING",
+    "PUT",
+    "PUTS",
+    "PUTTING",
+    "KEEP",
+    "KEEPS",
+    "KEPT",
+    "KEEPING",
+    "BEGIN",
+    "BEGINS",
+    "BEGAN",
+    "BEGUN",
+    "BEGINNING",
     # General noise / reference text
-    "RULE", "RULES", "SUBRULE", "SUBRULES", "SECTION", "SECTIONS", "CHAPTER",
-    "CHAPTERS", "PART", "PARTS", "MORE", "LESS", "MOST", "LEAST", "SOME",
-    "ANY", "EACH", "EVERY", "ALL", "BOTH", "OTHER", "OTHERS", "ANOTHER",
-    "SUCH", "CERTAIN", "PARTICULAR", "SPECIFIC", "VARIOUS", "DIFFERENT",
-    "SAME", "INFORMATION", "EXAMPLE", "EXAMPLES", "NOTE", "NOTES", "PLEASE",
-    "WIZARDS", "WIZARDSCOM", "GATHERER", "ORACLE", "DATABASE", "WPNWIZARDSCOM",
+    "RULE",
+    "RULES",
+    "SUBRULE",
+    "SOMETHING",
+    "SUBRULES",
+    "SECTION",
+    "SECTIONS",
+    "CHAPTER",
+    "CHAPTERS",
+    "PART",
+    "PARTS",
+    "MORE",
+    "LESS",
+    "MOST",
+    "LEAST",
+    "SOME",
+    "ANY",
+    "EACH",
+    "EVERY",
+    "ALL",
+    "BOTH",
+    "OTHER",
+    "OTHERS",
+    "ANOTHER",
+    "SUCH",
+    "CERTAIN",
+    "PARTICULAR",
+    "SPECIFIC",
+    "VARIOUS",
+    "DIFFERENT",
+    "SAME",
+    "INFORMATION",
+    "EXAMPLE",
+    "EXAMPLES",
+    "NOTE",
+    "NOTES",
+    "PLEASE",
+    "WIZARDS",
+    "WIZARDSCOM",
+    "GATHERER",
+    "ORACLE",
+    "DATABASE",
+    "WPNWIZARDSCOM",
+    "MAGIC",
     # Numbers (often noise in titles)
-    "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN",
-    "FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH",
+    "ONE",
+    "TWO",
+    "THREE",
+    "FOUR",
+    "FIVE",
+    "SIX",
+    "SEVEN",
+    "EIGHT",
+    "NINE",
+    "TEN",
+    "FIRST",
+    "SECOND",
+    "THIRD",
+    "FOURTH",
+    "FIFTH",
     # Common adverbs & Filler words
-    "STILL", "ONLY", "JUST", "ALREADY", "NOT", "NO", "NEVER", "ALWAYS", "VERY",
-    "TOO", "EVEN", "WELL", "BACK", "AGAIN", "TOGETHER", "SEPARATELY", "USUALLY",
-    "NORMALLY", "GENERALLY", "THERE", "HERE",
+    "STILL",
+    "ONLY",
+    "JUST",
+    "ALREADY",
+    "NO",
+    "NEVER",
+    "ALWAYS",
+    "VERY",
+    "MANY",
+    "TOO",
+    "EVEN",
+    "WELL",
+    "BACK",
+    "AGAIN",
+    "TOGETHER",
+    "SEPARATELY",
+    "USUALLY",
+    "NORMALLY",
+    "GENERALLY",
+    "THERE",
+    "HERE",
+    "COMPLETELY",
+    "DIRECTLY",
+    "NOTABLY",
+    "PARTICULARLY",
     # Contraction residues / single letter noise
-    "S", "T", "RE", "D", "M", "LL", "VE",
+    "S",
+    "T",
+    "RE",
+    "D",
+    "M",
+    "LL",
+    "VE",
+}
+
+high_value_keywords = {
+    "ABILITIES",
+    "ABILITY",
+    "ACTION",
+    "ACTION",
+    "ACTIONS",
+    "ACTIVATE",
+    "APNAP",
+    "ATTACK",
+    "BASED",
+    "BATTLEFIELD",
+    "BLOCK",
+    "CANT",
+    "CARD",
+    "CARDS",
+    "CAST",
+    "COLORLESS",
+    "COMBAT",
+    "CONTINUOUS",
+    "COST",
+    "COSTS",
+    "CREATURE",
+    "CREATURES",
+    "DAMAGE",
+    "EFFECT",
+    "EFFECT",
+    "EFFECTS",
+    "EXILE",
+    "GRAVEYARD",
+    "HAND",
+    "HIDDEN",
+    "IDENTITY",
+    "IGNORED",
+    "LAYER",
+    "LAYERS",
+    "LIBRARY",
+    "MULTICOLOR",
+    "MULTICOLORED",
+    "N",
+    "NOT",
+    "OBJECT",
+    "ONE",
+    "PERMANENT",
+    "PERMANENTS",
+    "PHASE",
+    "PRECEDENCE",
+    "RESOLVE",
+    "RESOLVES",
+    "RESOLVING",
+    "SCHEME",
+    "SPECIAL",
+    "SPELL",
+    "SPELLS",
+    "STACK",
+    "STATE",
+    "STEP",
+    "STICKER",
+    "SUBLAYER",
+    "SUBLAYERS",
+    "TIMESTAMP",
+    "TRIGGER",
+    "TURN",
+    "X",
+    "ZERO",
+    "ZONE",
+    "ZONES",
 }
 
 condition_keywords = {"if", "when", "whenever", "unless", "at", "instead", "would"}
 
+# Rules with subrules that should NOT be split into separate granular variants,
+# but instead grouped together under their major rule number (e.g., "100.1")
+SKIP_GRANULAR_RULE_PREFIXES = [
+    # Add prefixes here to skip granular subrules and group them under a single major rule
+]
+
+
 def make_refined_name(primary_rnum, text):
+    # Extract words inside quotes before stripping special characters
+    quote_pattern = re.compile(r'[“"‘]([^”"’]+)[”"’]')
+
     # Strip reference parentheticals like "(see rule 103...)" or "(see section...)"
     text_no_ref = re.sub(r"\(\s*[sS]ee\s+rule\s+[^)]+\)", "", text)
     text_no_ref = re.sub(r"\(\s*[sS]ee\s+section\s+[^)]+\)", "", text_no_ref)
-    
+
+    # Convert digits to strings
+    number_to_word = {
+        "0": "ZERO",
+        "1": "ONE",
+        "2": "TWO",
+        "3": "THREE",
+        "4": "FOUR",
+        "5": "FIVE",
+        "6": "SIX",
+        "7": "SEVEN",
+        "8": "EIGHT",
+        "9": "NINE",
+        "10": "TEN",
+    }
+
+    quoted_matches = quote_pattern.findall(text_no_ref)
+    quoted_words = set()
+    for match in quoted_matches:
+        match_no_apostrophes = match.replace("'", "").replace("’", "")
+        match_clean = re.sub(r"[^A-Z0-9\s]", " ", match_no_apostrophes.upper())
+        for word in match_clean.split():
+            word_conv = number_to_word.get(word, word)
+            quoted_words.add(word_conv)
+
     # Remove apostrophes completely so they don't become space-separated letters (e.g. they're -> theyre)
     text_no_apostrophes = text_no_ref.replace("'", "").replace("’", "")
-    
+
     # Clean text: remove special characters, make uppercase
     text_clean = re.sub(r"[^A-Z0-9\s]", " ", text_no_apostrophes.upper())
     words = text_clean.split()
-    
+
+    words = [number_to_word.get(w, w) for w in words]
+
     # Filter out noise words, numeric literals, and duplicate/stem-duplicate words
     filtered_words = []
     seen_stems = set()
     for w in words:
         if w in noise_words or w.isdigit():
             continue
-        
+
         # Simple stemming to prevent duplicate-stem adjacencies (e.g., COLOR_COLOR, COLOR_COLORS, TEAM_TEAM)
         stem = w
         if len(w) > 3:
@@ -108,16 +508,31 @@ def make_refined_name(primary_rnum, text):
                 stem = w[:-2]
             elif w.endswith("S") and not w.endswith("SS"):
                 stem = w[:-1]
-        
+
         if stem in seen_stems:
             continue
-            
+
         seen_stems.add(stem)
         filtered_words.append(w)
-    
-    # Let's limit to 5 words to keep it compact and compile-friendly
-    selected_words = filtered_words[:5]
-    
+
+    # Prioritize high-value keywords to select the top 5 words
+    # High-value keywords have priority 1, others have priority 2
+    scored_words = []
+    for idx, w in enumerate(filtered_words):
+        priority = 1 if (w in high_value_keywords or w in quoted_words) else 2
+        scored_words.append((priority, idx, w))
+
+    # Sort by priority ascending, then by original index ascending
+    scored_words.sort(key=lambda x: (x[0], x[1]))
+
+    # Take the top 5
+    top_scored = scored_words[:5]
+
+    # Sort them back by original index to preserve reading order
+    top_scored.sort(key=lambda x: x[1])
+
+    selected_words = [x[2] for x in top_scored]
+
     desc = "_".join(selected_words)
     rnum_clean = primary_rnum.replace(".", "_")
     if desc:
@@ -125,10 +540,12 @@ def make_refined_name(primary_rnum, text):
     else:
         return f"RULE_{rnum_clean}"
 
+
 def check_cond_heuristic(text):
     text_clean = re.sub(r"[^a-zA-Z\s]", " ", text.lower())
     words = set(text_clean.split())
     return not words.isdisjoint(condition_keywords)
+
 
 OVERRIDE_NAMES = {
     "105.1": "RULE_105_1_FIVE_COLORS_IN_MAGIC",
@@ -141,12 +558,14 @@ OVERRIDE_NAMES = {
     "208.3": "RULE_208_3_NONCREATURE_PERMANENT_HAS_NO_POWER_TOUGHNESS",
     "301.5": "RULE_301_5_EQUIPMENT_CONTROL_AND_ATTACHMENT",
     "507.1": "RULE_507_1_MULTIPLAYER_CHOOSE_DEFENDING_PLAYER",
+    "601.2": "RULE_601_2_CAST_SPELL_FROM_HAND_ON_STACK",
     "701.49": "RULE_701_49_VENTURE_INTO_DUNGEON",
     "702.26": "RULE_702_26_PHASING_MECHANICS",
     "726.2": "RULE_726_2_INITIATIVE_INHERENT_TRIGGERED_ABILITIES",
     "805.10": "RULE_805_10_SHARED_TEAM_COMBAT_BLOCK_DAMAGE",
     "903.5": "RULE_903_5_COMMANDER_DECK_CONSTRUCTION_RESTRICTIONS",
 }
+
 
 def main():
     rules_text_path = "./rules/MagicCompRules_20260417.txt"
@@ -168,6 +587,7 @@ def main():
             if match:
                 rule_num = match.group(1)
                 rule_text = match.group(2)
+                rule_text = filter_example_sentences(rule_text)
                 if rule_num not in comp_rules:
                     comp_rules[rule_num] = rule_text
                     all_rules.append((rule_num, rule_text))
@@ -198,90 +618,102 @@ def main():
                         if primary_m:
                             expected_prefix = "RULE_" + primary_m.group(1)
                             # Check if matches expected prefix or is the correct esoteric placeholder
-                            is_esoteric_match = variant_name.startswith("ESOTERIC_") and get_esoteric_category(rnum) == variant_name
+                            is_esoteric_match = (
+                                variant_name.startswith("ESOTERIC_")
+                                and get_esoteric_category(rnum) == variant_name
+                            )
                             is_rule_match = variant_name.startswith(expected_prefix)
                             if is_rule_match or is_esoteric_match:
                                 # Exclude 601.2a-i from being mapped to RULE_601_2_CAST_SPELL_WHERE_HAND_PUT
-                                if rnum.startswith("601.2") and rnum != "601.2" and variant_name == "RULE_601_2_CAST_SPELL_WHERE_HAND_PUT":
+                                if (
+                                    rnum.startswith("601.2")
+                                    and rnum != "601.2"
+                                    and variant_name
+                                    == "RULE_601_2_CAST_SPELL_WHERE_HAND_PUT"
+                                ):
                                     continue
-                                existing_rule_to_variant[rnum] = (variant_name, has_cond_in_file)
+                                existing_rule_to_variant[rnum] = (
+                                    variant_name,
+                                    has_cond_in_file,
+                                )
                 current_comments = []
             else:
                 if "enum Rule" not in line and "struct Condition" not in line:
                     current_comments = []
 
-    print(f"Parsed {len(existing_rule_to_variant)} existing rule mappings from src/compiler/rules.rs.")
+    print(
+        f"Parsed {len(existing_rule_to_variant)} existing rule mappings from src/compiler/rules.rs."
+    )
 
     # 3. Group and assign all rules from MagicCompRules_20260417.txt
-    used_variant_names = set(existing_variants)
+    used_variant_names = set()
     generated_primary_to_variant = {}
-    
+
     esoteric_placeholders_list = [
         "ESOTERIC_CARD_ATTRIBUTES",
         "ESOTERIC_CARD_TYPES",
         "ESOTERIC_SPECIAL_ACTIONS",
         "ESOTERIC_MECHANICS",
         "ESOTERIC_MULTIPLAYER_VARIANTS",
-        "ESOTERIC_CASUAL_VARIANTS"
+        "ESOTERIC_CASUAL_VARIANTS",
     ]
-    
+
     group_map = {}
     ordered_groups = []
-    
+
     # Pre-populate esoteric placeholders to preserve them
     for ph in esoteric_placeholders_list:
         group_dict = {
             "variant_name": ph,
             "has_condition": False,
             "is_esoteric": True,
-            "rules": []
+            "rules": [],
         }
         group_map[ph] = group_dict
         ordered_groups.append(group_dict)
+        used_variant_names.add(ph)
 
     for rnum, text in all_rules:
-        if rnum in existing_rule_to_variant:
-            var_name, has_cond = existing_rule_to_variant[rnum]
-            is_esoteric = var_name.startswith("ESOTERIC_")
-        else:
-            eso_cat = get_esoteric_category(rnum)
-            if eso_cat:
-                var_name = eso_cat
-                has_cond = False
-                is_esoteric = True
+        eso_cat = get_esoteric_category(rnum)
+        is_esoteric = False
+
+        # Calculate primary
+        if any(rnum.startswith(prefix) for prefix in SKIP_GRANULAR_RULE_PREFIXES):
+            m = re.match(r"^(\d{3}\.\d+)", rnum)
+            if m:
+                primary = m.group(1)
             else:
-                is_esoteric = False
-                if (
-                    rnum.startswith("105.2")
-                    or rnum.startswith("107.4")
-                    or rnum.startswith("201.2")
-                    or rnum.startswith("202.2")
-                    or rnum.startswith("205.1")
-                    or rnum.startswith("601.2")
-                ):
-                    primary = rnum
-                else:
-                    m = re.match(r"^(\d{3}\.\d+)", rnum)
-                    if m:
-                        primary = m.group(1)
-                    else:
-                        primary = rnum
-                
-                if primary in OVERRIDE_NAMES:
-                    var_name = OVERRIDE_NAMES[primary]
-                else:
-                    if primary not in generated_primary_to_variant:
-                        candidate_name = make_refined_name(primary, text)
-                        var_name = candidate_name
-                        suffix = 2
-                        while var_name in used_variant_names:
-                            var_name = f"{candidate_name}_{suffix}"
-                            suffix += 1
-                        used_variant_names.add(var_name)
-                        generated_primary_to_variant[primary] = var_name
-                    var_name = generated_primary_to_variant[primary]
-                
-                has_cond = check_cond_heuristic(text)
+                primary = rnum
+        else:
+            primary = rnum
+
+        # 1. First priority: OVERRIDE_NAMES
+        if primary in OVERRIDE_NAMES:
+            var_name = OVERRIDE_NAMES[primary]
+            has_cond = check_cond_heuristic(text)
+            used_variant_names.add(var_name)
+        elif rnum in OVERRIDE_NAMES:
+            var_name = OVERRIDE_NAMES[rnum]
+            has_cond = check_cond_heuristic(text)
+            used_variant_names.add(var_name)
+        # 2. Second priority: Esoteric placeholders
+        elif eso_cat:
+            var_name = eso_cat
+            has_cond = False
+            is_esoteric = True
+        # 3. Third priority: Dynamic generation
+        else:
+            if primary not in generated_primary_to_variant:
+                candidate_name = make_refined_name(primary, text)
+                var_name = candidate_name
+                suffix = 2
+                while var_name in used_variant_names:
+                    var_name = f"{candidate_name}_{suffix}"
+                    suffix += 1
+                used_variant_names.add(var_name)
+                generated_primary_to_variant[primary] = var_name
+            var_name = generated_primary_to_variant[primary]
+            has_cond = check_cond_heuristic(text)
 
         # Add to group
         if var_name not in group_map:
@@ -289,7 +721,7 @@ def main():
                 "variant_name": var_name,
                 "has_condition": has_cond,
                 "is_esoteric": is_esoteric,
-                "rules": []
+                "rules": [],
             }
             group_map[var_name] = group_dict
             ordered_groups.append(group_dict)
@@ -297,7 +729,7 @@ def main():
             group_dict = group_map[var_name]
             if has_cond:
                 group_dict["has_condition"] = True
-                
+
         group_dict["rules"].append((rnum, text))
 
     # Find the header of the file (everything up to enum Rule {)
@@ -308,7 +740,7 @@ def main():
             enum_found = True
             break
         header_lines.append(line)
-        
+
     if not enum_found:
         raise Exception("Could not find 'enum Rule' in src/compiler/rules.rs!")
 
@@ -318,18 +750,29 @@ def main():
 
     # Write Esoteric Placeholders
     output_lines.append("\n")
-    output_lines.append("    // =========================================================================\n")
+    output_lines.append(
+        "    // =========================================================================\n"
+    )
     output_lines.append("    // GENERATED CORE AND ESOTERIC RULES (CHAPTERS 1-9)\n")
-    output_lines.append("    // =========================================================================\n\n")
-    output_lines.append("    // --- ESOTERIC AND CASUAL PLAY VARIANTS PLACEHOLDERS ---\n\n")
-    
+    output_lines.append(
+        "    // =========================================================================\n\n"
+    )
+    output_lines.append(
+        "    // --- ESOTERIC AND CASUAL PLAY VARIANTS PLACEHOLDERS ---\n\n"
+    )
+
     for ph in esoteric_placeholders_list:
         group_dict = group_map[ph]
         rules_list = group_dict["rules"]
-        output_lines.append(f"    // Placeholder for {ph.replace('ESOTERIC_', '').replace('_', ' ').title()}\n")
+        output_lines.append(
+            f"    // Placeholder for {ph.replace('ESOTERIC_', '').replace('_', ' ').title()}\n"
+        )
         if rules_list:
             output_lines.append(f"    // Covers the following rules:\n")
-            for rn, txt in sorted(rules_list, key=lambda x: [int(v) for v in re.findall(r'\d+', x[0])] + [x[0]]):
+            for rn, txt in sorted(
+                rules_list,
+                key=lambda x: [int(v) for v in re.findall(r"\d+", x[0])] + [x[0]],
+            ):
                 output_lines.append(f"    // {rn}. {txt}\n")
         else:
             output_lines.append(f"    // (No rules covered currently)\n")
@@ -345,34 +788,40 @@ def main():
         "6": "Spells, Abilities, and Effects",
         "7": "Additional Rules",
         "8": "Multiplayer Rules",
-        "9": "Casual Variants"
+        "9": "Casual Variants",
     }
-    
+
     variants_by_chapter = {ch: [] for ch in chapters.keys()}
     for group_dict in ordered_groups:
         if group_dict["is_esoteric"]:
             continue
-        
+
         rnum = group_dict["rules"][0][0]
         ch = rnum[0]
         if ch in variants_by_chapter:
             variants_by_chapter[ch].append(group_dict)
-            
+
     for ch in sorted(variants_by_chapter.keys()):
         ch_name = chapters[ch]
         infos = variants_by_chapter[ch]
         if not infos:
             continue
-            
+
         output_lines.append(f"    // --- {ch}. {ch_name} ---\n\n")
-        
+
         # Sort the groups within each chapter numerically by their first rule number
-        infos.sort(key=lambda x: [int(v) for v in re.findall(r'\d+', x["rules"][0][0])] + [x["rules"][0][0]])
-        
+        infos.sort(
+            key=lambda x: [int(v) for v in re.findall(r"\d+", x["rules"][0][0])]
+            + [x["rules"][0][0]]
+        )
+
         for info in infos:
-            for rn, txt in sorted(info["rules"], key=lambda x: [int(v) for v in re.findall(r'\d+', x[0])] + [x[0]]):
+            for rn, txt in sorted(
+                info["rules"],
+                key=lambda x: [int(v) for v in re.findall(r"\d+", x[0])] + [x[0]],
+            ):
                 output_lines.append(f"    // {rn}. {txt}\n")
-                
+
             v_def = info["variant_name"]
             if info["has_condition"]:
                 v_def += "(Condition)"
@@ -383,9 +832,11 @@ def main():
     with open(rules_rs_path, "w", encoding="utf-8") as f:
         f.writelines(output_lines)
 
-    print(f"Success! Generated {len(ordered_groups) - len(esoteric_placeholders_list)} core granular variants and {len(esoteric_placeholders_list)} esoteric placeholder variants.")
+    print(
+        f"Success! Generated {len(ordered_groups) - len(esoteric_placeholders_list)} core granular variants and {len(esoteric_placeholders_list)} esoteric placeholder variants."
+    )
     print("Added them to src/compiler/rules.rs successfully.")
+
 
 if __name__ == "__main__":
     main()
-
