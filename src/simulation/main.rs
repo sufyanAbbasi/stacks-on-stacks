@@ -13,7 +13,7 @@ pub mod scryfall;
 
 use game::{Game, SimInstruction, Format};
 use player::Player;
-use card::{Card, Color};
+use card::Color;
 use zones::ZoneCard;
 use effects::{Target, Zone};
 use scryfall::create_test_card;

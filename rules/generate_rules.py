@@ -23,6 +23,28 @@ def get_esoteric_category(rnum):
     return None
 
 
+def to_upper_camel_case(name):
+    if not name:
+        return name
+    if name.startswith("ESOTERIC_"):
+        return "".join(part.capitalize() for part in name.split("_"))
+    if name.startswith("RULE_"):
+        parts = name.split("_")
+        if len(parts) < 3:
+            return "".join(part.capitalize() for part in parts)
+        major = parts[1]
+        minor = parts[2]
+        words = parts[3:]
+        capitalized_words = [w.capitalize() for w in words]
+        if capitalized_words:
+            return f"Rule{major}_{minor}{''.join(capitalized_words)}"
+        else:
+            return f"Rule{major}_{minor}"
+    if "_" in name:
+        return "".join(part.capitalize() for part in name.split("_"))
+    return name
+
+
 # Filter out sentences starting with "For example,"
 def filter_example_sentences(text):
     sentences = re.split(r"(?<=[.!?])\s+", text)
@@ -538,9 +560,10 @@ def make_refined_name(primary_rnum, text):
     desc = "_".join(selected_words)
     rnum_clean = primary_rnum.replace(".", "_")
     if desc:
-        return f"RULE_{rnum_clean}_{desc}"
+        snake_name = f"RULE_{rnum_clean}_{desc}"
     else:
-        return f"RULE_{rnum_clean}"
+        snake_name = f"RULE_{rnum_clean}"
+    return to_upper_camel_case(snake_name)
 
 
 def check_cond_heuristic(text):
@@ -624,20 +647,23 @@ def main():
                         rnum = m_rnum.group(1)
                         primary_m = re.match(r"^(\d{3}_\d+)", rnum.replace(".", "_"))
                         if primary_m:
-                            expected_prefix = "RULE_" + primary_m.group(1)
+                            expected_prefix_snake = "RULE_" + primary_m.group(1)
+                            expected_prefix_camel = to_upper_camel_case(expected_prefix_snake)
                             # Check if matches expected prefix or is the correct esoteric placeholder
                             is_esoteric_match = (
-                                variant_name.startswith("ESOTERIC_")
-                                and get_esoteric_category(rnum) == variant_name
+                                (variant_name.startswith("ESOTERIC_") or variant_name.startswith("Esoteric"))
+                                and (get_esoteric_category(rnum) == variant_name or to_upper_camel_case(get_esoteric_category(rnum)) == variant_name)
                             )
-                            is_rule_match = variant_name.startswith(expected_prefix)
+                            is_rule_match = variant_name.startswith(expected_prefix_snake) or variant_name.startswith(expected_prefix_camel)
                             if is_rule_match or is_esoteric_match:
                                 # Exclude 601.2a-i from being mapped to RULE_601_2_CAST_SPELL_WHERE_HAND_PUT
                                 if (
                                     rnum.startswith("601.2")
                                     and rnum != "601.2"
-                                    and variant_name
-                                    == "RULE_601_2_CAST_SPELL_WHERE_HAND_PUT"
+                                    and (
+                                        variant_name == "RULE_601_2_CAST_SPELL_WHERE_HAND_PUT"
+                                        or variant_name == "Rule601_2CastSpellWhereHandPut"
+                                    )
                                 ):
                                     continue
                                 existing_rule_to_variant[rnum] = (
@@ -671,15 +697,16 @@ def main():
 
     # Pre-populate esoteric placeholders to preserve them
     for ph in esoteric_placeholders_list:
+        ph_camel = to_upper_camel_case(ph)
         group_dict = {
-            "variant_name": ph,
+            "variant_name": ph_camel,
             "has_condition": False,
             "is_esoteric": True,
             "rules": [],
         }
-        group_map[ph] = group_dict
+        group_map[ph_camel] = group_dict
         ordered_groups.append(group_dict)
-        used_variant_names.add(ph)
+        used_variant_names.add(ph_camel)
 
     for rnum, text in all_rules:
         eso_cat = get_esoteric_category(rnum)
@@ -697,16 +724,16 @@ def main():
 
         # 1. First priority: OVERRIDE_NAMES
         if primary in OVERRIDE_NAMES:
-            var_name = OVERRIDE_NAMES[primary]
+            var_name = to_upper_camel_case(OVERRIDE_NAMES[primary])
             has_cond = check_cond_heuristic(text)
             used_variant_names.add(var_name)
         elif rnum in OVERRIDE_NAMES:
-            var_name = OVERRIDE_NAMES[rnum]
+            var_name = to_upper_camel_case(OVERRIDE_NAMES[rnum])
             has_cond = check_cond_heuristic(text)
             used_variant_names.add(var_name)
         # 2. Second priority: Esoteric placeholders
         elif eso_cat:
-            var_name = eso_cat
+            var_name = to_upper_camel_case(eso_cat)
             has_cond = False
             is_esoteric = True
         # 3. Third priority: Dynamic generation
@@ -716,7 +743,7 @@ def main():
                 var_name = candidate_name
                 suffix = 2
                 while var_name in used_variant_names:
-                    var_name = f"{candidate_name}_{suffix}"
+                    var_name = f"{candidate_name}{suffix}"
                     suffix += 1
                 used_variant_names.add(var_name)
                 generated_primary_to_variant[primary] = var_name
@@ -770,7 +797,8 @@ def main():
     )
 
     for ph in esoteric_placeholders_list:
-        group_dict = group_map[ph]
+        ph_camel = to_upper_camel_case(ph)
+        group_dict = group_map[ph_camel]
         rules_list = group_dict["rules"]
         output_lines.append(
             f"    // Placeholder for {ph.replace('ESOTERIC_', '').replace('_', ' ').title()}\n"
@@ -784,7 +812,7 @@ def main():
                 output_lines.append(f"    // {rn}. {txt}\n")
         else:
             output_lines.append(f"    // (No rules covered currently)\n")
-        output_lines.append(f"    {ph},\n\n")
+        output_lines.append(f"    {ph_camel},\n\n")
 
     # Group core granular variants by chapter
     chapters = {

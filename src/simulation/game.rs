@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 use crate::effects::{PlayerId, CardId, Zone, Target};
 use crate::player::{Player, ManaPool};
-use crate::zones::{Zones, ZoneCard, Permanent};
-use crate::stack::{Stack, StackItemId, StackObject, StackItem};
+use crate::zones::{Zones, ZoneCard};
+use crate::stack::{Stack, StackItemId, StackObject};
 use crate::card::{Card, Color};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]

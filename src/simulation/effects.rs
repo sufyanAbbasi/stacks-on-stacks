@@ -1,5 +1,4 @@
-use crate::card::{Card, Color, CardType, Subtype};
-use crate::player::Player;
+use crate::card::{Color, CardType, Subtype};
 
 /// Unique identifier for a card instance in play or inside a zone.
 pub type CardId = u32;
@@ -95,25 +94,25 @@ pub enum EffectDuration {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum ContinuousLayer {
     /// Layer 1: Rules and effects that modify copiable values (Rule 613.1a).
-    Layer1_CopiableValues,
+    Layer1CopiableValues,
     /// Layer 2: Control-changing effects (Rule 613.1b).
-    Layer2_Control,
+    Layer2Control,
     /// Layer 3: Text-changing effects (Rule 613.1c).
-    Layer3_Text,
+    Layer3Text,
     /// Layer 4: Type-changing effects (Rule 613.1d).
-    Layer4_Type,
+    Layer4Type,
     /// Layer 5: Color-changing effects (Rule 613.1e).
-    Layer5_Color,
+    Layer5Color,
     /// Layer 6: Ability-adding or ability-removing effects (Rule 613.1f).
-    Layer6_Abilities,
+    Layer6Abilities,
     /// Layer 7a: Effects from characteristic-defining abilities that define power/toughness (Rule 613.4a).
-    Layer7a_CharacteristicDefiningPT,
+    Layer7aCharacteristicDefiningPT,
     /// Layer 7b: Effects that set power and/or toughness to a specific number (Rule 613.4b).
-    Layer7b_SetPT,
+    Layer7bSetPT,
     /// Layer 7c: Effects and counters that modify power/toughness but don't set them (Rule 613.4c).
-    Layer7c_ModifyPT,
+    Layer7cModifyPT,
     /// Layer 7d: Power and/or toughness switching effects (Rule 613.4d).
-    Layer7d_SwitchPT,
+    Layer7dSwitchPT,
 }
 
 /// Represents the actual modification applied by a continuous effect.
