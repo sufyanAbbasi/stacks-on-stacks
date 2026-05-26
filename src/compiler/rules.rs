@@ -5710,7 +5710,7 @@ enum Rule {
     RULE_702_29a_CYCLING_ABILITY_CARD_HAND_COST,
 
     // 702.29b. Although the cycling ability can be activated only if the card is in a player’s hand, it continues to exist while the object is on the battlefield and in all other zones. Therefore objects with cycling will be affected by effects that depend on objects having one or more activated abilities.
-    RULE_702_29b_ABILITY_CARD_HAND_OBJECT_BATTLEFIELD(Condition),
+    RULE_702_29b_CYCLING_ABILITY_CARD_HAND_OBJECT(Condition),
 
     // 702.29c. Some cards with cycling have abilities that trigger when they’re cycled. “When you cycle this card” means “When you discard this card to pay an activation cost of a cycling ability.” These abilities trigger from whatever zone the card winds up in after it’s cycled.
     RULE_702_29c_CARDS_CYCLING_ABILITIES_TRIGGER_CYCLE(Condition),
@@ -5719,10 +5719,10 @@ enum Rule {
     RULE_702_29d_CARDS_ABILITIES_TRIGGER_CYCLES_DISCARDS(Condition),
 
     // 702.29e. Typecycling is a variant of the cycling ability. “[Type]cycling [cost]” means “[Cost], Discard this card: Search your library for a [type] card, reveal it, and put it into your hand. Then shuffle your library.” This type is usually a subtype (as in “mountaincycling”) but can be any card type, subtype, supertype, or combination thereof (as in “basic landcycling”).
-    RULE_702_29e_CYCLING_ABILITY_TYPE_COST_DISCARD,
+    RULE_702_29e_TYPECYCLING_CYCLING_ABILITY_TYPE_COST,
 
     // 702.29f. Typecycling abilities are cycling abilities, and typecycling costs are cycling costs. Any cards that trigger when a player cycles a card will trigger when a card is discarded to pay an activation cost of a typecycling ability. Any effect that stops players from cycling cards will stop players from activating cards’ typecycling abilities. Any effect that increases or reduces a cycling cost will increase or reduce a typecycling cost. Any effect that looks for a card with cycling will find a card with typecycling.
-    RULE_702_29f_ABILITIES_COSTS_CARDS_TRIGGER_EFFECT(Condition),
+    RULE_702_29f_TYPECYCLING_ABILITIES_CYCLING_COSTS_CARDS(Condition),
 
     // 702.30. Echo
     RULE_702_30_ECHO,
