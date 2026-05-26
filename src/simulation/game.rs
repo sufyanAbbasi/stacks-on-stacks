@@ -79,6 +79,89 @@ pub enum SimInstruction {
         stack_item_id: StackItemId,
         target: Target,
     },
+    /// 1:1 with Library draw (Rule 121 / 401.1)
+    DrawCard {
+        player_id: PlayerId,
+    },
+    /// 1:1 with Library shuffle (Rule 701.20)
+    ShuffleLibrary {
+        player_id: PlayerId,
+    },
+    /// 1:1 with Library search (Rule 701.19)
+    SearchLibrary {
+        player_id: PlayerId,
+        card_id: CardId,
+    },
+    /// 1:1 with Permanent status flip category (Rule 110.5 / 709)
+    FlipPermanent {
+        card_id: CardId,
+    },
+    /// 1:1 with Permanent status flip category (Rule 110.5 / 709)
+    UnflipPermanent {
+        card_id: CardId,
+    },
+    /// 1:1 with Permanent status face category (Rule 110.5 / 708)
+    TurnPermanentFaceDown {
+        card_id: CardId,
+    },
+    /// 1:1 with Permanent status face category (Rule 110.5 / 708)
+    TurnPermanentFaceUp {
+        card_id: CardId,
+    },
+    /// 1:1 with Permanent status phasing category (Rule 702.26)
+    PhaseInPermanent {
+        card_id: CardId,
+    },
+    /// 1:1 with Permanent status phasing category (Rule 702.26)
+    PhaseOutPermanent {
+        card_id: CardId,
+    },
+    /// 1:1 with Permanent counters additions (Rule 122)
+    AddCounter {
+        card_id: CardId,
+        counter_type: String,
+        amount: u32,
+    },
+    /// 1:1 with Permanent counters removals (Rule 122)
+    RemoveCounter {
+        card_id: CardId,
+        counter_type: String,
+        amount: u32,
+    },
+    /// 1:1 with Permanent damage marking (Rule 120.3e)
+    MarkDamage {
+        card_id: CardId,
+        amount: u32,
+    },
+    /// 1:1 with Permanent damage clearing (Rule 510.5)
+    ClearDamage {
+        card_id: CardId,
+    },
+    /// 1:1 with Permanent attachment (Rule 301.5 / 303.4)
+    AttachPermanent {
+        card_id: CardId,
+        target: Target,
+    },
+    /// 1:1 with Permanent detachment (Rule 301.5 / 303.4)
+    DetachPermanent {
+        card_id: CardId,
+    },
+    /// 1:1 with Exile face up/down status (Rule 406)
+    SetExiledFaceUp {
+        card_id: CardId,
+        face_up: bool,
+    },
+    /// 1:1 with Command Zone emblem creation (Rule 114)
+    CreateEmblem {
+        controller: PlayerId,
+        rules_text: String,
+    },
+    /// 1:1 with Token creation (Rule 111)
+    CreateToken {
+        controller: PlayerId,
+        token_id: CardId,
+        card: Card,
+    },
 }
 
 impl Game {
@@ -237,6 +320,202 @@ impl Game {
                 } else {
                     println!("  -> \x1b[31mError:\x1b[0m Stack Item ID {} not found on stack to register target!", stack_item_id);
                 }
+            }
+
+            SimInstruction::DrawCard { player_id } => {
+                if let Some(lib) = self.zones.libraries.get_mut(&player_id) {
+                    if let Some(zc) = lib.draw() {
+                        let card_name = get_card_name(&zc.card).to_string();
+                        let id = zc.id;
+                        self.zones.insert_card(zc, Zone::Hand, player_id);
+                        println!(
+                            "  -> \x1b[32mCard Drawn:\x1b[0m '{}' (ID: {}) drawn by Player {}.",
+                            card_name, id, player_id
+                        );
+                    } else {
+                        println!("  -> \x1b[31mError:\x1b[0m Player {} has no cards left in library to draw! (Rule 121.4)", player_id);
+                    }
+                }
+            }
+
+            SimInstruction::ShuffleLibrary { player_id } => {
+                if let Some(lib) = self.zones.libraries.get_mut(&player_id) {
+                    lib.shuffle();
+                    println!("  -> \x1b[32mLibrary Shuffled:\x1b[0m Player {} shuffled their library.", player_id);
+                }
+            }
+
+            SimInstruction::SearchLibrary { player_id, card_id } => {
+                if let Some(card) = self.zones.search_library(player_id, card_id) {
+                    let card_name = get_card_name(&card);
+                    println!(
+                        "  -> \x1b[32mLibrary Search:\x1b[0m Player {} searched library and found '{}' (ID: {}).",
+                        player_id, card_name, card_id
+                    );
+                } else {
+                    println!(
+                        "  -> \x1b[31mLibrary Search:\x1b[0m Player {} searched library for ID {} but did NOT find it.",
+                        player_id, card_id
+                    );
+                }
+            }
+
+            SimInstruction::FlipPermanent { card_id } => {
+                if let Some(p) = self.zones.battlefield.get_permanent_mut(card_id) {
+                    p.flip();
+                    let name = get_card_name(&p.card);
+                    println!("  -> \x1b[33mPermanent Flipped:\x1b[0m '{}' (ID: {}) flipped.", name, card_id);
+                } else {
+                    println!("  -> \x1b[31mError:\x1b[0m Permanent ID {} not found on battlefield!", card_id);
+                }
+            }
+
+            SimInstruction::UnflipPermanent { card_id } => {
+                if let Some(p) = self.zones.battlefield.get_permanent_mut(card_id) {
+                    p.unflip();
+                    let name = get_card_name(&p.card);
+                    println!("  -> \x1b[32mPermanent Unflipped:\x1b[0m '{}' (ID: {}) unflipped.", name, card_id);
+                } else {
+                    println!("  -> \x1b[31mError:\x1b[0m Permanent ID {} not found on battlefield!", card_id);
+                }
+            }
+
+            SimInstruction::TurnPermanentFaceDown { card_id } => {
+                if let Some(p) = self.zones.battlefield.get_permanent_mut(card_id) {
+                    p.set_face_down();
+                    let name = get_card_name(&p.card);
+                    println!("  -> \x1b[33mPermanent turned Face Down:\x1b[0m '{}' (ID: {}) is now face down.", name, card_id);
+                } else {
+                    println!("  -> \x1b[31mError:\x1b[0m Permanent ID {} not found on battlefield!", card_id);
+                }
+            }
+
+            SimInstruction::TurnPermanentFaceUp { card_id } => {
+                if let Some(p) = self.zones.battlefield.get_permanent_mut(card_id) {
+                    p.set_face_up();
+                    let name = get_card_name(&p.card);
+                    println!("  -> \x1b[32mPermanent turned Face Up:\x1b[0m '{}' (ID: {}) is now face up.", name, card_id);
+                } else {
+                    println!("  -> \x1b[31mError:\x1b[0m Permanent ID {} not found on battlefield!", card_id);
+                }
+            }
+
+            SimInstruction::PhaseInPermanent { card_id } => {
+                if let Some(p) = self.zones.battlefield.get_permanent_mut(card_id) {
+                    p.phase_in();
+                    let name = get_card_name(&p.card);
+                    println!("  -> \x1b[32mPermanent Phased In:\x1b[0m '{}' (ID: {}) phased in.", name, card_id);
+                } else {
+                    println!("  -> \x1b[31mError:\x1b[0m Permanent ID {} not found on battlefield!", card_id);
+                }
+            }
+
+            SimInstruction::PhaseOutPermanent { card_id } => {
+                if let Some(p) = self.zones.battlefield.get_permanent_mut(card_id) {
+                    p.phase_out();
+                    let name = get_card_name(&p.card);
+                    println!("  -> \x1b[33mPermanent Phased Out:\x1b[0m '{}' (ID: {}) phased out.", name, card_id);
+                } else {
+                    println!("  -> \x1b[31mError:\x1b[0m Permanent ID {} not found on battlefield!", card_id);
+                }
+            }
+
+            SimInstruction::AddCounter { card_id, counter_type, amount } => {
+                if let Some(p) = self.zones.battlefield.get_permanent_mut(card_id) {
+                    p.add_counters(&counter_type, amount);
+                    let name = get_card_name(&p.card);
+                    println!(
+                        "  -> \x1b[32mCounter Added:\x1b[0m Added {} {:?} counters to '{}' (ID: {}).",
+                        amount, counter_type, name, card_id
+                    );
+                } else {
+                    println!("  -> \x1b[31mError:\x1b[0m Permanent ID {} not found on battlefield!", card_id);
+                }
+            }
+
+            SimInstruction::RemoveCounter { card_id, counter_type, amount } => {
+                if let Some(p) = self.zones.battlefield.get_permanent_mut(card_id) {
+                    let removed = p.remove_counters(&counter_type, amount);
+                    let name = get_card_name(&p.card);
+                    println!(
+                        "  -> \x1b[33mCounter Removed:\x1b[0m Removed {}/{} {:?} counters from '{}' (ID: {}).",
+                        removed, amount, counter_type, name, card_id
+                    );
+                } else {
+                    println!("  -> \x1b[31mError:\x1b[0m Permanent ID {} not found on battlefield!", card_id);
+                }
+            }
+
+            SimInstruction::MarkDamage { card_id, amount } => {
+                if let Some(p) = self.zones.battlefield.get_permanent_mut(card_id) {
+                    p.mark_damage(amount);
+                    let name = get_card_name(&p.card);
+                    println!(
+                        "  -> \x1b[31mDamage Marked:\x1b[0m Marked {} damage on '{}' (ID: {}). Total Marked: {}.",
+                        amount, name, card_id, p.damage_marked
+                    );
+                } else {
+                    println!("  -> \x1b[31mError:\x1b[0m Permanent ID {} not found on battlefield!", card_id);
+                }
+            }
+
+            SimInstruction::ClearDamage { card_id } => {
+                if let Some(p) = self.zones.battlefield.get_permanent_mut(card_id) {
+                    p.clear_damage();
+                    let name = get_card_name(&p.card);
+                    println!("  -> \x1b[32mDamage Cleared:\x1b[0m Cleared all marked damage from '{}' (ID: {}).", name, card_id);
+                } else {
+                    println!("  -> \x1b[31mError:\x1b[0m Permanent ID {} not found on battlefield!", card_id);
+                }
+            }
+
+            SimInstruction::AttachPermanent { card_id, target } => {
+                if let Some(p) = self.zones.battlefield.get_permanent_mut(card_id) {
+                    p.attach_to(target);
+                    let name = get_card_name(&p.card);
+                    println!("  -> \x1b[32mPermanent Attached:\x1b[0m '{}' (ID: {}) attached to {:?}", name, card_id, target);
+                } else {
+                    println!("  -> \x1b[31mError:\x1b[0m Permanent ID {} not found on battlefield!", card_id);
+                }
+            }
+
+            SimInstruction::DetachPermanent { card_id } => {
+                if let Some(p) = self.zones.battlefield.get_permanent_mut(card_id) {
+                    p.detach();
+                    let name = get_card_name(&p.card);
+                    println!("  -> \x1b[32mPermanent Detached:\x1b[0m '{}' (ID: {}) detached.", name, card_id);
+                } else {
+                    println!("  -> \x1b[31mError:\x1b[0m Permanent ID {} not found on battlefield!", card_id);
+                }
+            }
+
+            SimInstruction::SetExiledFaceUp { card_id, face_up } => {
+                if self.zones.exile.set_face_up(card_id, face_up) {
+                    let card_name = self.get_registered_card_name(card_id);
+                    println!(
+                        "  -> \x1b[32mExile Visibility Changed:\x1b[0m Exiled Card '{}' (ID: {}) set to face_up = {}.",
+                        card_name, card_id, face_up
+                    );
+                } else {
+                    println!("  -> \x1b[31mError:\x1b[0m Card ID {} not found in Exile!", card_id);
+                }
+            }
+
+            SimInstruction::CreateEmblem { controller, rules_text } => {
+                let id = self.zones.create_emblem(controller, rules_text.clone());
+                println!(
+                    "  -> \x1b[35mEmblem Created:\x1b[0m New Emblem (ID: {}) created in Player {}'s Command Zone. Rules: '{}'",
+                    id, controller, rules_text
+                );
+            }
+
+            SimInstruction::CreateToken { controller, token_id, card } => {
+                let card_name = get_card_name(&card).to_string();
+                self.zones.create_token(token_id, card, controller);
+                println!(
+                    "  -> \x1b[35mToken Created:\x1b[0m Created '{}' token (ID: {}) on battlefield under Player {}'s control.",
+                    card_name, token_id, controller
+                );
             }
         }
     }

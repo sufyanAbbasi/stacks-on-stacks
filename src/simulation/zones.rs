@@ -99,6 +99,48 @@ impl Permanent {
     pub fn phase_out(&mut self) {
         self.status.phased_out = true;
     }
+
+    /// Adds counters to this permanent (Rule 122).
+    pub fn add_counters(&mut self, counter_type: &str, amount: u32) {
+        let count = self.counters.entry(counter_type.to_string()).or_insert(0);
+        *count += amount;
+    }
+
+    /// Removes counters from this permanent, returning the number of counters actually removed (Rule 122).
+    pub fn remove_counters(&mut self, counter_type: &str, amount: u32) -> u32 {
+        if let Some(count) = self.counters.get_mut(counter_type) {
+            if *count <= amount {
+                let removed = *count;
+                self.counters.remove(counter_type);
+                removed
+            } else {
+                *count -= amount;
+                amount
+            }
+        } else {
+            0
+        }
+    }
+
+    /// Marks damage on the permanent (Rule 120.3e).
+    pub fn mark_damage(&mut self, amount: u32) {
+        self.damage_marked += amount;
+    }
+
+    /// Clears all marked damage (Rule 510.5).
+    pub fn clear_damage(&mut self) {
+        self.damage_marked = 0;
+    }
+
+    /// Attaches this permanent to a target (Aura, Equipment, Fortification) (Rule 301.5 / 303.4 / 305.7).
+    pub fn attach_to(&mut self, target: Target) {
+        self.attached_to = Some(target);
+    }
+
+    /// Detaches this permanent (Rule 301.5 / 303.4).
+    pub fn detach(&mut self) {
+        self.attached_to = None;
+    }
 }
 
 /// --- SECTION 114: EMBLEMS ---
@@ -164,6 +206,12 @@ impl Library {
     pub fn shuffle(&mut self) {
         // Simple deterministic reverse as a placeholder for simulation testing.
         self.cards.reverse();
+    }
+
+    /// Searches the library for a specific card by its CardId (Rule 701.19).
+    /// Returns the static Card definition if found, or None.
+    pub fn search(&self, card_id: CardId) -> Option<Card> {
+        self.cards.iter().find(|zc| zc.id == card_id).map(|zc| zc.card.clone())
     }
 }
 
@@ -294,6 +342,16 @@ impl Exile {
             None
         }
     }
+
+    /// Sets the face-up status of an exiled card (Rule 406.3).
+    pub fn set_face_up(&mut self, card_id: CardId, face_up: bool) -> bool {
+        if let Some(e) = self.objects.iter_mut().find(|obj| obj.id == card_id) {
+            e.face_up = face_up;
+            true
+        } else {
+            false
+        }
+    }
 }
 
 /// --- SECTION 407: COMMAND ZONE ---
@@ -383,6 +441,26 @@ impl Zones {
         self.libraries.insert(player_id, Library::new(player_id));
         self.hands.insert(player_id, Hand::new(player_id));
         self.graveyards.insert(player_id, Graveyard::new(player_id));
+    }
+
+    /// Searches a player's library for a specific card by its CardId (Rule 701.19).
+    /// Returns the static Card definition if found, or None.
+    pub fn search_library(&self, player_id: PlayerId, card_id: CardId) -> Option<Card> {
+        self.libraries.get(&player_id).and_then(|lib| lib.search(card_id))
+    }
+
+    /// Creates a new emblem in the command zone for a player (Rule 114).
+    pub fn create_emblem(&mut self, controller: PlayerId, rules_text: String) -> u32 {
+        let id = self.get_next_emblem_id();
+        let timestamp = self.get_next_timestamp();
+        self.command_zone.add_emblem(Emblem {
+            id,
+            owner: controller,
+            controller,
+            rules_text,
+            timestamp,
+        });
+        id
     }
 
     /// Creates a token permanent on the battlefield (Rule 111).
