@@ -34,8 +34,8 @@ fn main() {
     // Initialize Game Kernel and Players
     let mut game = Game::new(Format::Commander);
     
-    let player_a = Player::new(1, "Player A".to_string());
-    let player_b = Player::new(2, "Player B".to_string());
+    let player_a = Player::new(1, "Player A".to_string(), 20);
+    let player_b = Player::new(2, "Player B".to_string(), 20);
     
     game.add_player(player_a);
     game.add_player(player_b);

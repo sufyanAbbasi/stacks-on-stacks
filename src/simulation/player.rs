@@ -100,11 +100,11 @@ pub struct Player {
 }
 
 impl Player {
-    pub fn new(id: u32, name: String) -> Self {
+    pub fn new(id: u32, name: String, starting_life_total: u128) -> Self {
         Self {
             id,
             name,
-            life_total: 20, // Default starting life total (or 40 for Commander)
+            life_total: starting_life_total,
             commander_damage: HashMap::new(),
             counters: HashMap::new(),
             sideboard: Vec::new(),
