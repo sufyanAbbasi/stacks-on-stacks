@@ -5,6 +5,7 @@ struct Condition {
 }
 
 // Table of Contents
+
 // 1. Game Concepts
 // 100. General
 // 101. The Magic Golden Rules
@@ -876,14 +877,6 @@ enum Rule {
     // 122.3. If a permanent has both a +1/+1 counter and a -1/-1 counter on it, N +1/+1 and N -1/-1 counters are removed from it as a state-based action, where N is the smaller of the number of +1/+1 and -1/-1 counters on it. See rule 704.
     RULE_122_3_PLUS_AND_MINUS_COUNTERS_CANCEL,
 
-
-    // =========================================================================
-    // GENERATED CORE AND ESOTERIC RULES (CHAPTERS 1-9)
-    // =========================================================================
-
-    // --- ESOTERIC AND CASUAL PLAY VARIANTS PLACEHOLDERS ---
-
-    // Placeholder for Card Attributes
     // Covers the following rules:
     // 123.1. A sticker is a marker placed on an object that modifies its characteristics and/or interacts with a rule, ability, or effect. Stickers are not objects. Notably, a sticker is not a counter or a token. Changes to an object from stickers are not part of its copiable values. There are four kinds of stickers: name stickers; ability stickers; power and toughness stickers; and art stickers.
     // 123.2. Stickers are found in boosters of the Unfinity expansion on numbered inserts. Each insert has a predetermined combination of stickers. Any rule that refers to a sticker sheet refers to the specific combination of stickers found on one of those inserts. Sticker sheets are not cards and have no characteristics. Each sticker sheet can be found at Gatherer.Wizards.com.
@@ -1140,7 +1133,7 @@ enum Rule {
     // 905.6. Once the starting player has been determined, each player sets their life total to 20 and draws a hand of seven cards.
     ESOTERIC_CASUAL_VARIANTS,
 
-    // --- CHAPTER 1: GAME CONCEPTS ---
+    // --- 1. Game Concepts ---
 
     // 100.1. These Magic rules apply to any Magic game with two or more players, including two-player games and multiplayer games.
     // 100.1a. A two-player game is a game that begins with only two players.
@@ -1397,7 +1390,7 @@ enum Rule {
     // 122.9. If an activated ability of an object instructs a player to put its counters on another object and sacrificing the object with those counters is a cost to activate that ability, the player doesn’t move counters from one object to the other. Rather, the player puts the same number of each kind of counter the first object had onto the second object. If the ability specified what kind(s) of counters to place, the player puts the same number of each of those kinds of counters the first object had onto the second object.
     RULE_122_9_ACTIVATED_ABILITY_OBJECT_PLAYER_PUT(Condition),
 
-    // --- CHAPTER 2: PARTS OF A CARD ---
+    // --- 2. Parts of a Card ---
 
     // 200.1. The parts of a card are name, mana cost, illustration, color indicator, type line, expansion symbol, text box, power and toughness, loyalty, defense, hand modifier, life modifier, illustration credit, legal text, and collector number. Some cards may have more than one of any or all of these parts.
     RULE_200_1_CARD_NAME_MANA_COST_ILLUSTRATION,
@@ -1623,7 +1616,7 @@ enum Rule {
     // 213.1g. Legal text (the fine print at the bottom or bottom-right of the card) lists the trademark and copyright information.
     RULE_213_1_CARD_CONTAINS_TEXT_NOT_RELEVANT_TO_GAME(Condition),
 
-    // --- CHAPTER 3: CARD TYPES ---
+    // --- 3. Card Types ---
 
     // 300.1. The card types are artifact, battle, conspiracy, creature, dungeon, enchantment, instant, kindred, land, phenomenon, plane, planeswalker, scheme, sorcery, and vanguard.
     RULE_300_1_CARD_TYPES_DEFINITION,
@@ -1895,7 +1888,7 @@ enum Rule {
     // 310.11b. Sieges have the intrinsic ability “When the last defense counter is removed from this permanent, exile it, then you may cast it transformed without paying its mana cost.”
     RULE_310_11_CURRENTLY_EXISTING_BATTLES_SUBTYPE_SIEGE(Condition),
 
-    // --- CHAPTER 4: ZONES ---
+    // --- 4. Zones ---
 
     // 400.1. A zone is a place where objects can be during a game. There are normally seven zones: library, hand, battlefield, graveyard, stack, exile, and command. Some older cards also use the ante zone. Each player has their own library, hand, and graveyard. The other zones are shared by all players.
     RULE_400_1_ZONE_PLACE_WHERE_OBJECTS_GAME,
@@ -5566,5 +5559,269 @@ enum Rule {
     // 903.13f. Commander Draft deck construction follows the same rules as Commander deck construction (see rule 903.5) with three exceptions: (1) A player’s deck must contain at least 60 cards. There is no maximum deck size. (2) A player’s deck may include any number of cards from that player’s card pool with the same name. (3) If the draft contained draft boosters from Commander Masters, any card which can be a player’s commander by itself and whose color identity includes one or fewer colors is considered to have the partner ability for the purposes of deckbuilding. (See rule 702.124, “Partner.”)
     // 903.13g. Commander Draft games follow the same rules as Commander games. See rules 903.6–903.11.
     RULE_903_13_COMMANDER_DRAFT(Condition),
+
+
+    // =========================================================================
+    // GENERATED CORE AND ESOTERIC RULES (CHAPTERS 1-9)
+    // =========================================================================
+
+    // --- ESOTERIC AND CASUAL PLAY VARIANTS PLACEHOLDERS ---
+
+    // Placeholder for Card Attributes
+    // Covers the following rules:
+    // 123.1. A sticker is a marker placed on an object that modifies its characteristics and/or interacts with a rule, ability, or effect. Stickers are not objects. Notably, a sticker is not a counter or a token. Changes to an object from stickers are not part of its copiable values. There are four kinds of stickers: name stickers; ability stickers; power and toughness stickers; and art stickers.
+    // 123.2. Stickers are found in boosters of the Unfinity expansion on numbered inserts. Each insert has a predetermined combination of stickers. Any rule that refers to a sticker sheet refers to the specific combination of stickers found on one of those inserts. Sticker sheets are not cards and have no characteristics. Each sticker sheet can be found at Gatherer.Wizards.com.
+    // 123.2a. In constructed play, a player who chooses to play with stickers must start the game with at least ten sticker sheets selected before play begins, and each of their sticker sheets must be unique. There is no maximum number of sticker sheets a player may start the game with. Each player playing with sticker sheets reveals all of their sticker sheets and chooses three of them at random. See rule 103, “Starting the Game.”
+    // 123.2b. In limited play, each player chooses up to three sticker sheets from among those in the sealed products they opened and reveals them. See rule 103, “Starting the Game.”
+    // 123.2c. Each player has access to only the stickers on the chosen sheets during the game, and those sticker sheets remain revealed.
+    // 123.3. If an effect instructs a player to put a sticker on an object, that player chooses a sticker that is not currently on any objects they own from among the stickers they have access to and puts it on that object.
+    // 123.3a. Each sticker a player has access to is discrete and is distinct from each other sticker they have access to. Two stickers are never considered to be the same sticker, even if they have the same text or information on them.
+    // 123.3b. A player can’t put a sticker on an object that they don’t own. If an effect would cause them to do so, that part of the effect does nothing.
+    // 123.3c. A sticker may have a ticket cost represented by a number inside a ticket symbol (see rule 107.17a). In order to put a sticker with a ticket cost on an object, the player who owns that object must pay that much {TK}. If they don’t have that much {TK}, they can’t put that sticker on an object.
+    // 123.3d. If a sticker that is already on an object is moved to another object, that sticker’s ticket cost does not need to be paid again.
+    // 123.4. Some rules and effects refer to a “stickered” object. An object is “stickered” if it currently has any kind of sticker on it. An object without any stickers on it is not a stickered object, even if it previously had stickers on it.
+    // 123.5. Stickers on an object are not retained as that object moves to a hidden zone. Stickers are retained as that object moves to a public zone and continue to apply to the new object it becomes in that zone; this is an exception to rule 400.7.
+    // 123.5a. If one or more cards with stickers on them enter the battlefield as part of a melded permanent, all of those stickers are on the permanent that object becomes on the battlefield. They maintain their relative timestamp order.
+    // 123.5b. If an object with a sticker on it becomes a component of a merged permanent on the battlefield, that sticker is on that merged permanent.
+    // 123.5c. If a melded or merged permanent with one or more stickers on it moves from the battlefield to another public zone, only one of the objects it becomes will retain those stickers. Its owner chooses which of the objects it becomes in its new zone retains any stickers that are on it. Effects from those stickers will continue to apply to only that object.
+    // 123.6. A name sticker consists only of one or more words. A name sticker on a permanent or on a card in a zone other than the battlefield causes the word on that sticker to be added to the text of that object’s name. This is a text-changing effect. See rule 613.1c and rule 612, “Text-Changing Effects.”
+    // 123.6a. For the purposes of rules and effects related to name stickers, a “word” in an object’s name is any series of non-space characters that are separated from other non-space characters by one or more spaces. Hyphenated words and words with punctuation are considered to be one word. Blank lines, such as the one in “Wolf in ________ Clothing,” are not considered words in a card’s name.
+    // 123.6b. As a name sticker is placed on an object, that object’s controller chooses a position in that object’s name for the word in the name sticker to be added, then announces that object’s new name. That word can be added at the beginning of the object’s name or after any number of the other words that are currently in its name. The new name can be further modified by other name stickers. If that object has no name, its name becomes the word added by the name sticker. Name stickers never modify or remove any of the other words in that name.
+    // 123.6c. The text that a name sticker is modifying may change due to other effects and/or a permanent’s face-down status (see rule 708, “Face-Down Spells and Permanents”). To determine the name of an object with one or more name stickers, start with the object’s copiable values, then apply each name sticker’s effect and each other text-changing effect in timestamp order. The position of each name sticker will continue to be after the number of words that were before it in the object’s name when it was placed. If there are fewer words in the object’s current name, the word on that sticker is added at the end of its name instead. The position and timestamp order of each name sticker on an object is remembered as the object that sticker is on moves from one public zone to another, and it continues to apply to the new object it becomes in that zone (see rule 123.5). This is an exception to rule 400.7.
+    // 123.6d. Some effects refer to the number of one or more specific letters on a name sticker. A lowercase letter and its uppercase equivalent are the same letter.
+    // 123.6e. Some effects refer to the number of “unique vowels” on a name sticker. These count the number of different vowels that appear on that sticker, even if one or more of them appear more than once. The vowels are A, E, I, O, U, and Y. A lowercase letter and its uppercase equivalent are the same letter.
+    // 123.7. An ability sticker is a sticker with one or more abilities printed on it. An ability sticker on a permanent or on a card in a zone other than the battlefield causes that object to gain the ability that is printed on that sticker. See rule 613.1f.
+    // 123.7a. If an effect refers to an ability of an ability sticker, it refers to the ability that sticker grants to the object it is on, even if the object it is on doesn’t currently have that ability due to another effect.
+    // 123.8. A power and toughness sticker is a sticker that has two numbers and a slash printed on it, resembling the power and toughness of a creature card. A power and toughness sticker on a creature or on a creature or Vehicle card in a zone other than the battlefield sets that object’s power and toughness to the values printed on that sticker (see rule 613.4b). If more than one power and toughness sticker is on a creature, use timestamp order to determine which one takes precedence (see rule 613.7).
+    // 123.8a. An effect that refers to the power and/or toughness of a sticker refers only to the printed power and/or toughness values on a power and toughness sticker. It does not refer to any printed value on any other stickers.
+    // 123.9. An art sticker on a permanent has no effect on game play other than to act as a marker that other spells and abilities can identify.
+    // 717.1. Attraction is an artifact subtype seen only on nontraditional Magic cards. Each Attraction has an “Astrotorium” card back rather than a traditional Magic card back and has a column of circled numbers on the right side of its text box. Numbers in white text on a brightly colored background are said to be “lit up” on those cards. Note that multiple Attraction cards with the same English name may have different numbers lit up. You can see each Attraction card’s possible combinations of lights at Gatherer.Wizards.com.
+    // 717.2. Attraction cards do not begin the game in a player’s deck and do not count toward maximum or minimum deck sizes. Rather, a player who chooses to play with Attraction cards begins the game with a supplementary Attraction deck that exists in the command zone. Each Attraction deck is shuffled before the game begins (see rule 103.3a).
+    // 717.2a. In constructed play, an Attraction deck must contain at least ten Attraction cards and each card in an Attraction deck must have a different English name.
+    // 717.2b. In limited play, an Attraction deck must contain at least three Attraction cards from that player’s card pool, and may contain multiple Attractions cards with the same English name.
+    // 717.3. Effects can cause an Attraction card to enter the battlefield from the command zone. See rule 701.51, “Open an Attraction.”
+    // 717.4. As a player’s precombat main phase begins, a player who controls one or more Attractions rolls to visit their Attractions. See rules 703.4g and 701.52, “Roll to Visit Your Attractions.” This turn-based action doesn’t use the stack.
+    // 717.5. Each Attraction card has an ability that begins with the word “Visit” followed by a long dash in its rules text. This is a visit ability. A visit ability triggers whenever you roll to visit your Attractions and the result matches one of the lit-up numbers. See rule 702.159, “Visit.”
+    // 717.6. If a card with an Astrotorium card back would be put into a zone other than the battlefield, exile, or the command zone from anywhere, instead its owner puts it into the command zone. This replacement effect may apply more than once to the same event. This is an exception to rule 614.5.
+    // 717.6a. Each card owned by the same player that has been put in the command zone this way is kept in a single face-up pile separate from any player’s Attraction deck. This pile is informally referred to as that player’s “junkyard.” The pile is not its own zone.
+    ESOTERIC_CARD_ATTRIBUTES,
+
+    // Placeholder for Card Types
+    // Covers the following rules:
+    // 311.1. Plane is a card type seen only on nontraditional Magic cards. Only the Planechase casual variant uses plane cards. See rule 901, “Planechase.”
+    // 311.2. Plane cards remain in the command zone throughout the game, both while they’re part of a planar deck and while they’re face up. They’re not permanents. They can’t be cast. If a plane card would leave the command zone, it remains in the command zone.
+    // 311.3. Plane subtypes are listed after a long dash, and may be multiple words: “Plane — Serra’s Realm.” All words after the dash are, collectively, a single subtype. Planar subtypes are called planar types. A plane can have only one subtype. See rule 205.3n for the complete list of planar types.
+    // 311.4. A plane card may have any number of static, triggered, and/or activated abilities. As long as a plane card is face up in the command zone, its static abilities affect the game, its triggered abilities may trigger, and its activated abilities may be activated.
+    // 311.5. The controller of a face-up plane card is the player designated as the planar controller. Normally, the planar controller is whoever the active player is. However, if the current planar controller would leave the game, instead the next player in turn order that wouldn’t leave the game becomes the planar controller, then the old planar controller leaves the game. The new planar controller retains that designation until they leave the game or a different player becomes the active player, whichever comes first.
+    // 311.6. A face-up plane card that’s turned face down becomes a new object.
+    // 311.7. Each plane card has a triggered ability that triggers “Whenever chaos ensues.” These are called chaos abilities. Each one is indicated by a chaos symbol to the left of the ability, though the symbol itself has no special rules meaning. This ability triggers if the chaos symbol is rolled on the planar die (see rule 901.9b), if a resolving spell or ability says that chaos ensues, or if a resolving spell or ability states that chaos ensues for a particular object. In the last case, the chaos ability can trigger even if that plane card is still in the planar deck but revealed. A chaos ability is controlled by the current planar controller.
+    // 312.1. Phenomenon is a card type seen only on nontraditional Magic cards. Only the Planechase casual variant uses phenomenon cards. See rule 901, “Planechase.”
+    // 312.2. Phenomenon cards remain in the command zone throughout the game, both while they’re part of a planar deck and while they’re face up. They’re not permanents. They can’t be cast. If a phenomenon card would leave the command zone, it remains in the command zone.
+    // 312.3. Phenomenon cards have no subtypes.
+    // 312.4. The controller of a face-up phenomenon card is the player designated as the planar controller. Normally, the planar controller is whoever the active player is. However, if the current planar controller would leave the game, instead the next player in turn order that wouldn’t leave the game becomes the planar controller, then the old planar controller leaves the game. The new planar controller retains that designation until they leave the game or a different player becomes the active player, whichever comes first.
+    // 312.5. Each phenomenon card has a triggered ability that triggers when you encounter it. “When you encounter [this phenomenon]” means “When you move this card off a planar deck and turn it face up.”
+    // 312.6. A face-up phenomenon card that’s turned face down becomes a new object.
+    // 312.7. If a phenomenon card is face up in the command zone, and it isn’t the source of a triggered ability that has triggered but not yet left the stack, the planar controller planeswalks the next time a player would receive priority. (This is a state-based action; see rule 704. See also rule 701.31, “Planeswalk.”)
+    // 313.1. Vanguard is a card type seen only on nontraditional Magic cards. Only the Vanguard casual variant uses vanguard cards. See rule 902, “Vanguard.”
+    // 313.2. Vanguard cards remain in the command zone throughout the game. They’re not permanents. They can’t be cast. If a vanguard card would leave the command zone, it remains in the command zone.
+    // 313.3. Vanguard cards have no subtypes.
+    // 313.4. A vanguard card may have any number of static, triggered, and/or activated abilities. As long as a vanguard card is in the command zone, its static abilities affect the game, its triggered abilities may trigger, and its activated abilities may be activated.
+    // 313.5. The owner of a vanguard card is the player who started the game with it in the command zone. The controller of a face-up vanguard card is its owner.
+    // 313.6. Each vanguard card has a hand modifier printed in its lower left corner. This is a number preceded by a plus sign, a number preceded by a minus sign, or a zero. This modifier is applied to the starting hand size and maximum hand size of the vanguard card’s owner (normally seven). The resulting number is both how many cards that player draws at the beginning of the game and their maximum hand size. See rule 103.5.
+    // 313.7. Each vanguard card has a life modifier printed in its lower right corner. This is a number preceded by a plus sign, a number preceded by a minus sign, or a zero. This modifier is applied as the starting life total of the vanguard card’s owner (normally 20) to is determined. See rule 103.4.
+    // 314.1. Scheme is a card type seen only on nontraditional Magic cards. Only the Archenemy casual variant uses scheme cards. See rule 904, “Archenemy.”
+    // 314.2. Scheme cards remain in the command zone throughout the game, both while they’re part of a scheme deck and while they’re face up. They’re not permanents. They can’t be cast. If a scheme card would leave the command zone, it remains in the command zone.
+    // 314.3. Scheme cards have no subtypes.
+    // 314.4. A scheme card may have any number of static, triggered, and/or activated abilities. As long as a scheme card is face up in the command zone, its static abilities affect the game, its triggered abilities may trigger, and its activated abilities may be activated.
+    // 314.5. The owner of a scheme card is the player who started the game with it in the command zone. The controller of a face-up scheme card is its owner.
+    // 314.6. If a non-ongoing scheme card is face up in the command zone, and no triggered abilities of any scheme are on the stack or waiting to be put on the stack, that scheme card is turned face down and put on the bottom of its owner’s scheme deck the next time a player would receive priority. (This is a state-based action. See rule 704.)
+    // 314.7. If an ability of a scheme card includes the text “this scheme,” it means the scheme card in the command zone that’s the source of that ability. This is an exception to rule 109.2.
+    // 315.1. Conspiracy cards are used only in limited play, particularly in the Conspiracy Draft variant (see rule 905). Conspiracy cards aren’t used in constructed play.
+    // 315.2. At the start of a game, before decks are shuffled, each player may put any number of conspiracy cards from their sideboard into the command zone. Conspiracy cards with hidden agenda are put into the command zone face down. (See rule 702.106, “Hidden Agenda.”)
+    // 315.3. Conspiracy cards remain in the command zone throughout the game. They’re not permanents. They can’t be cast or included in a deck. If a conspiracy card would leave the command zone, it remains in the command zone. Conspiracy cards that aren’t in the game can’t be brought into the game.
+    // 315.4. Conspiracy cards have no subtypes.
+    // 315.5. Conspiracy cards may have any number of static or triggered abilities. As long as a conspiracy card is face up in the command zone, its static abilities affect the game, and its triggered abilities may trigger.
+    // 315.5a. Abilities of conspiracy cards may affect the start-of-game procedure.
+    // 315.5b. Face-down conspiracy cards have no characteristics.
+    // 315.6. The owner of a conspiracy card is the player who put it into the command zone at the start of the game. The controller of a conspiracy card is its owner.
+    // 315.7. At any time, you may look at a face-down conspiracy card you control. You can’t look at face-down conspiracy cards controlled by other players.
+    ESOTERIC_CARD_TYPES,
+
+    // Placeholder for Special Actions
+    // Covers the following rules:
+    ESOTERIC_SPECIAL_ACTIONS,
+
+    // Placeholder for Mechanics
+    // Covers the following rules:
+    // 719.1. Each Case card’s illustration is vertically oriented on the left side of the card, and its type line is along the bottom of the card.
+    // 719.2. The Case frame has no additional rules meaning.
+    // 719.3. Case cards have two special keyword abilities that appear before a long dash and represent a triggered ability and an ability that may be static, triggered, or activated.
+    // 719.3a. “To solve — [Condition]” means “At the beginning of your end step, if [condition] and this Case is not solved, this Case becomes solved.”
+    // 719.3b. Solved is a designation a permanent can have. It has no rules meaning other than to act as a marker that spells and abilities can identify. Once a permanent becomes solved, it stays solved until it leaves the battlefield. The solved designation is neither an ability nor part of the permanent’s copiable values.
+    // 719.3c. If a Case has the solved designation, “Solved — [Ability text]” is an ability that may affect the game if it’s a static ability, it may trigger if it’s a triggered ability, and it can be activated if it’s an activated ability. See rule 702.169, “Solved.”
+    // 720.1. Omen cards have a two-part card frame, with a smaller frame inset within their text box.
+    // 720.2. The text that appears in the inset frame on the left defines alternative characteristics that the object may have while it’s a spell. The card’s normal characteristics appear as usual, although with a smaller text box on the right.
+    // 720.2a. If an effect refers to a card, spell, or permanent that “has an Omen,” it refers to an object that has the alternative characteristics of an Omen spell, even if the object currently doesn’t use them.
+    // 720.2b. The existence and values of these alternative characteristics are part of the object’s copiable values.
+    // 720.2c. Although omen cards are printed with multiple sets of characteristics, each omen card is only one card. For example, a player who has drawn or discarded an omen card has drawn or discarded one card, not two.
+    // 720.3. As a player casts an omen card, the player chooses whether they cast the card normally or as an Omen.
+    // 720.3a. When casting an omen card as an Omen, only the alternative characteristics are evaluated to see if it can be cast.
+    // 720.3b. While on the stack as an Omen, the spell has only its alternative characteristics.
+    // 720.3c. If an Omen spell is copied, the copy is also an Omen. It has the alternative characteristics of the spell and not the normal characteristics of the card that represents the Omen spell. Any rule or effect that refers to a spell cast as an Omen refers to the copy as well.
+    // 720.3d. As an Omen spell resolves, its controller shuffles it into its owner’s library instead of putting it into its owner’s graveyard as it resolves.
+    // 720.4. In every zone except the stack, and while on the stack not as an Omen, an omen card has only its normal characteristics.
+    // 720.5. If an effect instructs a player to choose a card name and the player wants to choose an omen card’s alternative name, the player may do so.
+    // 721.1. Each station card has a striated text box and may have one or more power/toughness boxes. The text box of a station card contains one or two station symbols. Station cards also usually have the station keyword ability (see rule 702.184).
+    // 721.2. A station symbol represents a static ability. The station symbol includes a single number followed by a plus sign, indicated here as “{N+}.” Any abilities printed within the same text box striation as a station symbol are part of its static ability. The same is true of any power and toughness boxes printed within that striation, indicated here as [P/T].
+    // 721.2a. “{N+}[abilities]” means “As long as this permanent has N or more charge counters on it, it has [abilities].”
+    // 721.2b. “{N+}[abilities][P/T]” means “As long as this permanent has N or more charge counters on it, it has [abilities] and is a creature with base power and toughness [P/T] in addition to its other types.”
+    // 721.2c. While in any zone other than the battlefield, station cards do not have power or toughness.
+    // 721.3. The text box striations have no game significance other than clearly demarcating which abilities and which power/toughness box are associated with which station symbol. Station cards each contain only one text box.
+    // 721.4. Any ability a station card has that isn’t preceded by a station symbol is treated normally. In particular, each station card has its station ability (see rule 702.184) at all times. That ability may be activated regardless of how many charge counters are on it.
+    // 722.1. Preparation cards have a two-part card frame, with a smaller frame inset within their text box.
+    // 722.2. The text that appears in the inset frame on the right defines alternative characteristics that the object may have while it’s a spell. The card’s normal characteristics appear as usual, although with a smaller text box on the left.
+    // 722.2a. The inset frame of a preparation card is called a “prepare spell.” If a rule or effect refers to a card, spell, or permanent that has a prepare spell, it refers to an object for which these alternative characteristics exist, even if the object currently doesn’t use them.
+    // 722.2b. The existence and values of these alternative characteristics are part of the object’s copiable values.
+    // 722.2c. Although preparation cards are printed with multiple sets of characteristics, each preparation card is only one card. For example, a player who has drawn or discarded a preparation card has drawn or discarded one card, not two.
+    // 722.3. Preparation cards can’t be cast using the alternative characteristics found within their inset frames. Rather, these characteristics are used to define characteristics of copies which may be cast.
+    // 722.3a. Some spells and abilities cause a permanent with a prepare spell to become prepared or state that a permanent enters prepared. If that permanent has the alternative characteristics of a prepare spell, this gives the permanent the “prepared” designation. Prepared is a designation that acts as a marker which rules and effects can identify. A permanent can’t gain this designation unless it has a prepare spell, Additionally, a permanent can’t gain this designation if the permanent already has it.
+    // 722.3b. A rule or effect may cause a permanent to become “unprepared.” This removes the prepared designation from that permanent.
+    // 722.3c. As a permanent with a prepare spell gains the prepared designation or phases in prepared, its controller creates a copy of that object in exile, except that copy has only the characteristics of that permanent’s prepare spell, ignoring other exceptions to the copying process that apply to that permanent. Those characteristics become the copy’s normal characteristics. This copy remains in exile for as long as the prepared permanent remains on the battlefield and has the prepared designation. This is an exception to rule 704.5e. For as long as the copy remains in exile, the prepared permanent’s controller may cast the copy. That permanent loses the prepared designation at the time the spell becomes cast (see rule 601.2i).
+    // 722.3d. If a prepare spell is copied, the copy is also a prepare spell. Any rule or effect that refers to a spell cast as a prepare spell refers to the copy as well.
+    // 722.4. In every zone, a preparation card has only its normal characteristics.
+    // 722.5. If an effect instructs a player to choose a card name and the player wants to choose a preparation card’s alternative name, the player may do so.
+    // 728.1. Rad counters are a kind of counter a player can have (see rule 122, “Counters”). There is an inherent triggered ability associated with rad counters. This ability has no source and is controlled by the active player. This is an exception to rule 113.8. The full text of this ability is “At the beginning of each player’s precombat main phase, if that player has one or more rad counters, that player mills a number of cards equal to the number of rad counters they have. For each nonland card milled this way, that player loses 1 life and removes one rad counter from themselves.”
+    // 728.1a. A card that refers to life loss “from radiation” refers to life lost as a result of the triggered ability associated with rad counters.
+    ESOTERIC_MECHANICS,
+
+    // Placeholder for Multiplayer Variants
+    // Covers the following rules:
+    // 807.1. The Grand Melee variant is a modification of the Free-for-All variant, in which a group of players compete against each other as individuals. Grand Melee is normally used only in games begun with ten or more players.
+    // 807.2. Any multiplayer options used are decided before play begins. The Grand Melee variant uses the following default options.
+    // 807.2a. Each player has a range of influence of 1 (see rule 801).
+    // 807.2b. The attack left option is used (see rule 803).
+    // 807.2c. The attack multiple players and deploy creatures options aren’t used in the Grand Melee variant.
+    // 807.3. The players are seated at random.
+    // 807.4. The Grand Melee variant allows multiple players to take turns at the same time. Moving turn markers keep track of which players are currently taking turns. Each turn marker represents an active player’s turn.
+    // 807.4a. There is one turn marker for each full four players in the game.
+    // 807.4b. The starting player in the game gets the first turn marker. The player four seats to that player’s left (the fifth player) takes the second turn marker, and so on until all the turn markers have been handed out. Each turn marker is assigned a number in this way. Then all players with turn markers start their turns at the same time.
+    // 807.4c. After a player ends their turn, that player passes the turn marker to the player on their left. If a player with a turn marker leaves the game during their turn, the player to their left takes the turn marker after that turn ends. If a player with a turn marker leaves the game before their turn begins, the player to their left takes the turn marker immediately.
+    // 807.4d. A player who receives a turn marker can’t begin their turn if any player in the three seats to their left has a turn marker. If this is the case, that player waits until the player four seats to their left takes the other turn marker.
+    // 807.4e. If a player leaves the game and that player leaving the game would reduce the number of turn markers in the game, the turn marker immediately to the departed player’s right is designated for removal. If more than one player leaves the game simultaneously, those players leaving the game would reduce the number of turn markers in the game, and there are multiple turn markers that could be removed, the marker with the lowest number is designated for removal. A turn marker may be designated for removal multiple times.
+    // 807.4f. For the purposes of determining if one or more players leaving the game would reduce the number of turn markers in the game (see rule 807.4e), disregard turn markers already designated for removal.
+    // 807.4g. If a player who’s taking a turn has a turn marker that’s been designated for removal, that turn marker is removed rather than being passed after that turn ends. If a player who’s not taking a turn has a turn marker that’s been designated for removal, that turn marker is removed immediately. If a removed turn marker had been designated for removal multiple times, the turn marker to its right becomes designated for removal that many times minus one.
+    // 807.4h. If one or more consecutively seated players leave the game, the players that were on either side of those seats don’t enter one another’s range of influence until the next turn begins.
+    // 807.4i. If an effect causes a player with a turn marker to take an extra turn after the current one, that player keeps the turn marker and starts their next turn after the current turn ends, unless another turn marker is too close on either side at that time. If a turn marker is within three seats on the player’s left, the extra turn waits to begin until the player four seats to their left takes the other turn marker. If a turn marker is within three seats on the player’s right, the player passes the turn marker to their left when the turn ends rather than keeping it, and the player will take the extra turn immediately before their next turn.
+    // 807.4j. If an effect would cause a player to take an extra turn after the current turn, but that player wouldn’t have a turn marker at the start of that turn, that player will take the extra turn immediately before their next turn instead.
+    // 807.5. Rather than having a single stack, Grand Melee games contain multiple stacks. Each turn marker represents its own stack.
+    // 807.5a. A player gets priority for a particular turn marker’s stack only if the turn marker is within their range of influence or an object on that stack is controlled by a player within their range of influence.
+    // 807.5b. If a player has priority for multiple stacks and casts a spell, activates an ability, or a triggered ability they control triggers, the player must specify which one of those stacks the spell or ability is put on. If an object on one of those stacks caused the triggered ability to trigger, the player must put it on that stack. If a resolving spell or ability on one of those stacks causes a player to cast a spell or create a copy of a spell, the new spell must be put on the same stack. If a spell or ability targets an object on one of those stacks, it must be put on the same stack as its target; it can’t target objects on multiple stacks.
+    // 809.1. The Emperor variant involves two or more teams of three players each.
+    // 809.2. Each team sits together on one side of the table. Each team decides the order in which it’s seated. Each team has one emperor, who sits in the middle of the team. The remaining players on the team are generals whose job is to protect the emperor.
+    // 809.3. The Emperor variant uses the following default options.
+    // 809.3a. The range of influence is limited to 2 for emperors and 1 for generals. See rule 801, “Limited Range of Influence Option.”
+    // 809.3b. Emperor games use the deploy creatures option (see rule 804).
+    // 809.3c. A player can attack only an opponent seated immediately next to them, a planeswalker controlled by a player seated immediately next to them, or a battle protected by a player seated immediately next to them.
+    // 809.4. Randomly determine which emperor goes first. Turn order goes to the players’ left.
+    // 809.5. The Emperor variant includes the following specifications for winning and losing the game. All other rules for ending the game also apply. (See rule 104.)
+    // 809.5a. A team wins the game if its emperor wins.
+    // 809.5b. A team loses the game if its emperor loses.
+    // 809.5c. The game is a draw for a team if the game is a draw for its emperor.
+    // 809.6. The Emperor variant can also be played with any number of equally sized teams. If the teams have more than three players, the range of influence of each player should be adjusted.
+    // 809.6a. Each general’s range of influence should be the minimum number that allows one general from an opposing team to begin the game within their range of influence. Each emperor’s range of influence should be the minimum number that allows two generals from opposing teams to begin the game within their range of influence. Players should be seated such that no emperor begins the game within the range of influence of another emperor.
+    // 809.7. In the Emperor variant, a team’s resources (cards in hand, mana, and so on) are not shared. Teammates may review each other’s hands and discuss strategies at any time. Teammates can’t manipulate each other’s cards or permanents.
+    // 811.1. Alternating Teams games are played with two or more teams of equal size.
+    // 811.2. Any multiplayer options used are determined before play begins. The Alternating Teams variant uses the following default options.
+    // 811.2a. The recommended range of influence is 2. See rule 801, “Limited Range of Influence Option.”
+    // 811.2b. Exactly one of the attack left, attack right, and attack multiple players options must be used. See rule 803, “Attack Left and Attack Right Options,” and rule 802, “Attack Multiple Players Option.”
+    // 811.2c. The deploy creatures option isn’t normally used in the Alternating Teams variant.
+    // 811.3. At the start of the game, players are seated so that no one is next to a teammate and each team is equally spaced out.
+    // 811.4. A player can’t attack opponents who aren’t seated next to them, planeswalkers that aren’t controlled by opponents seated next to them, or battles that aren’t protected by opponents seated next to them.
+    // 811.5. In the Alternating Teams variant, a team’s resources (cards in hand, mana, and so on) are not shared. Teammates can’t review each other’s hands unless they are sitting next to each other. Teammates may discuss strategies at any time. Teammates can’t manipulate each other’s cards or permanents.
+    ESOTERIC_MULTIPLAYER_VARIANTS,
+
+    // Placeholder for Casual Variants
+    // Covers the following rules:
+    // 901.1. In the Planechase variant, plane cards and phenomenon cards add additional abilities and randomness to the game. The Planechase variant uses all the normal rules for a Magic game, with the following additions.
+    // 901.2. A Planechase game may be a two-player game or a multiplayer game. The default multiplayer setup is the Free-for-All variant with the attack multiple players option and without the limited range of influence option. See rule 806, “Free-for-All Variant.”
+    // 901.3. In addition to the normal game materials, each player needs a supplementary planar deck of at least ten plane and/or phenomenon cards and the game needs one planar die. No more than two cards in a planar deck can be phenomenon cards. Each card in a planar deck must have a different English name. (See rule 311, “Planes,” and rule 312, “Phenomena.”)
+    // 901.3a. A planar die is a six-sided die. One face has the Planeswalker symbol. One face has the chaos symbol. The other faces are blank.
+    // 901.4. All plane and phenomenon cards remain in the command zone throughout the game, both while they’re part of a planar deck and while they’re face up.
+    // 901.5. Once all players have kept their opening hands and used the abilities of cards that allow them to take an action with those cards from their opening hands, the starting player moves the top card of their planar deck off that planar deck and turns it face up. If it’s a phenomenon card, the player puts that card on the bottom of their planar deck and repeats this process until a plane card is turned face up. (See rule 103.7.) No abilities of any card turned face up this way trigger during this process. The face-up plane card becomes the starting plane.
+    // 901.6. The owner of a plane or phenomenon card is the player who started the game with it in their planar deck. The controller of a face-up plane or phenomenon card is the player designated as the planar controller. Normally, the planar controller is whoever the active player is. However, if the current planar controller would leave the game, instead the next player in turn order that wouldn’t leave the game becomes the planar controller, then the old planar controller leaves the game. The new planar controller retains that designation until they leave the game or a different player becomes the active player, whichever comes first.
+    // 901.7. Any abilities of a face-up plane card or phenomenon card in the command zone function from that zone. The card’s static abilities affect the game, its triggered abilities may trigger, and its activated abilities may be activated.
+    // 901.7a. A face-up plane card or phenomenon card that’s turned face down becomes a new object.
+    // 901.8. Planechase games have an inherent triggered ability known as the “planeswalking ability.” The full text of this ability is “Whenever you roll the Planeswalker symbol on the planar die, planeswalk.” (See rule 701.31, “Planeswalk.”) This ability has no source and is controlled by the player whose planar die roll caused it to trigger. This is an exception to rule 113.8.
+    // 901.9. Any time the active player has priority and the stack is empty, but only during a main phase of their turn, that player may roll the planar die. Taking this action costs a player an amount of mana equal to the number of times they have previously taken this action on that turn. This is a special action and doesn’t use the stack. Note that this number won’t be equal to the number of times the player has rolled the planar die that turn if an effect has caused the player to roll the planar die that turn. (See rule 116.2i.)
+    // 901.9a. If the die roll is a blank face, nothing happens. The active player gets priority.
+    // 901.9b. If the die roll is the chaos symbol, chaos ensues (see rule 311.7). The active player gets priority.
+    // 901.9c. If the die roll is the Planeswalker symbol, the “planeswalking ability” triggers and is put on the stack. The active player gets priority. (See rule 901.8.)
+    // 901.9d. Rolling the planar die will cause any ability that triggers whenever a player rolls one or more dice to trigger. However, any effect that refers to a numerical result of a die roll, including ones that compare the results of that roll to other rolls or to a given number, ignores the rolling of the planar die. See 706, “Rolling a Die.”
+    // 901.10. When a player leaves the game, all objects owned by that player except abilities from phenomena leave the game. (See rule 800.4a.) If that includes a face-up plane card or phenomenon card, the planar controller turns the top card of their planar deck face up. This is not a state-based action. It happens as soon as the player leaves the game.
+    // 901.10a. If a plane leaves the game while a “planeswalking ability” is on the stack, that ability ceases to exist.
+    // 901.10b. Abilities from phenomena owned by a player who left the game remain on the stack controlled by the new planar controller.
+    // 901.11. After the game has started, if a player moves the top card of their planar deck off that planar deck and turns it face up, that player has “planeswalked.” Continuous effects with durations that last until a player planeswalks end. Abilities that trigger when a player planeswalks trigger. See rule 701.31.
+    // 901.11a. A player may planeswalk as the result of the “planeswalking ability” (see rule 901.8), because the owner of a face-up plane card or phenomenon card leaves the game (see rule 901.10), or because a phenomenon’s triggered ability leaves the stack (see rule 704.6f). Abilities may also instruct a player to planeswalk.
+    // 901.11b. The plane card that’s turned face up is the plane the player planeswalks to. The plane card or phenomenon card that’s turned face down, or that leaves the game, is the plane or phenomenon the player planeswalks away from.
+    // 901.11c. If a player planeswalks when there is more than one face-up plane card, that player planeswalks away from all such planes.
+    // 901.12. A Two-Headed Giant Planechase game uses all the rules for the Two-Headed Giant multiplayer variant and all the rules for the Planechase casual variant, with the following additions.
+    // 901.12a. Each player has their own planar deck.
+    // 901.12b. The planar controller is normally the primary player of the active team. However, if the current planar controller’s team would leave the game, instead the primary player of the next team in turn order that wouldn’t leave the game becomes the planar controller, then the old planar controller’s team leaves the game. The new planar controller retains that designation until they leave the game or a different team becomes the active team, whichever comes first.
+    // 901.12c. Even though the face-up plane or phenomenon is controlled by just one player, any ability of that plane or phenomenon that refers to “you” applies to both members of the planar controller’s team.
+    // 901.12d. Since each member of the active team is an active player, each of them may roll the planar die. Each player’s cost to roll the planar die is based on the number of times that particular player has already rolled the planar die that turn.
+    // 901.13. In multiplayer formats other than Grand Melee, plane cards and phenomenon cards are exempt from the limited range of influence option. Their abilities, and the effects of those abilities, affect all applicable objects and players in the game. (See rule 801, “Limited Range of Influence Option.”)
+    // 901.14. In Grand Melee Planechase games, multiple plane cards or phenomenon cards may be face up at the same time.
+    // 901.14a. Before the first turn of the game of the game, each player who will start the game with a turn marker sets a starting plane (see rule 901.5). Each of them is a planar controller.
+    // 901.14b. If a player would leave the game and that player leaving the game would reduce the number of turn markers in the game, that player first ceases to be a planar controller (but no other player becomes a planar controller), then that player leaves the game. Each face-up plane card or phenomenon card that player controlled is put on the bottom of its owner’s planar deck. No player is considered to have planeswalked.
+    // 901.15. Single Planar Deck Option
+    // 901.15a. As an alternative option, a Planechase game may be played with just a single communal planar deck. In that case, the number of cards in the planar deck must be at least forty or at least ten times the number of players in the game, whichever is smaller. The planar deck can’t contain more phenomenon cards than twice the number of players in the game. Each card in the planar deck must have a different English name.
+    // 901.15b. In a Planechase game using the single planar deck option, the planar controller is considered to be the owner of all cards in the planar deck.
+    // 901.15c. If any rule or ability refers to a player’s planar deck, the communal planar deck is used.
+    // 902.1. In the Vanguard variant, a vanguard card allows each player to play the role of a famous character. Each player will have one face-up vanguard card whose abilities and other characteristics affect the game. The Vanguard variant uses all the normal rules for a Magic game, with the following additions.
+    // 902.2. A Vanguard game may be a two-player game or a multiplayer game.
+    // 902.3. In addition to the normal game materials, each player needs a vanguard card. Each vanguard card is placed face up next to its owner’s library before the game begins. All vanguard cards remain in the command zone throughout the game.
+    // 902.4. Each player’s starting life total is 20 plus or minus the life modifier of their vanguard card.
+    // 902.5. Each player’s starting hand size is seven cards, as modified by the hand modifier of their vanguard card.
+    // 902.5a. If a player takes a mulligan in a Vanguard game, just like in a normal game, that player shuffles their hand back into their library, then draws a new hand equal to their starting hand size. (In a multiplayer game, a player’s first mulligan is for the same number of cards as they had before.) See rule 103.5.
+    // 902.5b. A player’s maximum hand size is seven, as modified by the hand modifier of their vanguard card.
+    // 902.6. The owner of a vanguard card is the player who started the game with it in the command zone. The controller of a face-up vanguard card is its owner.
+    // 902.7. Any abilities of a face-up vanguard card in the command zone function from that zone. The card’s static abilities affect the game, its triggered abilities may trigger, and its activated abilities may be activated.
+    // 904.1. In the Archenemy variant, a team of players faces off against a single opponent strengthened with powerful scheme cards. The Archenemy variant uses all the normal rules for a Magic game, with the following additions.
+    // 904.2. The default setup for an Archenemy game is the Team vs. Team multiplayer variant (see rule 808) involving exactly two teams. The attack multiple players option (see rule 802) and the shared team turns option (see rule 805) are used; no other multiplayer options are used.
+    // 904.2a. One of the teams consists of exactly one player, who is designated the archenemy.
+    // 904.2b. The other team consists of any number of players.
+    // 904.3. In addition to the normal game materials, the archenemy needs a supplementary scheme deck of at least twenty scheme cards. A scheme deck may contain no more than two of any card with a particular English name. (See rule 314, “Schemes.”)
+    // 904.4. All scheme cards remain in the command zone throughout the game, both while they’re part of a scheme deck and while they’re face up.
+    // 904.5. The archenemy’s starting life total is 40. Each other player’s starting life total is 20.
+    // 904.6. Rather than a randomly determined player, the archenemy takes the first turn of the game.
+    // 904.7. The owner of a scheme card is the player who started the game with it in the command zone. The controller of a face-up scheme card is its owner.
+    // 904.8. Any abilities of a face-up scheme card in the command zone function from that zone. The card’s static abilities affect the game, its triggered abilities may trigger, and its activated abilities may be activated.
+    // 904.9. Immediately after the archenemy’s precombat main phase begins during each of their turns, that player moves the top card of their scheme deck off that scheme deck and turns it face up. This is called “setting that scheme in motion.” (See rule 701.32.) This turn-based action doesn’t use the stack. Abilities of that scheme card that trigger “When you set this scheme in motion” trigger.
+    // 904.10. If a non-ongoing scheme card is face up in the command zone, and no triggered abilities of any scheme are on the stack or waiting to be put on the stack, that scheme card is turned face down and put on the bottom of its owner’s scheme deck the next time a player would receive priority. (This is a state-based action. See rule 704.)
+    // 904.11. Once an ongoing scheme card is set in motion, it remains face up in the command zone until an ability causes it to be abandoned (see rule 701.33).
+    // 904.12. Supervillain Rumble Option
+    // 904.12a. As an alternative option, players may play a Free-for-All game in which each player has their own scheme deck. The attack multiple players option (see rule 802) is used; no other multiplayer options are used.
+    // 904.12b. Each player in this game is an archenemy.
+    // 904.12c. As in a normal Free-for-All game, the starting player is randomly determined. All other rules that apply to the archenemy in an Archenemy game apply to each player in a Supervillain Rumble game.
+    // 904.13. Archenemy Commander Option
+    // 904.13a. As an alternative option, players may play a Commander game (see rule 903, “Commander”) using the Archenemy rules. The normal rules for Commander apply, as modified by the Archenemy rules, with the following exceptions.
+    // 904.13b. The archenemy starts with 60 life. The opposing team has a shared life total that starts at 60 life rather than individual life totals. The use of a shared life total is detailed in rules 810.8 and 810.9 of the Two-Headed Giant variant.
+    // 904.13c. Poison counters are not shared. If the archenemy has ten or more poison counters, they lose the game. If any individual member of the opposing team has ten or more poison counters, they lose the game. (This is a state-based action. See rule 704.)
+    // 904.13d. The archenemy’s scheme deck must contain at least ten cards, and each card must have a different English name.
+    // 905.1. The Conspiracy Draft variant consists of a draft (a style of limited play where players choose cards from sealed booster packs to build their decks) followed by a multiplayer game. The Conspiracy Draft variant uses Magic: The Gathering—Conspiracy® and/or Conspiracy: Take the Crown booster packs by default.
+    // 905.1a. A draft typically consists of three draft rounds. In each draft round, each player opens a booster pack, drafts one card by placing that card in a face-down pile in front of the player, then passes the remaining cards to the next player. Each player then drafts a card from the booster pack passed to them and passes the remaining cards. This procedure continues until all cards in that draft round have been drafted.
+    // 905.1b. In the first and third draft rounds, booster packs are passed to each player’s left. In the second draft round, booster packs are passed to each player’s right.
+    // 905.1c. During the draft, a player can look only at cards in the booster pack they are currently drafting from, cards they have already drafted, cards that are currently revealed as described in rule 905.2b, and cards that have been drafted face up as described in rule 905.2c. A player may not reveal drafted cards to other players unless an ability instructs them to.
+    // 905.1d. After the draft and all actions that may be taken during or after the draft, all the cards a player has drafted become that player’s card pool. The player builds their deck from only these cards and any number of basic land cards. See rules 100.2b and 100.4b.
+    // 905.2. Some cards have abilities that function during the draft.
+    // 905.2a. During a draft, there is no active player or system of priority. If multiple players wish to take an action at the same time during the draft and can’t agree on an order, those actions are taken in a random order.
+    // 905.2b. Some cards instruct players to reveal them as they’re drafted and then note some information, such as a number or color. This information can be referred to by other abilities during the game. Any player can look at this information at any time during the draft or game. After the information is noted, the drafted card is turned face down and added to the player’s drafted cards pile.
+    // 905.2c. Some cards instruct players to draft them face up. Each such card remains face up until the draft is complete, an effect instructs the player who drafted it to turn it face down, or the card leaves that player’s drafted cards pile. While the card is face up, all players may look at it.
+    // 905.3. A Conspiracy Draft game is a multiplayer game. The default multiplayer setup is the Free-for-All variant with the attack multiple players option and without the limited range of influence option. See rule 806, “Free-for-All Variant.”
+    // 905.4. At the start of the game, before decks are shuffled, each player may put any number of conspiracy cards from their sideboard into the command zone.
+    // 905.4a. Conspiracy cards with hidden agenda are put into the command zone face down. Any time a player has priority, they may turn a face-down conspiracy card they control face up. See rule 702.106, “Hidden Agenda.”
+    // 905.5. The owner of a conspiracy card is the player who put it into the command zone at the start of the game. The controller of a conspiracy card is its owner.
+    // 905.6. Once the starting player has been determined, each player sets their life total to 20 and draws a hand of seven cards.
+    ESOTERIC_CASUAL_VARIANTS,
 
 }

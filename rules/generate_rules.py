@@ -4,7 +4,7 @@ import os
 
 def main():
     rules_text_path = "./MagicCompRules_20260417.txt"
-    rules_rs_path = "../src/rules.rs"
+    rules_rs_path = "../src/compiler/rules.rs"
 
     # 1. Parse MagicCompRules_20260417.txt
     rule_pattern = re.compile(r"^(\d{3}\.\d+[a-z]?)\.?\s+(.*)$")
@@ -695,7 +695,7 @@ def main():
         if not infos:
             continue
 
-        output_lines.append(f"    // --- CHAPTER {ch}: {ch_name.upper()} ---\n\n")
+        output_lines.append(f"    // --- {ch}. {ch_name} ---\n\n")
         for info in sorted(
             infos,
             key=lambda x: [int(v) for v in re.findall(r"\d+", x["rules"][0][0])]
