@@ -94,13 +94,8 @@ pub struct Player {
     pub life_total: u128,
     pub commander_damage: HashMap<u32, u32>, // Maps other player's ID to commander damage dealt by them
     pub counters: HashMap<String, u32>,
-    pub library: Vec<Card>,
-    pub graveyard: Vec<Card>,
-    pub exile: Vec<Card>,
-    pub command_zone: Option<Card>,
     pub sideboard: Vec<Card>,
     pub hand_size: Option<u8>,
-    pub hand: Vec<Card>,
     pub mana_pool: ManaPool,
 }
 
@@ -112,13 +107,8 @@ impl Player {
             life_total: 20, // Default starting life total (or 40 for Commander)
             commander_damage: HashMap::new(),
             counters: HashMap::new(),
-            library: Vec::new(),
-            graveyard: Vec::new(),
-            exile: Vec::new(),
-            command_zone: None,
             sideboard: Vec::new(),
             hand_size: Some(7),
-            hand: Vec::new(),
             mana_pool: ManaPool::default(),
         }
     }

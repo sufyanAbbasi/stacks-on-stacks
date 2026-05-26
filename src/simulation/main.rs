@@ -5,6 +5,7 @@ pub mod effects;
 pub mod turns;
 pub mod actions;
 pub mod stack;
+pub mod zones;
 #[path = "../compiler/rules.rs"]
 pub mod rules;
 #[path = "../compiler/scryfall.rs"]
