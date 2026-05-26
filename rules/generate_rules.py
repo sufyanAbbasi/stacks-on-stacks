@@ -575,8 +575,10 @@ def main():
 
     # 1. Parse MagicCompRules_20260417.txt
     rule_pattern = re.compile(r"^(\d{3}\.\d+[a-z]?)\.?\s+(.*)$")
+    section_pattern = re.compile(r"^(\d{3})\.\s+([A-Za-z].*)$")
     all_rules = []  # list of tuples: (rule_num, text)
     comp_rules = {}  # dict: rule_num -> text
+    section_headers = {}  # dict: section_num -> section_title
 
     with open(rules_text_path, "r", encoding="utf-8") as f:
         for line in f:
@@ -584,6 +586,10 @@ def main():
             if not line:
                 continue
             if line.startswith("Example:"):
+                continue
+            sect_match = section_pattern.match(line)
+            if sect_match:
+                section_headers[sect_match.group(1)] = sect_match.group(2)
                 continue
             match = rule_pattern.match(line)
             if match:
@@ -817,7 +823,16 @@ def main():
             + [x["rules"][0][0]]
         )
 
+        last_section = None
         for info in infos:
+            first_rule_num = info["rules"][0][0]
+            section_num = first_rule_num.split('.')[0]
+
+            if section_num != last_section:
+                if section_num in section_headers:
+                    output_lines.append(f"    // {section_num}. {section_headers[section_num]}\n\n")
+                last_section = section_num
+
             for rn, txt in sorted(
                 info["rules"],
                 key=lambda x: [int(v) for v in re.findall(r"\d+", x[0])] + [x[0]],

@@ -1,6 +1,7 @@
 pub mod card;
 pub mod player;
 pub mod game;
+pub mod effects;
 #[path = "../compiler/rules.rs"]
 pub mod rules;
 #[path = "../compiler/scryfall.rs"]
