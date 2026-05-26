@@ -67,6 +67,25 @@ pub enum ManaSymbols {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum CardType {
+    Artifact,
+    Battle,
+    Conspiracy,
+    Creature,
+    Dungeon,
+    Enchantment,
+    Instant,
+    Kindred,
+    Land,
+    Phenomenon,
+    Plane,
+    Planeswalker,
+    Scheme,
+    Sorcery,
+    Vanguard,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum PermanentType {
     Artifact,
     Battle,
@@ -705,8 +724,10 @@ pub enum Subtype {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct CardAttributes {
     pub name: String,
+    pub types: Vec<CardType>,
     pub supertypes: Vec<Supertype>,
     pub subtypes: Vec<Subtype>,
+    pub rules_text: String,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -719,6 +740,7 @@ pub struct PermanentAttributes {
 pub struct SpellAttributes {
     pub color: Vec<Color>,
     pub cost: Vec<ManaSymbols>,
+    pub cmc: u32,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -759,9 +781,66 @@ pub struct ClassAttributes {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
+pub struct CreatureAttributes {
+    pub card: CardAttributes,
+    pub permanent: PermanentAttributes,
+    pub spell: SpellAttributes,
+    pub power: String,
+    pub toughness: String,
+    pub damage_marked: u32,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ArtifactAttributes {
+    pub card: CardAttributes,
+    pub permanent: PermanentAttributes,
+    pub spell: SpellAttributes,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct EnchantmentAttributes {
+    pub card: CardAttributes,
+    pub permanent: PermanentAttributes,
+    pub spell: SpellAttributes,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct BattleAttributes {
+    pub card: CardAttributes,
+    pub permanent: PermanentAttributes,
+    pub spell: SpellAttributes,
+    pub defense: u32,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct InstantAttributes {
+    pub card: CardAttributes,
+    pub spell: SpellAttributes,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SorceryAttributes {
+    pub card: CardAttributes,
+    pub spell: SpellAttributes,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct KindredAttributes {
+    pub card: CardAttributes,
+    pub spell: SpellAttributes,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Card {
+    Artifact(ArtifactAttributes),
+    Battle(BattleAttributes),
+    Creature(CreatureAttributes),
+    Enchantment(EnchantmentAttributes),
+    Instant(InstantAttributes),
     Land(LandAttributes),
     Planeswalker(PlaneswalkerAttributes),
+    Sorcery(SorceryAttributes),
+    Kindred(KindredAttributes),
     Leveler(LevelerAttributes),
     Saga(SagaAttributes),
     Class(ClassAttributes),
