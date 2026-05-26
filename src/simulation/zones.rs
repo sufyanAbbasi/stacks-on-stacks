@@ -9,6 +9,7 @@ pub struct ZoneCard {
     pub id: CardId,
     pub card: Card,
     pub owner: PlayerId,
+    pub is_token: bool,
 }
 
 /// --- SECTION 110: PERMANENTS ---
@@ -123,6 +124,7 @@ pub struct ExiledCard {
     pub face_up: bool,
     /// Timestamp when the card entered exile.
     pub timestamp: Timestamp,
+    pub is_token: bool,
 }
 
 /// --- SECTION 401: LIBRARY ---
@@ -403,11 +405,17 @@ impl Zones {
 
     /// Extracts a card from its current zone (if found) (Rule 400.7).
     /// Once extracted, the card ceases to exist in that zone.
+    /// Extracts a card from its current zone (if found) (Rule 400.7).
+    /// Once extracted, the card ceases to exist in that zone.
+    /// Under Rule 111.8, a token that has left the battlefield cannot move to another zone.
     pub fn extract_card(&mut self, card_id: CardId, from: Zone) -> Option<ZoneCard> {
         match from {
             Zone::Library => {
                 for library in self.libraries.values_mut() {
                     if let Some(pos) = library.cards.iter().position(|zc| zc.id == card_id) {
+                        if library.cards[pos].is_token {
+                            return None; // Rule 111.8: remains in current zone instead
+                        }
                         return Some(library.cards.remove(pos));
                     }
                 }
@@ -416,6 +424,9 @@ impl Zones {
             Zone::Hand => {
                 for hand in self.hands.values_mut() {
                     if let Some(pos) = hand.cards.iter().position(|zc| zc.id == card_id) {
+                        if hand.cards[pos].is_token {
+                            return None; // Rule 111.8: remains in current zone instead
+                        }
                         return Some(hand.cards.remove(pos));
                     }
                 }
@@ -424,6 +435,9 @@ impl Zones {
             Zone::Graveyard => {
                 for graveyard in self.graveyards.values_mut() {
                     if let Some(pos) = graveyard.cards.iter().position(|zc| zc.id == card_id) {
+                        if graveyard.cards[pos].is_token {
+                            return None; // Rule 111.8: remains in current zone instead
+                        }
                         return Some(graveyard.cards.remove(pos));
                     }
                 }
@@ -434,19 +448,35 @@ impl Zones {
                     id: p.id,
                     card: p.card,
                     owner: p.owner,
+                    is_token: p.is_token,
                 })
             }
             Zone::Exile => {
-                self.exile.remove_by_id(card_id).map(|e| ZoneCard {
-                    id: e.id,
-                    card: e.card,
-                    owner: e.owner,
-                })
+                if let Some(pos) = self.exile.objects.iter().position(|e| e.id == card_id) {
+                    if self.exile.objects[pos].is_token {
+                        return None; // Rule 111.8: remains in current zone instead
+                    }
+                    let e = self.exile.objects.remove(pos);
+                    Some(ZoneCard {
+                        id: e.id,
+                        card: e.card,
+                        owner: e.owner,
+                        is_token: e.is_token,
+                    })
+                } else {
+                    None
+                }
             }
             Zone::Command => {
-                if let Some(zc) = self.command_zone.remove_commander(card_id) {
-                    Some(zc)
+                if let Some(pos) = self.command_zone.commanders.iter().position(|zc| zc.id == card_id) {
+                    if self.command_zone.commanders[pos].is_token {
+                        return None;
+                    }
+                    Some(self.command_zone.commanders.remove(pos))
                 } else if let Some(pos) = self.command_zone.other_objects.iter().position(|zc| zc.id == card_id) {
+                    if self.command_zone.other_objects[pos].is_token {
+                        return None;
+                    }
                     Some(self.command_zone.other_objects.remove(pos))
                 } else {
                     None
@@ -490,7 +520,7 @@ impl Zones {
                     counters: HashMap::new(),
                     damage_marked: 0,
                     attached_to: None,
-                    is_token: false,
+                    is_token: zone_card.is_token,
                 });
             }
             Zone::Exile => {
@@ -501,6 +531,7 @@ impl Zones {
                     owner: zone_card.owner,
                     face_up: true,
                     timestamp,
+                    is_token: zone_card.is_token,
                 });
             }
             Zone::Command => {
@@ -523,5 +554,82 @@ impl Zones {
         } else {
             false
         }
+    }
+
+    /// Automatically removes any tokens from zones other than the battlefield (Rule 111.7).
+    pub fn clean_up_tokens(&mut self) -> Vec<CardId> {
+        let mut removed_ids = Vec::new();
+
+        // 1. Clean libraries
+        for library in self.libraries.values_mut() {
+            let mut i = 0;
+            while i < library.cards.len() {
+                if library.cards[i].is_token {
+                    let removed = library.cards.remove(i);
+                    removed_ids.push(removed.id);
+                } else {
+                    i += 1;
+                }
+            }
+        }
+
+        // 2. Clean hands
+        for hand in self.hands.values_mut() {
+            let mut i = 0;
+            while i < hand.cards.len() {
+                if hand.cards[i].is_token {
+                    let removed = hand.cards.remove(i);
+                    removed_ids.push(removed.id);
+                } else {
+                    i += 1;
+                }
+            }
+        }
+
+        // 3. Clean graveyards
+        for graveyard in self.graveyards.values_mut() {
+            let mut i = 0;
+            while i < graveyard.cards.len() {
+                if graveyard.cards[i].is_token {
+                    let removed = graveyard.cards.remove(i);
+                    removed_ids.push(removed.id);
+                } else {
+                    i += 1;
+                }
+            }
+        }
+
+        // 4. Clean exile
+        let mut i = 0;
+        while i < self.exile.objects.len() {
+            if self.exile.objects[i].is_token {
+                let removed = self.exile.objects.remove(i);
+                removed_ids.push(removed.id);
+            } else {
+                i += 1;
+            }
+        }
+
+        // 5. Clean command zone
+        let mut i = 0;
+        while i < self.command_zone.commanders.len() {
+            if self.command_zone.commanders[i].is_token {
+                let removed = self.command_zone.commanders.remove(i);
+                removed_ids.push(removed.id);
+            } else {
+                i += 1;
+            }
+        }
+        let mut i = 0;
+        while i < self.command_zone.other_objects.len() {
+            if self.command_zone.other_objects[i].is_token {
+                let removed = self.command_zone.other_objects.remove(i);
+                removed_ids.push(removed.id);
+            } else {
+                i += 1;
+            }
+        }
+
+        removed_ids
     }
 }

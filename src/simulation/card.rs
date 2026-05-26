@@ -845,3 +845,484 @@ pub enum Card {
     Saga(SagaAttributes),
     Class(ClassAttributes),
 }
+
+/// --- RULE 111.10: PREDEFINED TOKENS ---
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum PredefinedToken {
+    Treasure,
+    Food,
+    Gold,
+    Walker,
+    Shard,
+    Clue,
+    Blood,
+    Powerstone,
+    Incubator,
+    CursedRole,
+    MonsterRole,
+    RoyalRole,
+    SorcererRole,
+    VirtuousRole,
+    WickedRole,
+    YoungHeroRole,
+    Map,
+    Junk,
+    Lander,
+    Mutagen,
+}
+
+impl PredefinedToken {
+    /// Compiles a predefined token into its standard characteristics as defined in Rule 111.10a-v.
+    pub fn get_card_characteristics(self) -> Card {
+        match self {
+            PredefinedToken::Treasure => Card::Artifact(ArtifactAttributes {
+                card: CardAttributes {
+                    name: "Treasure".to_string(),
+                    types: vec![CardType::Artifact],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Artifact(ArtifactType::Treasure)],
+                    rules_text: "{T}, Sacrifice this token: Add one mana of any color.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Artifact],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::Food => Card::Artifact(ArtifactAttributes {
+                card: CardAttributes {
+                    name: "Food".to_string(),
+                    types: vec![CardType::Artifact],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Artifact(ArtifactType::Food)],
+                    rules_text: "{2}, {T}, Sacrifice this token: You gain 3 life.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Artifact],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::Gold => Card::Artifact(ArtifactAttributes {
+                card: CardAttributes {
+                    name: "Gold".to_string(),
+                    types: vec![CardType::Artifact],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Artifact(ArtifactType::Gold)],
+                    rules_text: "Sacrifice this token: Add one mana of any color.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Artifact],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::Clue => Card::Artifact(ArtifactAttributes {
+                card: CardAttributes {
+                    name: "Clue".to_string(),
+                    types: vec![CardType::Artifact],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Artifact(ArtifactType::Clue)],
+                    rules_text: "{2}, Sacrifice this token: Draw a card.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Artifact],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::Blood => Card::Artifact(ArtifactAttributes {
+                card: CardAttributes {
+                    name: "Blood".to_string(),
+                    types: vec![CardType::Artifact],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Artifact(ArtifactType::Blood)],
+                    rules_text: "{1}, {T}, Discard a card, Sacrifice this token: Draw a card.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Artifact],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::Powerstone => Card::Artifact(ArtifactAttributes {
+                card: CardAttributes {
+                    name: "Powerstone".to_string(),
+                    types: vec![CardType::Artifact],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Artifact(ArtifactType::Powerstone)],
+                    rules_text: "{T}: Add {C}. This mana can't be spent to cast a nonartifact spell.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Artifact],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::Map => Card::Artifact(ArtifactAttributes {
+                card: CardAttributes {
+                    name: "Map".to_string(),
+                    types: vec![CardType::Artifact],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Artifact(ArtifactType::Map)],
+                    rules_text: "{1}, {T}, Sacrifice this token: Target creature you control explores. Activate only as a sorcery.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Artifact],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::Junk => Card::Artifact(ArtifactAttributes {
+                card: CardAttributes {
+                    name: "Junk".to_string(),
+                    types: vec![CardType::Artifact],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Artifact(ArtifactType::Junk)],
+                    rules_text: "{T}, Sacrifice this token: Exile the top card of your library. You may play that card this turn. Activate only as a sorcery.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Artifact],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::Lander => Card::Artifact(ArtifactAttributes {
+                card: CardAttributes {
+                    name: "Lander".to_string(),
+                    types: vec![CardType::Artifact],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Artifact(ArtifactType::Lander)],
+                    rules_text: "{2}, {T}, Sacrifice this token: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Artifact],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::Mutagen => Card::Artifact(ArtifactAttributes {
+                card: CardAttributes {
+                    name: "Mutagen".to_string(),
+                    types: vec![CardType::Artifact],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Artifact(ArtifactType::Mutagen)],
+                    rules_text: "{1}, {T}, Sacrifice this token: Put a +1/+1 counter on target creature. Activate only as a sorcery.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Artifact],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::Walker => Card::Creature(CreatureAttributes {
+                card: CardAttributes {
+                    name: "Walker".to_string(),
+                    types: vec![CardType::Creature],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Creature(CreatureType::Zombie)],
+                    rules_text: "".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Creature],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::B],
+                    cost: vec![],
+                    cmc: 0,
+                },
+                power: "2".to_string(),
+                toughness: "2".to_string(),
+                damage_marked: 0,
+            }),
+            PredefinedToken::Shard => Card::Enchantment(EnchantmentAttributes {
+                card: CardAttributes {
+                    name: "Shard".to_string(),
+                    types: vec![CardType::Enchantment],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Enchantment(EnchantmentType::Shard)],
+                    rules_text: "{2}, Sacrifice this token: Scry 1, then draw a card.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Enchantment],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::Incubator => Card::Artifact(ArtifactAttributes {
+                card: CardAttributes {
+                    name: "Incubator".to_string(),
+                    types: vec![CardType::Artifact],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Artifact(ArtifactType::Incubator)],
+                    rules_text: "{2}: Transform this token.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Artifact],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::CursedRole => Card::Enchantment(EnchantmentAttributes {
+                card: CardAttributes {
+                    name: "Cursed".to_string(),
+                    types: vec![CardType::Enchantment],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Enchantment(EnchantmentType::Role)],
+                    rules_text: "Enchant creature. Enchanted creature has base power and toughness 1/1.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Enchantment],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::MonsterRole => Card::Enchantment(EnchantmentAttributes {
+                card: CardAttributes {
+                    name: "Monster".to_string(),
+                    types: vec![CardType::Enchantment],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Enchantment(EnchantmentType::Role)],
+                    rules_text: "Enchant creature. Enchanted creature gets +1/+1 and has trample.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Enchantment],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::RoyalRole => Card::Enchantment(EnchantmentAttributes {
+                card: CardAttributes {
+                    name: "Royal".to_string(),
+                    types: vec![CardType::Enchantment],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Enchantment(EnchantmentType::Role)],
+                    rules_text: "Enchant creature. Enchanted creature gets +1/+1 and has ward {1}.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Enchantment],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::SorcererRole => Card::Enchantment(EnchantmentAttributes {
+                card: CardAttributes {
+                    name: "Sorcerer".to_string(),
+                    types: vec![CardType::Enchantment],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Enchantment(EnchantmentType::Role)],
+                    rules_text: "Enchant creature. Enchanted creature gets +1/+1 and has 'Whenever this creature attacks, scry 1.'".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Enchantment],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::VirtuousRole => Card::Enchantment(EnchantmentAttributes {
+                card: CardAttributes {
+                    name: "Virtuous".to_string(),
+                    types: vec![CardType::Enchantment],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Enchantment(EnchantmentType::Role)],
+                    rules_text: "Enchant creature. Enchanted creature gets +1/+1 for each enchantment you control.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Enchantment],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::WickedRole => Card::Enchantment(EnchantmentAttributes {
+                card: CardAttributes {
+                    name: "Wicked".to_string(),
+                    types: vec![CardType::Enchantment],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Enchantment(EnchantmentType::Role)],
+                    rules_text: "Enchant creature. Enchanted creature gets +1/+1. When this token is put into a graveyard from the battlefield, each opponent loses 1 life.".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Enchantment],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+            PredefinedToken::YoungHeroRole => Card::Enchantment(EnchantmentAttributes {
+                card: CardAttributes {
+                    name: "Young Hero".to_string(),
+                    types: vec![CardType::Enchantment],
+                    supertypes: vec![],
+                    subtypes: vec![Subtype::Enchantment(EnchantmentType::Role)],
+                    rules_text: "Enchant creature. Enchanted creature has 'Whenever this creature attacks, if its toughness is 3 or less, put a +1/+1 counter on it.'".to_string(),
+                },
+                permanent: PermanentAttributes {
+                    types: vec![PermanentType::Enchantment],
+                    status: PermanentStatus::default(),
+                },
+                spell: SpellAttributes {
+                    color: vec![Color::C],
+                    cost: vec![],
+                    cmc: 0,
+                },
+            }),
+        }
+    }
+}
+
+/// --- STATIC TEST CARDS FACTORY ---
+/// Creates rule-compliant and statically defined Card models for our deterministic 2-player testing scenario.
+pub fn create_test_card(name: &str) -> Card {
+    match name.to_lowercase().as_str() {
+        "forest" => Card::Land(LandAttributes {
+            card: CardAttributes {
+                name: "Forest".to_string(),
+                types: vec![CardType::Land],
+                supertypes: vec![Supertype::Basic],
+                subtypes: vec![Subtype::Land(LandType::Forest)],
+                rules_text: "{T}: Add {G}.".to_string(),
+            },
+            permanent: PermanentAttributes {
+                types: vec![PermanentType::Land],
+                status: PermanentStatus::default(),
+            },
+        }),
+        "island" => Card::Land(LandAttributes {
+            card: CardAttributes {
+                name: "Island".to_string(),
+                types: vec![CardType::Land],
+                supertypes: vec![Supertype::Basic],
+                subtypes: vec![Subtype::Land(LandType::Island)],
+                rules_text: "{T}: Add {U}.".to_string(),
+            },
+            permanent: PermanentAttributes {
+                types: vec![PermanentType::Land],
+                status: PermanentStatus::default(),
+            },
+        }),
+        "sol ring" => Card::Artifact(ArtifactAttributes {
+            card: CardAttributes {
+                name: "Sol Ring".to_string(),
+                types: vec![CardType::Artifact],
+                supertypes: vec![],
+                subtypes: vec![],
+                rules_text: "{T}: Add {C}{C}.".to_string(),
+            },
+            permanent: PermanentAttributes {
+                types: vec![PermanentType::Artifact],
+                status: PermanentStatus::default(),
+            },
+            spell: SpellAttributes {
+                color: vec![Color::C],
+                cost: vec![ManaSymbols::N(1)],
+                cmc: 1,
+            },
+        }),
+        "arcane signet" => Card::Artifact(ArtifactAttributes {
+            card: CardAttributes {
+                name: "Arcane Signet".to_string(),
+                types: vec![CardType::Artifact],
+                supertypes: vec![],
+                subtypes: vec![],
+                rules_text: "{T}: Add one mana of any color in your commander's color identity.".to_string(),
+            },
+            permanent: PermanentAttributes {
+                types: vec![PermanentType::Artifact],
+                status: PermanentStatus::default(),
+            },
+            spell: SpellAttributes {
+                color: vec![Color::C],
+                cost: vec![ManaSymbols::N(2)],
+                cmc: 2,
+            },
+        }),
+        "counterspell" => Card::Instant(InstantAttributes {
+            card: CardAttributes {
+                name: "Counterspell".to_string(),
+                types: vec![CardType::Instant],
+                supertypes: vec![],
+                subtypes: vec![],
+                rules_text: "Counter target spell.".to_string(),
+            },
+            spell: SpellAttributes {
+                color: vec![Color::U],
+                cost: vec![ManaSymbols::U, ManaSymbols::U],
+                cmc: 2,
+            },
+        }),
+        _ => panic!("Unknown test card: {}", name),
+    }
+}
+

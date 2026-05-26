@@ -43,6 +43,21 @@ pub enum GameEvent {
     AbilityActivated { player: PlayerId, ability_id: u32 },
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum TokenCreator {
+    Predefined(crate::card::PredefinedToken),
+    Custom {
+        name: String,
+        colors: Vec<crate::card::Color>,
+        supertypes: Vec<crate::card::Supertype>,
+        card_types: Vec<crate::card::CardType>,
+        subtypes: Vec<crate::card::Subtype>,
+        power: Option<String>,
+        toughness: Option<String>,
+        rules_text: String,
+    },
+}
+
 /// --- SECTION 610: ONE-SHOT EFFECTS ---
 /// An effect that does something once and has no duration (Rule 610.1).
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -52,7 +67,7 @@ pub enum OneShotEffect {
     Destroy { target: CardId, prevent_regeneration: bool },
     Exile { target: CardId },
     Sacrifice { player: PlayerId, target: CardId },
-    CreateToken { player: PlayerId, token_name: String, power: u32, toughness: u32 },
+    CreateToken { player: PlayerId, creator: TokenCreator },
     GainLife { player: PlayerId, amount: u32 },
     LoseLife { player: PlayerId, amount: u32 },
     MoveZone { card: CardId, from: Zone, to: Zone },
