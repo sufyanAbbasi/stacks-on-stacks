@@ -3,8 +3,8 @@ import os
 
 
 def main():
-    rules_text_path = "./MagicCompRules_20260417.txt"
-    rules_rs_path = "../src/compiler/rules.rs"
+    rules_text_path = "./rules/MagicCompRules_20260417.txt"
+    rules_rs_path = "./src/compiler/rules.rs"
 
     # 1. Parse MagicCompRules_20260417.txt
     rule_pattern = re.compile(r"^(\d{3}\.\d+[a-z]?)\.?\s+(.*)$")

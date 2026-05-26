@@ -2070,7 +2070,7 @@ enum Rule {
     // 408.3. In the Planechase, Vanguard, Commander, Archenemy, and Conspiracy Draft casual variants, nontraditional Magic cards and/or specially designated cards start the game in the command zone. Each variant has its own rules regarding such cards. See section 9, “Casual Variants.”
     RULE_408_3_PLANECHASE_VANGUARD_COMMANDER_ARCHENEMY_CONSPIRACY,
 
-    // --- CHAPTER 5: TURN STRUCTURE ---
+    // --- 5. Turn Structure ---
 
     // 500.1. A turn consists of five phases, in this order: beginning, precombat main, combat, postcombat main, and ending. Each of these phases takes place every turn, even if nothing happens during the phase. The beginning, combat, and ending phases are further broken down into steps, which proceed in order.
     RULE_500_1_TURN_CONSISTS_PHASES_ORDER_BEGINNING(Condition),
@@ -2342,7 +2342,7 @@ enum Rule {
     // 514.3a. At this point, the game checks to see if any state-based actions would be performed and/or any triggered abilities are waiting to be put onto the stack (including those that trigger “at the beginning of the next cleanup step”). If so, those state-based actions are performed, then those triggered abilities are put on the stack, then the active player gets priority. Players may cast spells and activate abilities. Once the stack is empty and all players pass in succession, another cleanup step begins.
     RULE_514_3_POINT_GAME_CHECKS_STATE_BASED(Condition),
 
-    // --- CHAPTER 6: SPELLS, ABILITIES, AND EFFECTS ---
+    // --- 6. Spells, Abilities, and Effects ---
 
     // 601.1. Previously, the action of casting a spell, or casting a card as a spell, was referred to on cards as “playing” that spell or that card. Cards that were printed with that text have received errata in the Oracle card reference so they now refer to “casting” that spell or that card.
     // 601.1a. Some effects still refer to “playing” a card. “Playing a card” means playing that card as a land or casting that card as a spell, whichever is appropriate.
@@ -2899,7 +2899,7 @@ enum Rule {
     // 616.2. A replacement or prevention effect can become applicable to an event as the result of another replacement or prevention effect that modifies the event.
     RULE_616_2_REPLACEMENT_PREVENTION_EFFECT_BECOME_APPLICABLE,
 
-    // --- CHAPTER 7: ADDITIONAL RULES ---
+    // --- 7. Additional Rules ---
 
     // 700.1. Anything that happens in a game is an event. Multiple events may take place during the resolution of a spell or ability. The text of triggered abilities and replacement effects defines the event they’re looking for. One “happening” may be treated as a single event by one ability and as multiple events by another.
     RULE_700_1_ANYTHING_HAPPENS_GAME_EVENT_MULTIPLE,
@@ -5222,7 +5222,7 @@ enum Rule {
     // 733.2. When reversing illegal spells and abilities, the player who had priority retains it and may take another action or pass. The player may redo the reversed action in a legal way or take any other action allowed by the rules.
     RULE_733_2_REVERSING_ILLEGAL_SPELLS_ABILITIES_PLAYER(Condition),
 
-    // --- CHAPTER 8: MULTIPLAYER RULES ---
+    // --- 8. Multiplayer Rules ---
 
     // 800.1. A multiplayer game is a game that begins with more than two players. This section contains additional optional rules that can be used for multiplayer play.
     RULE_800_1_MULTIPLAYER_GAME_BEGINS_THAN_PLAYERS,
@@ -5477,7 +5477,7 @@ enum Rule {
     // 810.11. The Two-Headed Giant variant can also be played with equally sized teams of more than two players. For each player a team has beyond the second, that team’s starting life total is increased by 15 and the number of poison counters required for the team to lose is increased by five. (These variants are called Three-Headed Giant, Four-Headed Giant, and so on.)
     RULE_810_11_HEADED_GIANT_VARIANT_PLAYED_EQUALLY,
 
-    // --- CHAPTER 9: CASUAL VARIANTS ---
+    // --- 9. Casual Variants ---
 
     // 900.1. This section contains additional optional rules that can be used for certain casual game variants. It is by no means comprehensive.
     RULE_900_1_CONTAINS_ADDITIONAL_OPTIONAL_CASUAL_GAME,
@@ -5559,7 +5559,6 @@ enum Rule {
     // 903.13f. Commander Draft deck construction follows the same rules as Commander deck construction (see rule 903.5) with three exceptions: (1) A player’s deck must contain at least 60 cards. There is no maximum deck size. (2) A player’s deck may include any number of cards from that player’s card pool with the same name. (3) If the draft contained draft boosters from Commander Masters, any card which can be a player’s commander by itself and whose color identity includes one or fewer colors is considered to have the partner ability for the purposes of deckbuilding. (See rule 702.124, “Partner.”)
     // 903.13g. Commander Draft games follow the same rules as Commander games. See rules 903.6–903.11.
     RULE_903_13_COMMANDER_DRAFT(Condition),
-
 
     // =========================================================================
     // GENERATED CORE AND ESOTERIC RULES (CHAPTERS 1-9)
