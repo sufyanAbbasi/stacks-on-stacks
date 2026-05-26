@@ -16,20 +16,20 @@ use player::Player;
 use card::{Card, Color};
 use zones::ZoneCard;
 use effects::{Target, Zone};
-
-/// Dynamically fetches card details from the Scryfall API and constructs the card structure.
-pub fn create_test_card(name: &str) -> Card {
-    println!("\x1b[36m[SCRYFALL FETCH]\x1b[0m Fetching '{}' from Scryfall API...", name);
-    match scryfall::fetch_and_compile(name) {
-        Ok(card) => card,
-        Err(e) => panic!("Failed to compile card '{}' from Scryfall: {}", name, e),
-    }
-}
+use scryfall::create_test_card;
 
 fn main() {
     println!("\x1b[1;35m=========================================================\x1b[0m");
     println!("\x1b[1;35m*  STACKS-ON-STACKS: MTG SIMULATION KERNEL WALKTHROUGH   *\x1b[0m");
     println!("\x1b[1;35m=========================================================\x1b[0m");
+
+    // --- PREMIUM CARD RENDERING SHOWCASE ---
+    println!("\n\x1b[1;36m=========================================================\x1b[0m");
+    println!("\x1b[1;36m*             MTG ASCII CARD RENDERING SHOWCASE         *\x1b[0m");
+    println!("\x1b[1;36m=========================================================\x1b[0m");
+    let _dreadmaw = create_test_card("Colossal Dreadmaw");
+    let _bolt = create_test_card("Lightning Bolt");
+    println!("\x1b[1;36m=========================================================\x1b[0m\n");
 
     // Initialize Game Kernel and Players
     let mut game = Game::new(Format::Commander);
