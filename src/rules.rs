@@ -7,27 +7,36 @@ struct Condition {
 enum Rule {
     // 101.1. Whenever a card’s text directly contradicts these rules, the card takes precedence. The card overrides only the rule that applies to that specific situation. The only exception is that a player can concede the game at any time (see rule 104.3a).
     RULE_101_1_CARDS_TAKE_PRECEDENCE,
+
     // 101.2. When a rule or effect allows or directs something to happen, and another effect states that it can’t happen, the “can’t” effect takes precedence.
     // 101.2a. Adding abilities to objects and removing abilities from objects don’t fall under this rule. (See rule 113.10.)
     RULE_101_2a_CANT_TAKES_PRECEDENCE(Condition),
+
     // 101.3. Any part of an instruction that’s impossible to perform is ignored. (In many cases the card will specify consequences for this; if it doesn’t, there’s no effect.)
     RULE_101_3_IMPOSSIBLE_ACTIONS_IGNORED,
+
     // 101.4. If multiple players would make choices and/or take actions at the same time, the active player (the player whose turn it is) makes any choices required, then the next player in turn order (usually the player seated to the active player’s left) makes any choices required, followed by the remaining nonactive players in turn order. Then the actions happen simultaneously. This rule is often referred to as the “Active Player, Nonactive Player (APNAP) order” rule.
     RULE_101_4_APNAP_CHOICE_ORDER,
+
     // 103.6. Some cards allow a player to take actions with them from their opening hand. Once the mulligan process (see rule 103.5) is complete, the starting player may take any such actions in any order. Then each other player in turn order may do the same.
     // 103.6a. If a card allows a player to begin the game with that card on the battlefield, the player taking this action puts that card onto the battlefield.
     // 103.6b. If a card allows a player to reveal it from their opening hand, the player taking this action does so. The card remains revealed until the first turn begins. Each card may be revealed this way only once.
     RULE_103_6b_FIRST_ACTION_FROM_OPENING_HAND(Condition),
+
     // 103.8. The starting player takes their first turn.
     RULE_103_8_FIRST_TURN,
+
     // 103.8a. In a two-player game, the player who plays first skips the draw step (see rule 504, “Draw Step”) of their first turn.
     RULE_103_8a_TWO_PLAYER_SKIP_DRAW(Condition),
+
     // 104.1. A game ends immediately when a player wins, when the game is a draw, or when the game is restarted.
     RULE_104_1_GAME_ENDS(Condition),
+
     // 104.2. There are several ways to win the game.
     // 104.2a. A player still in the game wins the game if that player’s opponents have all left the game. This happens immediately and overrides all effects that would preclude that player from winning the game.
     // 104.2b. An effect may state that a player wins the game.
     RULE_104_2b_PLAYER_WINS(Condition),
+
     // 104.3. There are several ways to lose the game.
     // 104.3a. A player can concede the game at any time. A player who concedes leaves the game immediately. That player loses the game.
     // 104.3b. If a player’s life total is 0 or less, that player loses the game the next time a player would receive priority. (This is a state-based action. See rule 704.)
@@ -37,55 +46,76 @@ enum Rule {
     // 104.3f. If a player would both win and lose the game simultaneously, that player loses the game.
     // 104.3j. In a Commander game, a player who’s been dealt 21 or more combat damage by the same commander over the course of the game loses the game. (This is a state-based action. See rule 704. See also rule 903.10.)
     RULE_104_3_PLAYER_LOSES(Condition),
+
     // 104.4. There are several ways for the game to be a draw.
     // 104.4a. If all the players remaining in a game lose simultaneously, the game is a draw.
     // 104.4b. If a game that’s not using the limited range of influence option (including a two-player game) somehow enters a “loop” of mandatory actions, repeating a sequence of events with no way to stop, the game is a draw. Loops that contain an optional action don’t result in a draw.
     // 104.4c. An effect may state that the game is a draw.
     // 104.5. If a player loses the game, that player leaves the game. If the game is a draw for a player, that player leaves the game. The multiplayer rules handle what happens when a player leaves the game; see rule 800.4.
     RULE_104_5_PLAYER_DRAWS(Condition),
+
     // 104.6. One card (Karn Liberated) restarts the game. All players still in the game when it restarts then immediately begin a new game. See rule 727, “Restarting the Game.”
     RULE_104_6_RESTART_GAME(Condition),
+
     // 105.2. An object can be one or more of the five colors, or it can be no color at all. An object is the color or colors of the mana symbols in its mana cost, regardless of the color of its frame. An object’s color or colors may also be defined by a color indicator or a characteristic-defining ability. See rule 202.2.
     // 105.5. If an effect refers to a color pair, it means exactly two of the five colors. There are ten color pairs: white and blue, white and black, blue and black, blue and red, black and red, black and green, red and green, red and white, green and white, and green and blue.
     RULE_105_5_OBJECT_HAS_COLORS_OR_NO_COLOR(Condition),
+
     // 105.3. Effects may change an object’s color or give a color to a colorless object. If an effect gives an object a new color, the new color replaces all previous colors the object had (unless the effect said the object became that color “in addition” to its other colors). Effects may also make a colored object become colorless.
     // 105.4. If a player is asked to choose a color, they must choose one of the five colors. “Multicolored” is not a color. Neither is “colorless.”
     RULE_105_4_OBJECT_HAS_NEW_COLOR(Condition),
+
     // 106.3. Mana is produced by the effects of mana abilities (see rule 605). It may also be produced by the effects of spells, as well as by the effects of abilities that aren’t mana abilities. A spell or ability that produces mana instructs a player to add that mana. If mana is produced by a spell, the source of that mana is that spell. If mana is produced by an ability, the source of that mana is the source of that ability (see rule 113.7).
     RULE_106_3_MANA_IS_ADDED_TO_POOL(Condition),
+
     // 106.4. When an effect instructs a player to add mana, that mana goes into a player’s mana pool. From there, it can be used to pay costs immediately, or it can stay in the player’s mana pool as unspent mana. Each player’s mana pool empties at the end of each step and phase, and the player is said to lose this mana. Cards with abilities that produce mana or refer to unspent mana have received errata in the Oracle™ card reference to no longer explicitly refer to the mana pool.
     RULE_106_4_MANA_POOLS_EMPTY_AT_END_OF_STEP_OR_PHASE(Condition),
+
     // 106.5. If an ability would produce one or more mana of an undefined type, it produces no mana instead.
     RULE_106_5_UNDEFINED_MANA_PRODUCED_NO_MANA(Condition),
+
     // 106.6. Some spells or abilities that produce mana restrict how that mana can be spent, have an additional effect that affects the spell or ability that mana is spent on, or create a delayed triggered ability (see rule 603.7a) that triggers when that mana is spent. This doesn’t affect the mana’s type.
     RULE_106_6_MANA_HAS_RESTRICTION(Condition),
+
     // 106.6a. Some replacement effects increase the amount of mana produced by a spell or ability. In these cases, any restrictions or additional effects created by the spell or ability will apply to all mana produced. If the spell or ability creates a delayed triggered ability that triggers when the mana is spent, a separate delayed triggered ability is created for each mana produced. If the spell or ability creates a continuous effect or replacement effect if the mana is spent, a separate effect is created once for each mana produced.
     RULE_106_6a_MANA_RESTRICTIONS_APPLY_TO_ADDITIONAL_MANA_EFFECTS(Condition),
+
     // 106.7. Some abilities produce mana based on the type of mana another permanent or permanents “could produce.” The type of mana a permanent could produce at any time includes any type of mana that an ability of that permanent would produce if the ability were to resolve at that time, taking into account any applicable replacement effects in any possible order. Ignore whether any costs of the ability could or could not be paid. If that permanent wouldn’t produce any mana under these conditions, or no type of mana can be defined this way, there’s no type of mana it could produce.
     RULE_106_7_COUD_ADD_MANA(Condition),
+
     // 106.8. If an effect would add mana represented by a hybrid mana symbol to a player’s mana pool, that player chooses one half of that symbol. If a colored half is chosen, one mana of that color is added to that player’s mana pool. If a generic half is chosen, an amount of colorless mana represented by that half’s number is added to that player’s mana pool.
     RULE_106_8_HYBRID_ADD_MANA_CHOOSE_COLOR(Condition),
+
     // 106.9. If an effect would add mana represented by a Phyrexian mana symbol to a player’s mana pool, one mana of the color of that symbol is added to that player’s mana pool.
     RULE_106_9_PHYREXIAN_ADD_MANA_COLOR(Condition),
+
     // 106.10. If an effect would add mana represented by a generic mana symbol to a player’s mana pool, that much colorless mana is added to that player’s mana pool.
     RULE_106_10_GENERIC_ADD_MANA_COLOR_IS_COLORLESS(Condition),
+
     // 106.11. If an effect would add mana represented by one or more snow mana symbols to a player’s mana pool, that much colorless mana is added to that player’s mana pool.
     RULE_106_11_SNOW_ADD_MANA_IS_COLORLESS(Condition),
+
     // 106.12. To “tap [a permanent] for mana” is to activate a mana ability of that permanent that includes the {T} symbol in its activation cost. See rule 605, “Mana Abilities.”
     RULE_106_12_ACTIVATE_MANA_ABILITY_WITH_TAP_SYMBOL(Condition),
+
     // 106.12a. An ability that triggers whenever a permanent “is tapped for mana” or is tapped for mana of a specified type triggers whenever such a mana ability resolves and produces mana or the specified type of mana.
     RULE_106_12a_MANA_ABILITIES_TRIGGER(Condition),
+
     // 106.12b. A replacement effect that applies if a permanent “is tapped for mana” or tapped for mana of a specific type and/or amount modifies the mana production event while such an ability is resolving and producing mana or the specified type and/or amount of mana.
     RULE_106_12b_REPLACEMENT_EFFECTS_AFFECT_MANA_ABILITIES(Condition),
+
     // 106.13. One card (Drain Power) causes one player to lose unspent mana and another to add “the mana lost this way.” (Note that these may be the same player.) This empties the former player’s mana pool and causes the mana emptied this way to be put into the latter player’s mana pool. Which permanents, spells, and/or abilities produced that mana are unchanged, as are any restrictions or additional effects associated with any of that mana.
     RULE_106_13_DRAIN_POWER_MANA_CONDITIONS_CARRY_OVER(Condition),
+
     // 107.1. The only numbers the Magic game uses are integers.
     // 107.1a. You can’t choose a fractional number, deal fractional damage, gain fractional life, and so on. If a spell or ability could generate a fractional number, the spell or ability will tell you whether to round up or down.
     // 107.1c. If a rule or ability instructs a player to choose “any number,” that player may choose any positive number or zero.
     // 107.1b. Most of the time, the Magic game uses only positive numbers and zero. You can’t choose a negative number, deal negative damage, gain negative life, and so on. However, it’s possible for a game value, such as a creature’s power, to be less than zero. If a calculation or comparison needs to use a negative value, it does so. If a calculation that would determine the result of an effect yields a negative number, zero is used instead, unless that effect doubles, triples, or sets to a specific value a player’s life total or the power and/or toughness of a creature or creature card.
     RULE_107_1_POSITIVE_INTEGER_VALUES_ONLY,
+
     // 107.2. If anything needs to use a number that can’t be determined, either as a result or in a calculation, it uses 0 instead.
     RULE_107_2_UNDEFINED_NUMBERS_ARE_ZERO,
+
     // 107.3. Many objects use the letter X as a placeholder for a number that needs to be determined. Some objects have abilities that define the value of X; the rest let their controller choose the value of X.
     // 107.3a. If a spell or activated ability has a mana cost, alternative cost, additional cost, and/or activation cost with an {X}, [-X], or X in it, and the value of X isn’t defined by the text of that spell or ability, the controller of that spell or ability chooses and announces the value of X as part of casting the spell or activating the ability. (See rule 601, “Casting Spells.”) While a spell is on the stack, any X in its mana cost or in any alternative cost or additional cost it has equals the announced value. While an activated ability is on the stack, any X in its activation cost equals the announced value.
     // 107.3b. If a player is casting a spell that has an {X} in its mana cost, the value of X isn’t defined by the text of that spell, and an effect lets that player cast that spell while paying neither its mana cost nor an alternative cost that includes X, then the only legal choice for X is 0. This doesn’t apply to effects that only reduce a cost, even if they reduce it to zero. See rule 601, “Casting Spells.”
@@ -102,107 +132,150 @@ enum Rule {
     // 107.3n. If a delayed triggered ability created by a resolving spell or ability refers to X, X is not defined in the text of that triggered ability, and the spell or ability that created it had a value of X chosen for any of its costs, the value of X for the triggered ability is the same as the value of X for the spell of ability that created it.
     // 107.3p. Some objects use the letter Y in addition to the letter X. Y follows the same rules as X.
     RULE_107_3_X_IS_CHOSEN_OR_ZERO(Condition),
+
     // 107.4b. Numerical symbols (such as {1}) and variable symbols (such as {X}) represent generic mana in costs. Generic mana in costs can be paid with any type of mana. For more information about {X}, see rule 107.3.
     RULE_107_4b_NUMERICAL_AND_VARIABLE_MANA_COST_PAID_WITH_GENERIC_MANA,
+
     // 107.4c. The colorless mana symbol {C} is used to represent one colorless mana, and also to represent a cost that can be paid only with one colorless mana.
     RULE_107_4c_COLORLESS_MANA_COST_CAN_ONLY_BE_PAID_WITH_COLORLESS,
+
     // 107.4d. The symbol {0} represents zero mana and is used as a placeholder for a cost that can be paid with no resources. (See rule 118.5.)
     RULE_107_4d_ZERO_MANA_COST,
+
     // 107.4e. A hybrid mana symbol is also a colored mana symbol, even if one of its components is colorless. Each one represents a cost that can be paid in one of two ways, as represented by the two halves of the symbol. A hybrid symbol such as {W/U} can be paid with either white or blue mana, and a monocolored hybrid symbol such as {2/B} can be paid with either one black mana or two mana of any type. A hybrid mana symbol is all of its component colors.
     RULE_107_4e_HYBRID_MANA_COST_CAN_BE_PAID_WITH_EITHER,
+
     // 107.4f. Phyrexian mana symbols are colored mana symbols: {W/P} is white, {U/P} is blue, {B/P} is black, {R/P} is red, and {G/P} is green. A Phyrexian mana symbol represents a cost that can be paid either with one mana of its color or by paying 2 life. There are also ten hybrid Phyrexian mana symbols. A hybrid Phyrexian mana symbol represents a cost that can be paid with one mana of either of its component colors or by paying 2 life. A hybrid Phyrexian mana symbol is both of its component colors.
     RULE_107_4f_PHYREXIAN_MANA_COST_CAN_BE_PAID_WITH_LIFE,
+
     // 107.4h. When used in a cost, the snow mana symbol {S} represents a cost that can be paid with one mana of any type produced by a snow source (see rule 106.3). Effects that reduce the amount of generic mana you pay don’t affect {S} costs. The {S} symbol can also be used to refer to mana of any type produced by a snow source spent to pay a cost. Snow is neither a color nor a type of mana.
     RULE_107_4h_SNOW_MANA_CAN_ONLY_BE_PAID_BY_SNOW_SOURCE,
+
     // 107.5. The tap symbol is {T}. The tap symbol in an activation cost means “Tap this permanent.” A permanent that’s already tapped can’t be tapped again to pay the cost. A creature’s activated ability with the tap symbol in its activation cost can’t be activated unless the creature has been under its controller’s control continuously since their most recent turn began. See rule 302.6.
     RULE_107_5_TAP_SYMBOL_ONLY_ACTIVATES_FOR_UNTAPPED_PERMANENTS_AND_NOT_SUMMONING_SICK(Condition),
+
     // 107.6. The untap symbol is {Q}. The untap symbol in an activation cost means “Untap this permanent.” A permanent that’s already untapped can’t be untapped again to pay the cost. A creature’s activated ability with the untap symbol in its activation cost can’t be activated unless the creature has been under its controller’s control continuously since their most recent turn began. See rule 302.6.
     RULE_107_6_UNTAP_SYMBOL_ONLY_ACTIVATES_FOR_TAPPED_PERMANENTS_AND_NOT_SUMMONING_SICK(Condition),
+
     // 107.7. Each activated ability of a planeswalker has a loyalty symbol in its cost. Positive loyalty symbols point upward and feature a plus sign followed by a number. Negative loyalty symbols point downward and feature a minus sign followed by a number or an X. Neutral loyalty symbols don’t point in either direction and feature a 0. [+N] means “Put N loyalty counters on this permanent,” [-N] means “Remove N loyalty counters from this permanent,” and [0] means “Put zero loyalty counters on this permanent.” Loyalty symbols may also appear in abilities that modify loyalty costs.
     RULE_107_7_PLANESWALKER_LOYALTY_COUNTERS,
+
     // 107.8. The text box of a leveler card contains two level symbols, each of which is a keyword ability that represents a static ability. The level symbol includes either a range of numbers, indicated here as “N1-N2,” or a single number followed by a plus sign, indicated here as “N3+.” Any abilities printed within the same text box striation as a level symbol are part of its static ability. The same is true of the power/toughness box printed within that striation, indicated here as “[P/T].” See rule 711, “Leveler Cards.”
     // 107.8a. “{LEVEL N1-N2} [Abilities] [P/T]” means “As long as this creature has at least N1 level counters on it, but no more than N2 level counters on it, it has base power and toughness [P/T] and has [abilities].”
     // 107.8b. “{LEVEL N3+} [Abilities] [P/T]” means “As long as this creature has N3 or more level counters on it, it has base power and toughness [P/T] and has [abilities].”
     RULE_107_8b_LEVELER_LEVEL_COUNTERS,
+
     // 107.14. The energy symbol is {E}. It represents one energy counter. To pay {E}, a player removes one energy counter from themselves.
     RULE_107_14_ENERGY_COUNTER,
+
     // 107.15. The text box of a Saga card contains chapter symbols, each of which is a keyword ability that represents a triggered ability. A chapter symbol includes a Roman numeral, indicated here as “rN”. The text printed in the text box striation to the right of a chapter symbol is the effect of the triggered ability it represents. See rule 714, “Saga Cards.”
     // 107.15a. “{rN}—[Effect]” means “When one or more lore counters are put onto this Saga, if the number of lore counters on it was less than N and became at least N, [effect].”
     // 107.15b. “{rN1}, {rN2}—[Effect]” is the same as “{rN1}—[Effect]” and “{rN2}—[Effect].”
     RULE_107_15b_SAGA_LORE_COUNTER,
+
     // 107.16. The text box of a Class card contains class level bars, each of which is a keyword ability that represents both an activated ability and a static ability. A class level bar includes the activation cost of its activated ability and a level number. Any abilities printed within the same text box section as the class level bar are part of its static ability. See rule 716, “Class Cards.”
     RULE_107_16_CLASS_LEVELS,
+
     // 107.17. The ticket symbol is {TK}. It represents one ticket counter.
     // 107.17a. A ticket symbol with a number inside it represents a ticket cost. To pay that cost, a player removes that many ticket counters from themselves.
     RULE_107_17a_TICKET_COUNTER,
+
     // 107.18. The pawprint symbol is {P}. This symbol is used to indicate the modes on some modal spells, and does not represent a cost, mana, counters, or any type of persistent resource. See rule 700.2i.
     RULE_107_18_PAWPRINT_SYMBOL,
+
     // 108.3. The owner of a card in the game is the player who started the game with it in their deck. If a card is brought into the game from outside the game rather than starting in a player’s deck, its owner is the player who brought it into the game. If a card starts the game in the command zone, its owner is the player who put it into the command zone to start the game. Legal ownership of a card in the game is irrelevant to the game rules except for the rules for ante. (See rule 407.)
     RULE_108_3_OWNER_IS_PLAYER_WHO_BROUGHT_THE_CARD,
+
     // 108.3b. Some spells and abilities allow a player to take cards they own from outside the game and bring them into the game. (See rule 400.11b.) If a card outside that game is involved in a Magic game, its owner is determined as described in rule 108.3. If a card outside that game is in the sideboard of a Magic game (see rule 100.4), its owner is considered to be the player who started the game with it in their sideboard. In all other cases, the owner of a card outside the game is its legal owner.
     RULE_108_3b_OUTSIDE_THE_GAME_IS_SIDEBOARD(Condition),
+
     // 108.4. A card doesn’t have a controller unless that card represents a permanent or spell; in those cases, its controller is determined by the rules for permanents or spells. See rules 110.2 and 112.2.
     // 108.4a. If anything asks for the controller of a card that doesn’t have one (because it’s not a permanent or spell), use its owner instead.
     RULE_108_4a_ONLY_PERMANENTS_AND_SPELLS_HAVE_CONTROLLERS_THEN_OWNERS(Condition),
+
     // 109.1. An object is an ability on the stack, a card, a copy of a card, a token, a spell, a permanent, or an emblem.
     RULE_109_1_OBJECT_DEFINITION(Condition),
+
     // 109.2. If a spell or ability uses a description of an object that includes a card type or subtype, but doesn’t refer to a specific zone or include the word “card,” “spell,” “source,” or “scheme,” it means a permanent of that card type or subtype on the battlefield.
     RULE_109_2_CARD_TYPE_REFERENCE_ON_BATTLEFIELD(Condition),
+
     // 109.2a. If a spell or ability uses a description of an object that includes the word “card” and the name of a zone, it means a card matching that description in the stated zone.
     RULE_109_2a_CARD_REFERENCED_IN_ZONE,
+
     // 109.2b. If a spell or ability uses a description of an object that includes the word “spell,” it means a spell matching that description on the stack.
     RULE_109_2b_SPELL_REFERENCE_ON_STACK,
+
     // 109.2c. If a spell or ability uses a description of an object that includes the word “source,” it means a source matching that description—a source of an ability, of damage, or of mana—in any zone. See rules 113.7 and 609.7.
     RULE_109_2c_SOURCE_REFERENCE,
+
     // 109.2d. If an ability of a scheme card includes the text “this scheme,” it means the scheme card in the command zone on which that ability is printed.
     RULE_109_2d_SCHEME_REFERENCE,
+
     // 109.3. An object’s characteristics are name, mana cost, color, color indicator, card type, subtype, supertype, rules text, abilities, power, toughness, loyalty, defense, hand modifier, and life modifier. Objects can have some or all of these characteristics. Any other information about an object isn’t a characteristic. For example, characteristics don’t include whether a permanent is tapped, a spell’s target, an object’s owner or controller, what an Aura enchants, and so on.
     RULE_109_3_CHARACTERISTIC_REFERENCE,
+
     // 109.4. Only objects on the stack or on the battlefield have a controller. Objects that are neither on the stack nor on the battlefield aren’t controlled by any player. See rule 108.4. There are six exceptions to this rule:
     // 109.4a. The controller of a mana ability is determined as though it were on the stack. See rule 605, “Mana Abilities.”
     // 109.4b. A triggered ability that has triggered but is waiting to be placed on the stack is controlled by the player who controlled its source at the time it triggered, unless it’s a delayed triggered ability. To determine the controller of a delayed triggered ability, see rules 603.7d–f. See also rule 603, “Handling Triggered Abilities.”
     // 109.4c. An emblem is controlled by the player who puts it into the command zone. See rule 114, “Emblems.”
     RULE_109_4c_CONTROLLER_REFERENCE,
+
     // 109.5. The words “you” and “your” on an object refer to the object’s controller, its would-be controller (if a player is attempting to play, cast, or activate it), or its owner (if it has no controller). For a static ability, this is the current controller of the object it’s on. For an activated ability, this is the player who activated the ability. For a triggered ability, this is the controller of the object when the ability triggered, unless it’s a delayed triggered ability. To determine the controller of a delayed triggered ability, see rules 603.7d–f.
     RULE_109_5_YOU_YOUR_REFERENCE,
+
     // 110.1. A permanent is a card or token on the battlefield. A permanent remains on the battlefield indefinitely. A card or token becomes a permanent as it enters the battlefield and it stops being a permanent as it’s moved to another zone by an effect or rule.
     RULE_110_1_PERMANENT_REMAINS_ON_BATTLEFIELD,
+
     // 110.2. A permanent’s owner is the same as the owner of the card that represents it (unless it’s a token; see rule 111.2). A permanent’s controller is, by default, the player under whose control it entered the battlefield. Every permanent has a controller.
     RULE_110_2_PERMANENT_OWNER_IS_OWNER_CONTROLLER_IS_CONTROLLER,
+
     // 110.2a. If an effect instructs a player to put an object onto the battlefield, that object enters the battlefield under that player’s control unless the effect states otherwise.
     RULE_110_2a_PLAYER_PUTS_ON_BATTLEFIELD_PUTS_IN_CONTROL,
+
     // 110.2b. If an effect causes a player to gain control of another player’s permanent spell, the first player controls the permanent that spell becomes, but the permanent’s controller by default is the player who put that spell onto the stack. (This distinction is relevant in multiplayer games; see rule 800.4c.)
     RULE_110_2b_PLAYER_GAINS_CONTROL_OF_PERMANENT_DEFAULTING_TO_PLAYER_WHO_PUT_ON_STACK,
+
     // 110.3. A nontoken permanent’s characteristics are the same as those printed on its card, as modified by any continuous effects. See rule 613, “Interaction of Continuous Effects.”
     RULE_110_3_PERMANENT_CHARACTERISTICS_AS_PRINTED_MODIFIED_BY_CONTINUOUS_EFFECTS,
+
     // 110.4. There are six permanent types: artifact, battle, creature, enchantment, land, and planeswalker. Instant and sorcery cards can’t enter the battlefield and thus can’t be permanents. Some kindred cards can enter the battlefield and some can’t, depending on their other card types. See section 3, “Card Types.”
     // 110.4a. The term “permanent card” is used to refer to a card that could be put onto the battlefield. Specifically, it means an artifact, battle, creature, enchantment, land, or planeswalker card.
     // 110.4b. The term “permanent spell” is used to refer to a spell that will enter the battlefield as a permanent as part of its resolution. Specifically, it means an artifact, battle, creature, enchantment, or planeswalker spell.
     // 110.4c. If a permanent somehow loses all its permanent types, it remains on the battlefield. It’s still a permanent.
     RULE_110_4c_PERMANENT_TYPE_DEFINITION,
+
     // 110.5. A permanent’s status is its physical state. There are four status categories, each of which has two possible values: tapped/untapped, flipped/unflipped, face up/face down, and phased in/phased out. Each permanent always has one of these values for each of these categories.
     // 110.5a. Status is not a characteristic, though it may affect a permanent’s characteristics.
     // 110.5b. Permanents enter the battlefield untapped, unflipped, face up, and phased in unless a spell or ability says otherwise.
     // 110.5c. A permanent retains its status until a spell, ability, or turn-based action changes it, even if that status is not relevant to it.
     // 110.5d. Only permanents have status. Cards not on the battlefield do not. Although an exiled card may be face down, this has no correlation to the face-down status of a permanent. Similarly, cards not on the battlefield are neither tapped nor untapped, regardless of their physical state.
     RULE_110_5d_STATUS_DEFINITION,
+
     // 111.1. Some effects put tokens onto the battlefield. A token is a marker used to represent any permanent that isn’t represented by a card.
     RULE_111_1_TOKEN_DEFINITION,
+
     // 111.2. The player who creates a token is its owner. The token enters the battlefield under that player’s control.
     RULE_111_2_TOKEN_OWNER,
+
     // 111.3. The spell or ability that creates a token may define the values of any number of characteristics for the token. This becomes the token’s “text.” The characteristic values defined this way are functionally equivalent to the characteristic values that are printed on a card; for example, they define the token’s copiable values. A token doesn’t have any characteristics not defined by the spell or ability that created it.
     RULE_111_3_TOKEN_TEXT_DEFINED_BY_SPELL,
+
     // 111.4. A spell or ability that creates a token sets both its name and its subtype(s). If the spell or ability doesn’t specify the name of the token, its name is the same as its subtype(s) plus the word “Token.” Once a token is on the battlefield, changing its name doesn’t change its subtype(s), and vice versa.
     RULE_111_4_TOKEN_NAME_AND_TYPE_SET_BY_SPELL,
+
     // 111.5. If a spell or ability would create a token, but a rule or effect states that a permanent with one or more of that token’s characteristics can’t enter the battlefield, the token is not created. Similarly, if an effect would create a token that is a copy of an instant or sorcery card, no token is created.
     RULE_111_5_TOKENS_DONT_ENTER_IF_RULE_OR_EFFECT_PREVENT_IT,
+
     // 111.6. A token is subject to anything that affects permanents in general or that affects the token’s card type or subtype. A token isn’t a card (even if represented by a card that has a Magic back or that came from a Magic booster pack).
     RULE_111_6_TOKENS_ARE_PERMANENTS_NOT_CARDS,
+
     // 111.7. A token that’s in a zone other than the battlefield ceases to exist. This is a state-based action; see rule 704. (Note that if a token changes zones, applicable triggered abilities will trigger before the token ceases to exist.)
     // 111.8. A token that has left the battlefield can’t move to another zone or come back onto the battlefield. If such a token would change zones, it remains in its current zone instead. It ceases to exist the next time state-based actions are checked; see rule 704.
     RULE_111_8_TOKENS_NOT_IN_BATTLEFIELD_DIE,
+
     // 111.9. Some effects instruct a player to create a legendary token. These may be written “create [name], a . . .” and list characteristics for the token. This is the same as an instruction to create a token with the listed characteristics that has the given name.
     RULE_111_9_LEGENDARY_TOKENS_DEFINITION,
+
     // 111.10. Some effects instruct a player to create a predefined token. These effects use the definition below to determine the characteristics the token is created with. The effect that creates a predefined token may also modify or add to the predefined characteristics.
     // 111.10a. A Treasure token is a colorless Treasure artifact token with “{T}, Sacrifice this token: Add one mana of any color.”
     // 111.10b. A Food token is a colorless Food artifact token with “{2}, {T}, Sacrifice this token: You gain 3 life.”
@@ -224,87 +297,125 @@ enum Rule {
     // 111.10t. A Junk token is a colorless Junk artifact token with “{T}, Sacrifice this token: Exile the top card of your library. You may play that card this turn. Activate only as a sorcery.”
     // 111.10u. A Lander token is a colorless Lander artifact token with “{2}, {T}, Sacrifice this token: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle.”
     RULE_111_10u_PREDEFINED_TOKENS,
+
     // 112.1. A spell is a card on the stack. As the first step of being cast (see rule 601, “Casting Spells”), the card becomes a spell and is moved to the top of the stack from the zone it was in, which is usually its owner’s hand. (See rule 405, “Stack.”) A spell remains on the stack as a spell until it resolves (see rule 608, “Resolving Spells and Abilities”), is countered (see rule 701.6), or otherwise leaves the stack. For more information, see section 6, “Spells, Abilities, and Effects.”
     // 112.1a. A copy of a spell is also a spell, even if it has no card associated with it. See rule 707.10.
     // 112.1b. Some effects allow a player to cast a copy of a card; if the player does, that copy is a spell as well. See rule 707.12.
     RULE_112_1b_SPELL_DEFINITION,
+
     // 112.2. A spell’s owner is the same as the owner of the card that represents it, unless it’s a copy. In that case, the owner of the spell is the player under whose control it was put on the stack. A spell’s controller is, by default, the player who put it on the stack. Every spell has a controller.
     // 112.2a. Some effects instruct a player to create a copy of a card and say they may cast it. In that case, the owner of that copy is the player who is instructed to create it and given permission to cast it.
     RULE_112_2a_SPELL_OWNER,
+
     // 112.3. A noncopy spell’s characteristics are the same as those printed on its card, as modified by any continuous effects. See rule 613, “Interaction of Continuous Effects.”
     RULE_112_3_SPELL_CHARACTERISTICS_MODIFIED_BY_CONTINUOUS_EFFECTS,
+
     // 112.4. If an effect of a resolving spell or ability changes any characteristics of a permanent spell, the effect continues to apply to the permanent when the spell resolves. See rule 400.7.
     RULE_112_4_SPELL_CHARACTERISTIC_CHANGES_CONTINUE_TO_RESOLUTION,
+
     // 113.1. An ability can be one of three things:
     // 113.1a. An ability can be a characteristic an object has that lets it affect the game. An object’s abilities are defined by its rules text or by the effect that created it. Abilities can also be granted to objects by rules or effects. (Effects that grant abilities usually use the words “has,” “have,” “gains,” or “gain.”) Abilities generate effects. (See rule 609, “Effects.”)
     // 113.1b. An ability can be something that a player has that changes how the game affects the player. A player normally has no abilities unless granted to that player by effects.
     // 113.1c. An ability can be an activated or triggered ability on the stack. This kind of ability is an object. (See section 6, “Spells, Abilities, and Effects.”)
     RULE_113_1c_ABILITIES_DEFINITION,
+
     // 113.2b. An additional cost or alternative cost to cast a card is an ability of the card.
     RULE_113_2b_ABILITIES_INCLUDE_ADDITIONAL_COSTS,
+
     // 113.2c. An object may have multiple abilities. If the object is represented by a card, then aside from certain defined abilities that may be strung together on a single line (see rule 702, “Keyword Abilities”), each paragraph break in a card’s text marks a separate ability. If the object is not represented by a card, the effect that created it may have given it multiple abilities. An object may also be granted additional abilities by a spell or ability. If an object has multiple instances of the same ability, each instance functions independently. This may or may not produce more effects than a single instance; refer to the specific ability for more information.
     RULE_113_2c_ABILITIES_CAN_BE_STACKED_SEPARATED_BY_PARAGRAPHS,
+
     // 113.2d. Abilities can generate one-shot effects or continuous effects. Some continuous effects are replacement effects or prevention effects. See rule 609, “Effects.”
     RULE_113_2d_ABILITIES_ARE_ONE_SHOT_OR_CONTINUOUS,
+
     // 113.3a. Spell abilities are abilities that are followed as instructions while an instant or sorcery spell is resolving. Any text on an instant or sorcery spell is a spell ability unless it’s an activated ability, a triggered ability, or a static ability that fits the criteria described in rule 113.6.
     RULE_113_3a_SPELL_ABILITIES_DEFINITION,
+
     // 113.3b. Activated abilities have a cost and an effect. They are written as “[Cost]: [Effect.] [Activation instructions (if any).]” A player may activate such an ability whenever they have priority. Doing so puts it on the stack, where it remains until it’s countered, it resolves, or it otherwise leaves the stack. See rule 602, “Activating Activated Abilities.”
     RULE_113_3b_ACTIVATED_ABILITIES_DEFINITION,
+
     // 113.3c. Triggered abilities have a trigger condition and an effect. They are written as “[Trigger condition], [effect],” and include (and usually begin with) the word “when,” “whenever,” or “at.” Whenever the trigger event occurs, the ability is put on the stack the next time a player would receive priority and stays there until it’s countered, it resolves, or it otherwise leaves the stack. See rule 603, “Handling Triggered Abilities.”
     RULE_113_3c_TRIGGERED_ABILITIES_DEFINITION,
+
     // 113.3d. Static abilities are written as statements. They’re simply true. Static abilities create continuous effects which are active while the permanent with the ability is on the battlefield and has the ability, or while the object with the ability is in the appropriate zone. See rule 604, “Handling Static Abilities.”
     RULE_113_3d_STATIC_ABILITIES_DEFINITION,
+
     // 113.4. Some activated abilities and some triggered abilities are mana abilities. Mana abilities follow special rules: They don’t use the stack, and, under certain circumstances, a player can activate mana abilities even if they don’t have priority. See rule 605, “Mana Abilities.”
     RULE_113_4_MANA_ABILITIES_DEFINITION,
+
     // 113.5. Some activated abilities are loyalty abilities. Loyalty abilities follow special rules: A player may activate a loyalty ability of a permanent they control any time they have priority and the stack is empty during a main phase of their turn, but only if no player has previously activated a loyalty ability of that permanent that turn. See rule 606, “Loyalty Abilities.”
     RULE_113_5_LOYALTY_ABILITIES_DEFINITION,
+
     // 113.6. Abilities of an instant or sorcery spell usually function only while that object is on the stack. Abilities of all other objects usually function only while that object is on the battlefield. The exceptions are as follows:
     RULE_113_6_INSTANT_SORCERY_ABILITIES_FUNCTION_WHEN_ON_STACK,
     PERMANENT_ABILITIES_ONLY_FUNCTION_WHEN_ON_BATTLEFIELD(Condition),
+
     // 113.6a. Characteristic-defining abilities function everywhere, even outside the game and before the game begins. (See rule 604.3.)
     RULE_113_6a_CHARACTERISTIC_ABILITIES_ARE_UBIQUITOUS,
+
     // 113.6b. An ability that states which zones it functions in functions only from those zones.
     RULE_113_6b_ABILITIES_SCOPED_TO_ZONE,
+
     // 113.6c. An ability that states which zones it doesn’t function in functions everywhere except for the specified zones, even outside the game and before the game begins.
     RULE_113_6c_ABILITIES_NOT_AFFECT_A_ZONE_AFFECTS_EVERYWHERE,
+
     // 113.6d. An object’s ability that allows a player to pay an alternative cost rather than its mana cost or otherwise modifies what that particular object costs to cast functions on the stack.
     RULE_113_6d_ALTERNATIVE_COST_ABILITY,
+
     // 113.6e. An object’s ability that restricts or modifies how that particular object can be played or cast functions in any zone from which it could be played or cast and also on the stack. An object’s ability that grants it another ability that restricts or modifies how that particular object can be played or cast functions only on the stack.
     RULE_113_6e_ABILITY_RESTRICTIONS_ON_STACK_AND_ANY_ZONE,
+
     // 113.6f. An object’s ability that restricts or modifies what zones that particular object can be played or cast from functions everywhere, even outside the game.
     RULE_113_6f_CAST_ABILITIES_ARE_SCOPED_TO_ZONES,
+
     // 113.6g. An object’s ability that states it can’t be countered or can’t be copied functions on the stack.
     RULE_113_6g_ABILITIES_THAT_PREVENT_COUNTER_OR_COPY_ON_STACK,
+
     // 113.6h. An object’s ability that modifies how that particular object enters the battlefield functions as that object is entering the battlefield. See rule 614.12.
     RULE_113_6h_ETB_ABILITIES_APPLY_ON_ENTERING,
+
     // 113.6i. An object’s ability that states counters can’t be put on that object functions as that object is entering the battlefield in addition to functioning while that object is on the battlefield.
     RULE_113_6i_ABILITY_THAT_PREVENTS_COUNTERS_ALSO_APPLIES_ON_ENTERING,
+
     // 113.6j. An object’s activated ability that has a cost that can’t be paid while the object is on the battlefield functions from any zone in which its cost can be paid.
     RULE_113_6j_ACTIVATED_ABILITY_THAT_CANT_BE_PAID_IN_ALL_ZONES,
+
     // 113.6k. A trigger condition that can’t trigger from the battlefield functions in all zones it can trigger from. Other trigger conditions of the same triggered ability may function in different zones.
     RULE_113_6k_TRIGGER_CONDITIONS_TRIGGER_FROM_ALL_ZONES_WHERE_IT_IS_LEGAL,
+
     // 113.6m. An ability whose cost or effect specifies that it moves the object it’s on out of a particular zone functions only in that zone, unless its trigger condition or a previous part of its cost or effect specifies that the object is put into that zone or, if the object is an Aura, that the object it enchants leaves the battlefield. The same is true if the effect of that ability creates a delayed triggered ability whose effect moves the object out of a particular zone.
     RULE_113_6m_ABILITY_THAT_AFFECTS_INSIDE_ZONE_ONLY_WITH_EXCEPTIONS(Condition),
+
     // 113.6p. Abilities of emblems, plane cards, vanguard cards, scheme cards, and conspiracy cards function in the command zone. See rule 114, “Emblems”; rule 901, “Planechase”; rule 902, “Vanguard”; rule 904, “Archenemy”; and rule 905, “Conspiracy Draft.”
     RULE_113_6p_ABILITIES_THAT_TRIGGER_FROM_COMMAND_ZONE,
+
     // 113.7. The source of an ability is the object that generated it. The source of an activated ability on the stack is the object whose ability was activated. The source of a triggered ability (other than a delayed triggered ability) on the stack, or one that has triggered and is waiting to be put on the stack, is the object whose ability triggered. To determine the source of a delayed triggered ability, see rules 603.7d–f.
     RULE_113_7_SOURCE_DEFINITION,
+
     // 113.7a. Once activated or triggered, an ability exists on the stack independently of its source. Destruction or removal of the source after that time won’t affect the ability. Note that some abilities cause a source to do something (for example, “This creature deals 1 damage to any target”) rather than the ability doing anything directly. In these cases, any activated or triggered ability that references information about the source for use while announcing an activated ability or putting a triggered ability on the stack checks that information when the ability is put onto the stack. Otherwise, it will check that information when it resolves. In both instances, if the source is no longer in the zone it’s expected to be in at that time, its last known information is used. The source can still perform the action even though it no longer exists.
     RULE_113_7a_ABILITIES_ON_STACK_ARE_INDEPENDENT_OF_SOURCE,
+
     // 113.8. The controller of an activated ability on the stack is the player who activated it. The controller of a triggered ability on the stack (other than a delayed triggered ability) is the player who controlled the ability’s source when it triggered, or, if it had no controller, the player who owned the ability’s source when it triggered. To determine the controller of a delayed triggered ability, see rules 603.7d–f.
     RULE_113_8_CONTROLLER_OF_ABILITY_ON_STACK_IS_THE_PLAYER_WHO_ACTIVATED,
+
     // 113.9. Activated and triggered abilities on the stack aren’t spells, and therefore can’t be countered by anything that counters only spells. Activated and triggered abilities on the stack can be countered by effects that specifically counter abilities. Static abilities don’t use the stack and thus can’t be countered at all.
     RULE_113_9_ABILITIES_CAN_ONLY_BE_COUNTERED_BY_ABILITY_COUNTER_EXCEPT_STATIC_ABILITIES(Condition),
+
     // 113.10. Effects can add or remove abilities of objects. An effect that adds an ability will state that the object “gains” or “has” that ability, or similar. An effect that removes an ability will state that the object “loses” that ability.
     RULE_113_10_EFFECTS_CAN_ADD_OR_REMOVE_ABILITIES,
+
     // 113.10a. An effect that adds an activated ability may include activation instructions for that ability. These instructions become part of the ability that’s added to the object.
     RULE_113_10a_EFFECTS_THAT_ADD_ACTIVATED_ABILITIES_INCLUDE_ACTIVATION_INSTRUCTIONS,
+
     // 113.10b. Effects that remove an ability remove all instances of it.
     RULE_113_10b_EFFECTS_THAT_REMOVE_ABILITY_REMOVE_ALL_INSTANCES,
+
     // 113.10c. If two or more effects add and remove the same ability, in general the most recent one prevails. See rule 613 for more information about the interaction of continuous effects.
     RULE_113_10c_MOST_RECENT_EFFECT_ADDED_OR_REMOVED_WINS,
+
     // 113.11. Effects can stop an object from having a specified ability. These effects say that the object “can’t have” that ability. If the object has that ability, it loses it. It’s also impossible for an effect or keyword counter to add that ability to the object. If a resolving spell or ability creates a continuous effect that would add the specified ability to such an object, that part of that continuous effect does not apply; however, other parts of that continuous effect will still apply, and that resolving spell or ability can still create other continuous effects. Continuous effects created by static abilities that would add the specified ability won’t apply to that object.
     RULE_113_11_EFFECTS_THAT_SAY_CANT_HAVE_PREVENT_THE_ABILITY_FROM_BEING_ADDED_BUT_LET_OTHERS_GO_THROUGH,
+
     // 113.12. An effect that sets an object’s characteristic, or simply states a quality of that object, is different from an ability granted by an effect. When an object “gains” or “has” an ability, that ability can be removed by another effect. If an effect defines a characteristic of the object (“[permanent] is [characteristic value]”), it’s not granting an ability. (See rule 604.3.) Similarly, if an effect states a quality of that object (“[creature] can’t be blocked,” for example), it’s neither granting an ability nor setting a characteristic.
     RULE_113_12_EFFECT_SETTING_CHARACTERISTIC_IS_NOT_AN_ABILITY,
 
@@ -312,12 +423,16 @@ enum Rule {
 
     // 114.1. Some effects put emblems into the command zone. An emblem is a marker used to represent an object that has one or more abilities, but usually no other characteristics.
     RULE_114_1_EMBLEMS_EXIST_IN_COMMAND_ZONE,
+
     // 114.2. An effect that creates an emblem is written “[Player] gets an emblem with [ability].” This means that [player] puts an emblem with [ability] into the command zone. The emblem is both owned and controlled by that player.
     RULE_114_2_EMBLEM_CREATION_SYNTAX,
+
     // 114.3. An emblem has no characteristics other than the abilities defined by the effect that created it. In particular, an emblem has no types, no mana cost, and no color. Most emblems also have no name.
     RULE_114_3_EMBLEM_HAS_NO_CHARACTERISTICS_EXCEPT_ABILITIES,
+
     // 114.4. Abilities of emblems function in the command zone.
     RULE_114_4_EMBLEM_ABILITIES_FUNCTION_IN_COMMAND_ZONE,
+
     // 114.5. An emblem is neither a card nor a permanent. Emblem isn’t a card type.
     RULE_114_5_EMBLEM_IS_NOT_A_CARD_OR_PERMANENT_OR_TYPE,
 
@@ -438,6 +553,7 @@ enum Rule {
 
     // 116.3. If a player takes a special action, that player receives priority afterward.
     RULE_116_3_PLAYER_RECEIVES_PRIORITY_AFTER_SPECIAL_ACTION,
+
     // 117.1. Unless a spell or ability is instructing a player to take an action, which player can take actions at any given time is determined by a system of priority. The player with priority may cast spells, activate abilities, and take special actions.
     RULE_117_1_PRIORITY_DETERMINES_ACTION_LEGALITY,
     
@@ -593,9 +709,6 @@ enum Rule {
     
     // 122.3. If a permanent has both a +1/+1 counter and a -1/-1 counter on it, N +1/+1 and N -1/-1 counters are removed from it as a state-based action, where N is the smaller of the number of +1/+1 and -1/-1 counters on it. See rule 704.
     RULE_122_3_PLUS_AND_MINUS_COUNTERS_CANCEL,
-
-
-
 
 
     // =========================================================================
@@ -856,6 +969,7 @@ enum Rule {
     // 905.2c. Some cards instruct players to draft them face up. Each such card remains face up until the draft is complete, an effect instructs the player who drafted it to turn it face down, or the card leaves that player’s drafted cards pile. While the card is face up, all players may look at it.
     // 905.3. A Conspiracy Draft game is a multiplayer game. The default multiplayer setup is the Free-for-All variant with the attack multiple players option and without the limited range of influence option. See rule 806, “Free-for-All Variant.”
     // 905.4. At the start of the game, before decks are shuffled, each player may put any number of conspiracy cards from their sideboard into the command zone.
+    // 905.4a. Conspiracy cards with hidden agenda are put into the command zone face down. Any time a player has priority, they may turn a face-down conspiracy card they control face up. See rule 702.106, “Hidden Agenda.”
     // 905.5. The owner of a conspiracy card is the player who put it into the command zone at the start of the game. The controller of a conspiracy card is its owner.
     // 905.6. Once the starting player has been determined, each player sets their life total to 20 and draws a hand of seven cards.
     ESOTERIC_CASUAL_VARIANTS,
@@ -877,6 +991,7 @@ enum Rule {
     // 100.3. Some cards require coins or traditional dice. Some casual variants require additional items, such as specially designated cards, nontraditional Magic cards, and specialized dice.
     RULE_100_3_CARDS_REQUIRE_COINS_TRADITIONAL_DICE,
 
+    // 100.4. Each player may also have a sideboard, which is a group of additional cards the player may use to modify their deck between games of a match. Sideboard rules and restrictions for some formats are modified by the Magic: The Gathering Tournament Rules (found at WPN.Wizards.com/en/rules-documents).
     // 100.4a. In constructed play, a sideboard may contain no more than fifteen cards. The four-card limit (see rule 100.2a) applies to the combined deck and sideboard.
     // 100.4b. In limited play involving individual players, all cards in a player’s card pool not included in their deck are in that player’s sideboard.
     // 100.4c. In limited play involving the Two-Headed Giant multiplayer variant, all cards in a team’s card pool but not in either player’s deck are in that team’s sideboard.
@@ -939,6 +1054,7 @@ enum Rule {
     // 103.4e. In an Archenemy game, the archenemy’s starting life total is 40.
     RULE_103_4_PLAYER_BEGINS_GAME_STARTING_LIFE,
 
+    // 103.5. Each player draws a number of cards equal to their starting hand size, which is normally seven. (Some effects can modify a player’s starting hand size.) A player who is dissatisfied with their initial hand may take a mulligan. First, the starting player declares whether they will take a mulligan. Then each other player in turn order does the same. Once each player has made a declaration, all players who decided to take mulligans do so at the same time. To take a mulligan, a player shuffles the cards in their hand back into their library, draws a new hand of cards equal to their starting hand size, then puts a number of those cards equal to the number of times that player has taken a mulligan on the bottom of their library in any order. Once a player chooses not to take a mulligan, the remaining cards become that player’s opening hand, and that player may not take any further mulligans. This process is then repeated until no player takes a mulligan. A player can take mulligans until their opening hand would be zero cards, after which they may not take further mulligans.
     // 103.5a. In a Vanguard game, each player’s starting hand size is seven plus or minus the hand modifier of their vanguard card.
     // 103.5b. If an effect allows a player to perform an action “any time [that player] could mulligan,” the player may perform that action at a time they would declare whether they will take a mulligan. This need not be in the first round of mulligans. Other players may have already made their mulligan declarations by the time the player has the option to perform this action. If the player performs the action, they then declare whether they will take a mulligan.
     // 103.5c. In a multiplayer game and in any Brawl game, the first mulligan a player takes doesn’t count toward the number of cards that player will put on the bottom of their library or the number of mulligans that player may take. Subsequent mulligans are counted toward these numbers as normal.
@@ -965,6 +1081,10 @@ enum Rule {
     // 104.3k. In a tournament, a player may lose the game as a result of a penalty given by a judge. See rule 100.6.
     RULE_104_3_MULTIPLAYER_GAME_TEAMS_TEAM_LOSES(Condition),
 
+    // 104.4. There are several ways for the game to be a draw.
+    // 104.4a. If all the players remaining in a game lose simultaneously, the game is a draw.
+    // 104.4b. If a game that’s not using the limited range of influence option (including a two-player game) somehow enters a “loop” of mandatory actions, repeating a sequence of events with no way to stop, the game is a draw. Loops that contain an optional action don’t result in a draw.
+    // 104.4c. An effect may state that the game is a draw.
     // 104.4d. In a multiplayer game between teams, the game is a draw if all remaining teams lose simultaneously.
     // 104.4e. In a multiplayer game using the limited range of influence option, the effect of a spell or ability that states that the game is a draw causes the game to be a draw for that spell or ability’s controller and all players within their range of influence. Only those players leave the game; the game continues for all other players.
     // 104.4f. In a multiplayer game using the limited range of influence option, if the game somehow enters a “loop” of mandatory actions, repeating a sequence of events with no way to stop, the game is a draw for each player who controls an object that’s involved in that loop, as well as for each player within the range of influence of any of those players. Only those players leave the game; the game continues for all other players.
@@ -974,12 +1094,16 @@ enum Rule {
     RULE_104_4_MULTIPLAYER_GAME_TEAMS_GAME_DRAW(Condition),
 
     // 105.1. There are five colors in the Magic game: white, blue, black, red, and green.
-    RULE_105_1_COLORS_MAGIC_GAME_WHITE_BLUE,
+    RULE_105_1_FIVE_COLORS_IN_MAGIC,
 
+    // 105.2. An object can be one or more of the five colors, or it can be no color at all. An object is the color or colors of the mana symbols in its mana cost, regardless of the color of its frame. An object’s color or colors may also be defined by a color indicator or a characteristic-defining ability. See rule 202.2.
     // 105.2a. A monocolored object is exactly one of the five colors.
     // 105.2b. A multicolored object is two or more of the five colors.
     // 105.2c. A colorless object has no color.
     RULE_105_2_MONOCOLORED_OBJECT_EXACTLY_COLORS,
+
+    // 105.3. Effects may change an object’s color or give a color to a colorless object. If an effect gives an object a new color, the new color replaces all previous colors the object had (unless the effect said the object became that color “in addition” to its other colors). Effects may also make a colored object become colorless.
+    RULE_105_3_EFFECTS_CHANGE_OBJECTS_COLOR_COLOR(Condition),
 
     // 106.1. Mana is the primary resource in the game. Players spend mana to pay costs, usually when casting spells and activating abilities.
     // 106.1a. There are five colors of mana: white, blue, black, red, and green.
@@ -1043,6 +1167,9 @@ enum Rule {
     // 109.4g. In a Conspiracy Draft game, each conspiracy card is controlled by its owner. See rule 905.5.
     RULE_109_4_PLANECHASE_GAME_FACE_PLANE_PHENOMENON,
 
+    // 111.7. A token that’s in a zone other than the battlefield ceases to exist. This is a state-based action; see rule 704. (Note that if a token changes zones, applicable triggered abilities will trigger before the token ceases to exist.)
+    RULE_111_7_TOKEN_THATS_ZONE_THAN_BATTLEFIELD(Condition),
+
     // 111.10v. A Mutagen token is a colorless Mutagen artifact token with “{1}, {T}, Sacrifice this token: Put a +1/+1 counter on target creature. Activate only as a sorcery.”
     RULE_111_10_MUTAGEN_TOKEN_COLORLESS_MUTAGEN_ARTIFACT,
 
@@ -1064,6 +1191,9 @@ enum Rule {
 
     // 113.6n. An ability that modifies the rules for deck construction functions before the game begins. Such an ability modifies not just the Comprehensive Rules, but also the Magic: The Gathering Tournament Rules and any other documents that set the deck construction rules for a specific format. However, such an ability can’t affect the format legality of a card, including whether it’s banned or restricted. The current Magic: The Gathering Tournament Rules can be found at WPN.Wizards.com/en/rules-documents.
     RULE_113_6_ABILITY_MODIFIES_DECK_CONSTRUCTION_FUNCTIONS(Condition),
+
+    // 115.7. Some effects allow a player to change the target(s) of a spell or ability, and other effects allow a player to choose new targets for a spell or ability.
+    RULE_115_7_EFFECTS_ALLOW_PLAYER_CHANGE_TARGET,
 
     // 115.9. Some objects check what another spell or ability is targeting. Depending on the wording, these may check the current state of the targets, the state of the targets at the time they were selected, or both.
     RULE_115_9_OBJECTS_CHECK_SPELL_ABILITY_TARGETING(Condition),
@@ -1264,7 +1394,7 @@ enum Rule {
     // 201.3a. For the purposes of all rules, abilities, and effects that refer to a card’s name, objects with interchangeable names have the same name. (See rules 201.2a–b.)
     // 201.3b. For the purposes of deck construction and format legality, cards with interchangeable names have the same name.
     // 201.3c. If a card has later printings with interchangeable names, the later printings will have an interchangeable names indicator in the bottom left-hand corner referring to the original printing’s three-letter set code and collector number (see rule 213.1d).
-    RULE_201_3_CARDS_ENGLISH_NAMES_TREATED_ENGLISH(Condition),
+    RULE_201_3_CARDS_ENGLISH_NAMES_TREATED_ENGLISH_2(Condition),
 
     // 201.4. If an effect instructs a player to choose a card name, the player must choose the name of a card in the Oracle card reference. (See rule 108.1.) A player may not choose the name of a token unless it’s also the name of a card.
     // 201.4a. If a player is instructed to choose a card name with certain characteristics, the player must choose the name of a card whose Oracle text matches those characteristics. (See rule 108.1.)
@@ -1289,6 +1419,9 @@ enum Rule {
     // 202.1a. The mana cost of an object represents what a player must spend from their mana pool to cast that card. Unless an object’s mana cost includes Phyrexian mana symbols (see rule 107.4f), paying that mana cost requires matching the type of any colored or colorless mana symbols as well as paying the generic mana indicated in the cost.
     // 202.1b. Some objects have no mana cost. This normally includes all land cards, any other cards that have no mana symbols where their mana cost would appear, tokens (unless the effect that creates them specifies otherwise), and nontraditional Magic cards. Having no mana cost represents an unpayable cost (see rule 118.6). Note that lands are played without paying any costs (see rule 305, “Lands”).
     RULE_202_1_CARDS_MANA_COST_INDICATED_MANA(Condition),
+
+    // 202.2. An object is the color or colors of the mana symbols in its mana cost, regardless of the color of its frame.
+    RULE_202_2_OBJECT_COLOR_COLORS_MANA_SYMBOLS,
 
     // 202.2a. The five colors are white, blue, black, red, and green. The white mana symbol is represented by {W}, blue by {U}, black by {B}, red by {R}, and green by {G}.
     RULE_202_2a_COLORS_WHITE_BLUE_BLACK_RED,
@@ -1401,7 +1534,7 @@ enum Rule {
     // 207.2b. Flavor text is italicized text that, like the illustration, adds artistic appeal to the game. It usually appears below the rules text.
     // 207.2c. An ability word appears in italics at the beginning of some abilities. Ability words are similar to keywords in that they tie together cards that have similar functionality, but they have no special rules meaning and no individual entries in the Comprehensive Rules. The ability words are adamant, addendum, alliance, battalion, bloodrush, celebration, channel, chroma, cohort, constellation, converge, council’s dilemma, coven, delirium, descend 4, descend 8, disappear, domain, eerie, eminence, enrage, fateful hour, fathomless descent, ferocious, flurry, formidable, grandeur, hellbent, heroic, imprint, infusion, inspired, join forces, kinship, landfall, lieutenant, magecraft, metalcraft, morbid, opus, pack tactics, paradox, parley, radiance, raid, rally, renew, repartee, revolt, secret council, spell mastery, strive, survival, sweep, tempting offer, threshold, undergrowth, valiant, vivid, void, and will of the council.
     // 207.2d. Similar to ability words, flavor words appear in italics at the beginning of some abilities. Flavor words provide a flavorful description of abilities, but they have no special rules meaning and are not listed in the Comprehensive Rules. While an ability word ties together several abilities with similar functionality, each flavor word is tailored to the specific ability it appears with.
-    RULE_207_2_TEXT_BOX_ITALICIZED_TEXT_NO_GAME_FUNCTION(Condition),
+    RULE_207_2_TEXT_BOX_CONTAIN_ITALICIZED_TEXT(Condition),
 
     // 207.3. Some cards have decorative icons in the background of their text boxes. For example, a guild icon appears in the text box of many cards associated with the guilds of Ravnica, and a faction icon appears in the text box of most Scars of Mirrodin™ block cards. Similarly, many promotional cards include decorative icons. These icons have no effect on game play.
     RULE_207_3_CARDS_DECORATIVE_ICONS_BACKGROUND_TEXT,
@@ -1422,7 +1555,7 @@ enum Rule {
 
     // 208.3. A noncreature permanent has no power or toughness, even if it’s a card with a power and toughness printed on it (such as a Vehicle). A noncreature object not on the battlefield has power or toughness only if it has a power and toughness printed on it.
     // 208.3a. If an effect would be created that sets the base power and/or toughness of a noncreature permanent, or otherwise modifies its power and/or toughness, that effect is created even though it doesn’t do anything unless that permanent becomes a creature.
-    RULE_208_3_NONCREATURE_PERMANENT_NO_POWER_TOUGHNESS(Condition),
+    RULE_208_3_NONCREATURE_PERMANENT_POWER_TOUGHNESS_CARD(Condition),
 
     // 208.4. Some effects refer to a creature’s “base power,” “base toughness,” or “base power and toughness.”
     // 208.4a. Effects that set a creature’s power and/or toughness to specific values may refer to base power and/or toughness. Other continuous effects may further modify the creature’s power and toughness. See rule 613, “Interaction of Continuous Effects.”
@@ -1486,7 +1619,7 @@ enum Rule {
     // 301.5d. An Equipment’s controller is separate from the equipped creature’s controller; the two need not be the same. Changing control of the creature doesn’t change control of the Equipment, and vice versa. Only the Equipment’s controller can activate its abilities. However, if the Equipment grants an ability to the equipped creature (with “gains” or “has”), the equipped creature’s controller is the only one who can activate that ability.
     // 301.5e. If an effect attempts to put an Equipment that isn’t also an Aura (see rule 303.4i) onto the battlefield attached to either an object it can’t legally equip or an object that is undefined, the Equipment enters the battlefield unattached. If the Equipment is a token, it’s created and enters the battlefield unattached.
     // 301.5f. An ability of a permanent that refers to the “equipped creature” refers to whatever creature that permanent is attached to, even if the permanent with the ability isn’t an Equipment.
-    RULE_301_5_ARTIFACT_SUBTYPE_EQUIPMENT_DEFINITION(Condition),
+    RULE_301_5_ARTIFACTS_SUBTYPE_EQUIPMENT_EQUIPMENT_ATTACHED(Condition),
 
     // 301.6. Some artifacts have the subtype “Fortification.” A Fortification can be attached to a land. It can’t legally be attached to an object that isn’t a land. Fortification’s analog to the equip keyword ability is the fortify keyword ability. Rules 301.5a–f apply to Fortifications in relation to lands just as they apply to Equipment in relation to creatures, with one clarification relating to rule 301.5c: a Fortification that’s also a creature (not a land) can’t fortify a land. (See rule 702.67, “Fortify.”)
     RULE_301_6_ARTIFACT_SUBTYPE_FORTIFICATION_DEFINITION,
@@ -1513,6 +1646,9 @@ enum Rule {
 
     // 302.5. Creatures can attack and block. (See rule 508, “Declare Attackers Step,” and rule 509, “Declare Blockers Step.”)
     RULE_302_5_CREATURES_ATTACK_BLOCK,
+
+    // 302.6. A creature’s activated ability with the tap symbol or the untap symbol in its activation cost can’t be activated unless the creature has been under its controller’s control continuously since their most recent turn began. A creature can’t attack unless it has been under its controller’s control continuously since their most recent turn began. This rule is informally called the “summoning sickness” rule.
+    RULE_302_6_CREATURES_ACTIVATED_ABILITY_TAP_SYMBOL(Condition),
 
     // 302.7. Damage dealt to a creature by a source with neither wither nor infect is marked on that creature (see rule 120.3). If the total damage marked on that creature is greater than or equal to its toughness, that creature has been dealt lethal damage and is destroyed as a state-based action (see rule 704). All damage marked on a creature is removed when it regenerates (see rule 701.19, “Regenerate”) and during the cleanup step (see rule 514.2).
     RULE_302_7_DAMAGE_DEALT_ON_CREATURE_MARKED_DESTROYED_IF_DAMAGE_IS_GREATER_THAN_TOUGHNESS_RESETS_WHEN_REGENERATED(Condition),
@@ -1748,6 +1884,7 @@ enum Rule {
     // 400.6. If an object would move from one zone to another, determine what event is moving the object. If the object is moving to a public zone and its owner will be able to look at it in that zone, its owner looks at it to see if it has any abilities that would affect the move. If the object is moving to the battlefield, each other player who will be able to look at it in that zone does so. Then any appropriate replacement effects, whether they come from that object or from elsewhere, are applied to that event. If any effects or rules try to do two or more contradictory or mutually exclusive things to a particular object, that object’s controller—or its owner if it has no controller—chooses which effect to apply, and what that effect does. (Note that multiple instances of the same thing may be mutually exclusive; for example, two simultaneous “destroy” effects.) Then the event moves the object.
     RULE_400_6_OBJECT_MOVE_ZONE_EVENT_MOVING(Condition),
 
+    // 400.7. An object that moves from one zone to another becomes a new object with no memory of, or relation to, its previous existence. This rule has the following exceptions.
     // 400.7a. Effects from spells, activated abilities, and triggered abilities that change the characteristics or controller of a permanent spell on the stack continue to apply to the permanent that spell becomes.
     // 400.7b. Effects from static abilities that grant an ability to a permanent spell that functions on the battlefield continue to apply to the permanent that spell becomes (see rule 611.3d).
     // 400.7c. Prevention effects that apply to damage from a permanent spell on the stack continue to apply to damage from the permanent that spell becomes.
@@ -1773,6 +1910,7 @@ enum Rule {
 
     // 400.11. An object is outside the game if it isn’t in any of the game’s zones. Outside the game is not a zone.
     // 400.11a. Cards in a player’s sideboard are outside the game. See rule 100.4.
+    // 400.11b. Some effects bring cards into a game from outside the game. Those cards remain in the game until the game ends, their owner leaves the game, or a rule or effect removes them from the game, whichever comes first.
     // 400.11c. Cards outside the game can’t be affected by spells or abilities, except for characteristic-defining abilities printed on them (see rule 604.3) and spells and abilities that allow those cards to be brought into the game.
     RULE_400_11_OBJECT_OUTSIDE_GAME_ISNT_GAMES(Condition),
 
@@ -2041,7 +2179,7 @@ enum Rule {
     RULE_506_7_SPELLS_STATE_CAST_POINT_COMBAT(Condition),
 
     // 507.1. First, if the game being played is a multiplayer game in which the active player’s opponents don’t all automatically become defending players, the active player chooses one of their opponents. That player becomes the defending player. This turn-based action doesn’t use the stack. (See rule 506.2.)
-    RULE_507_1_GAME_PLAYED_MULTIPLAYER_GAME_ACTIVE(Condition),
+    RULE_507_1_GAME_PLAYED_MULTIPLAYER_GAME_ACTIVE_2(Condition),
 
     // 507.2. Second, the active player gets priority. (See rule 117, “Timing and Priority.”)
     RULE_507_2_ACTIVE_PLAYER_PRIORITY,
@@ -2171,6 +2309,10 @@ enum Rule {
     // 514.1. First, if the active player’s hand contains more cards than their maximum hand size (normally seven), they discard enough cards to reduce their hand size to that number. This turn-based action doesn’t use the stack.
     RULE_514_1_ACTIVE_PLAYERS_HAND_CONTAINS_CARDS(Condition),
 
+    // 514.2. Second, the following actions happen simultaneously: all damage marked on permanents (including phased-out permanents) is removed and all “until end of turn” and “this turn” effects end. This turn-based action doesn’t use the stack.
+    RULE_514_2_ACTIONS_HAPPEN_SIMULTANEOUSLY_DAMAGE_MARKED,
+
+    // 514.3. Normally, no player receives priority during the cleanup step, so no spells can be cast and no abilities can be activated. However, this rule is subject to the following exception:
     // 514.3a. At this point, the game checks to see if any state-based actions would be performed and/or any triggered abilities are waiting to be put onto the stack (including those that trigger “at the beginning of the next cleanup step”). If so, those state-based actions are performed, then those triggered abilities are put on the stack, then the active player gets priority. Players may cast spells and activate abilities. Once the stack is empty and all players pass in succession, another cleanup step begins.
     RULE_514_3_POINT_GAME_CHECKS_STATE_BASED(Condition),
 
@@ -2182,8 +2324,11 @@ enum Rule {
 
     // 601.2. To cast a spell is to take it from where it is (usually the hand), put it on the stack, and pay its costs, so that it will eventually resolve and have its effect. Casting a spell includes proposal of the spell (rules 601.2a–d) and determination and payment of costs (rules 601.2f–h). To cast a spell, a player follows the steps listed below, in order. A player must be legally allowed to cast the spell to begin this process (see rule 601.3). If a player is unable to comply with the requirements of a step listed below while performing that step, the casting of the spell is illegal; the game returns to the moment before the casting of that spell was proposed (see rule 733, “Handling Illegal Actions”).
     // 601.2a. To propose the casting of a spell, a player first moves that card (or that copy of a card) from where it is to the stack. It becomes the topmost object on the stack. It has all the characteristics of the card (or the copy of a card) associated with it, and that player becomes its controller. Any continuous effects that modify the characteristics of the spell as you start casting it begin as it is put on the stack (see rule 611.2f). Any one-shot effects that cause the spell to gain abilities as you cast it apply as it is put on the stack (see rule 610.5). The spell remains on the stack until it resolves, it’s countered, or a rule or effect moves it elsewhere.
+    // 601.2b. If the spell is modal, the player announces the mode choice (see rule 700.2). If the player wishes to splice any cards onto the spell (see rule 702.47), they reveal those cards in their hand. If the spell has alternative or additional costs that will be paid as it’s being cast such as buyback or kicker costs (see rules 118.8 and 118.9), the player announces their intentions to pay any or all of those costs (see rule 601.2f). A player can’t apply two alternative methods of casting or two alternative costs to a single spell. If the spell has a variable cost that will be paid as it’s being cast (such as an {X} in its mana cost; see rule 107.3), the player announces the value of that variable. If the value of that variable is defined in the text of the spell by a choice that player would make later in the announcement or resolution of the spell, that player makes that choice at this time instead of that later time. If a cost that will be paid as the spell is being cast includes hybrid mana symbols, the player announces the nonhybrid equivalent cost they intend to pay. If a cost that will be paid as the spell is being cast includes Phyrexian mana symbols, the player announces whether they intend to pay 2 life or a corresponding colored mana cost for each of those symbols. Previously made choices (such as choosing to cast a spell with flashback from a graveyard or choosing to cast a creature with morph face down) may restrict the player’s options when making these choices.
+    // 601.2c. The player announces their choice of an appropriate object or player for each target the spell requires. A spell may require some targets only if an alternative or additional cost (such as a kicker cost) or a particular mode was chosen for it; otherwise, the spell is cast as though it did not require those targets. Similarly, a spell may require alternative targets only if an alternative or additional cost was chosen for it. If the spell has a variable number of targets, the player announces how many targets they will choose before they announce those targets. In some cases, the number of targets will be defined by the spell’s text. Once the number of targets the spell has is determined, that number doesn’t change, even if the information used to determine the number of targets does. The same target can’t be chosen multiple times for any one instance of the word “target” on the spell. However, if the spell uses the word “target” in multiple places, the same object or player can be chosen once for each instance of the word “target” (as long as it fits the targeting criteria). If any effects say that an object or player must be chosen as a target, the player chooses targets so that they obey the maximum possible number of such effects without violating any rules or effects that say that an object or player can’t be chosen as a target. The chosen objects and/or players each become a target of that spell. (Any abilities that trigger when those objects and/or players become the target of a spell trigger at this point; they’ll wait to be put on the stack until the spell has finished being cast.)
     // 601.2d. If the spell requires the player to divide or distribute an effect (such as damage or counters) among one or more targets, the player announces the division. Each of these targets must receive at least one of whatever is being divided.
     // 601.2e. The game checks to see if the proposed spell can legally be cast. If the proposed spell is illegal, the game returns to the moment before the casting of that spell was proposed (see rule 733, “Handling Illegal Actions”).
+    // 601.2f. The player determines the total cost of the spell. Usually this is just the mana cost. Some spells have additional or alternative costs. Some effects may increase or reduce the cost to pay, or may provide other alternative costs. Costs may include paying mana, tapping permanents, sacrificing permanents, discarding cards, and so on. The total cost is the mana cost or alternative cost (as determined in rule 601.2b), plus all additional costs and cost increases, and minus all cost reductions. If multiple cost reductions apply, the player may apply them in any order. If the mana component of the total cost is reduced to nothing by cost reduction effects, it is considered to be {0}. It can’t be reduced to less than {0}. Once the total cost is determined, any effects that directly affect the total cost are applied. Then the resulting total cost becomes “locked in.” If effects would change the total cost after this time, they have no effect.
     // 601.2g. If the total cost includes a mana payment, the player then has a chance to activate mana abilities (see rule 605, “Mana Abilities”). Mana abilities must be activated before costs are paid.
     // 601.2h. The player pays the total cost. First, they pay all costs that don’t involve random elements or moving objects from the library to a public zone, in any order. Then they pay all remaining costs in any order. Partial payments are not allowed. Unpayable costs can’t be paid.
     // 601.2i. Once the steps described in 601.2a–h are completed, effects that modify the characteristics of the spell as it’s cast are applied, then the spell becomes cast. Any abilities that trigger when a spell is cast or put onto the stack trigger at this time. If the spell’s controller had priority before casting it, they get priority.
@@ -2223,6 +2368,7 @@ enum Rule {
 
     // 602.2. To activate an ability is to put it onto the stack and pay its costs, so that it will eventually resolve and have its effect. Only an object’s controller (or its owner, if it doesn’t have a controller) can activate its activated ability unless the object specifically says otherwise. Activating an ability follows the steps listed below, in order. If, at any point during the activation of an ability, a player is unable to comply with any of those steps, the activation is illegal; the game returns to the moment before that ability started to be activated (see rule 733, “Handling Illegal Actions”). Announcements and payments can’t be altered after they’ve been made.
     // 602.2a. The player announces that they are activating the ability. If an activated ability is being activated from a hidden zone, the card that has that ability is revealed (see rule 701.20a). That ability is created on the stack as an object that’s not a card. It becomes the topmost object on the stack. It has the text of the ability that created it, and no other characteristics. Its controller is the player who activated the ability. The ability remains on the stack until it’s countered, it resolves, or an effect moves it elsewhere.
+    // 602.2b. The remainder of the process for activating an ability is identical to the process for casting a spell listed in rules 601.2b–i. Those rules apply to activating an ability just as they apply to casting a spell. An activated ability’s analog to a spell’s mana cost (as referenced in rule 601.2f) is its activation cost.
     RULE_602_2_ACTIVATE_ABILITY_PUT_ONTO_STACK(Condition),
 
     // 602.3. Some abilities specify that one of their controller’s opponents does something the controller would normally do while it’s being activated, such as choose a mode or choose targets. In these cases, the opponent does so when the ability’s controller normally would do so.
@@ -2261,6 +2407,7 @@ enum Rule {
     // 603.3a. A triggered ability is controlled by the player who controlled its source at the time it triggered, unless it’s a delayed triggered ability. To determine the controller of a delayed triggered ability, see rules 603.7d–f.
     // 603.3b. If multiple abilities have triggered since the last time a player received priority, the abilities are placed on the stack in a two-part process. First, each player, in APNAP order, puts each triggered ability they control with a trigger condition that isn’t another ability triggering on the stack in any order they choose. (See rule 101.4.) Second, each player, in APNAP order, puts all remaining triggered abilities they control on the stack in any order they choose. Then the game once again checks for and performs state-based actions until none are performed, then abilities that triggered during this process go on the stack. This process repeats until no new state-based actions are performed and no abilities trigger. Then the appropriate player gets priority.
     // 603.3c. If a triggered ability is modal, its controller announces the mode choice when putting the ability on the stack. If one of the modes would be illegal (due to an inability to choose legal targets, for example), that mode can’t be chosen. If no mode is chosen, the ability is removed from the stack. (See rule 700.2.)
+    // 603.3d. The remainder of the process for putting a triggered ability on the stack is identical to the process for casting a spell listed in rules 601.2c–d. If a choice is required when the triggered ability goes on the stack but no legal choices can be made for it, or if a rule or a continuous effect otherwise makes the ability illegal, the ability is simply removed from the stack.
     RULE_603_3_ONCE_ABILITY_TRIGGERED_CONTROLLER_PUTS(Condition),
 
     // 603.4. A triggered ability may read “When/Whenever/At [trigger event], if [condition], [effect].” When the trigger event occurs, the ability checks whether the stated condition is true. The ability triggers only if it is; otherwise it does nothing. If the ability triggers, it checks the stated condition again as it resolves. If the condition isn’t true at that time, the ability is removed from the stack and does nothing. Note that this mirrors the check for legal targets. This rule is referred to as the “intervening ‘if’ clause” rule. (The word “if” has only its normal English meaning anywhere else in the text of a card; this rule only applies to an “if” that immediately follows a trigger condition.)
@@ -2278,8 +2425,10 @@ enum Rule {
     RULE_603_6_TRIGGER_EVENTS_INVOLVE_OBJECTS_CHANGING(Condition),
 
     // 603.7. An effect may create a delayed triggered ability that can do something at a later time. A delayed triggered ability will contain “when,” “whenever,” or “at,” although that word won’t usually begin the ability.
+    // 603.7a. Delayed triggered abilities are created during the resolution of spells or abilities, as the result of a replacement effect being applied, or as a result of a static ability that allows a player to take an action. A delayed triggered ability won’t trigger until it has actually been created, even if its trigger event occurred just beforehand. Other events that happen earlier may make the trigger event impossible.
     // 603.7b. A delayed triggered ability will trigger only once—the next time its trigger event occurs—unless it has a stated duration, such as “this turn.” If its trigger event occurs more than once simultaneously and the ability doesn’t have a stated duration, the controller of the delayed triggered ability chooses which event causes the ability to trigger.
     // 603.7c. A delayed triggered ability that refers to a particular object still affects it even if the object changes characteristics. However, if that object is no longer in the zone it’s expected to be in at the time the delayed triggered ability resolves, the ability won’t affect it. (Note that if that object left that zone and then returned, it’s a new object and thus won’t be affected. See rule 400.7.)
+    // 603.7d. If a spell creates a delayed triggered ability, the source of that delayed triggered ability is that spell. The controller of that delayed triggered ability is the player who controlled that spell as it resolved.
     // 603.7e. If an activated or triggered ability creates a delayed triggered ability, the source of that delayed triggered ability is the same as the source of that other ability. The controller of that delayed triggered ability is the player who controlled that other ability as it resolved.
     // 603.7f. If a static ability generates a replacement effect which causes a delayed triggered ability to be created, the source of that delayed triggered ability is the object with that static ability. The controller of that delayed triggered ability is the same as the controller of that object at the time the replacement effect was applied.
     // 603.7g. If a static ability allows a player to take an action and creates a delayed triggered ability if that player does so, the source of that delayed triggered ability is the object with that static ability. The controller of that delayed triggered ability is the same as the controller of that object at the time the action was taken.
@@ -2315,6 +2464,7 @@ enum Rule {
     // 604.2. Static abilities create continuous effects, some of which are prevention effects or replacement effects. These effects are active as long as the permanent with the ability remains on the battlefield and has the ability, or as long as the object with the ability remains in the appropriate zone, as described in rule 113.6.
     RULE_604_2_STATIC_ABILITIES_CREATE_CONTINUOUS_EFFECTS,
 
+    // 604.3. Some static abilities are characteristic-defining abilities. A characteristic-defining ability conveys information about an object’s characteristics that would normally be found elsewhere on that object (such as in its mana cost, type line, or power/toughness box). Characteristic-defining abilities can add to or override information found elsewhere on that object. Characteristic-defining abilities function in all zones. They also function outside the game and before the game begins.
     // 604.3a. A static ability is a characteristic-defining ability if it meets the following criteria: (1) It defines an object’s colors, subtypes, power, or toughness; (2) it is printed on the card it affects, it was granted to the token it affects by the effect that created the token, or it was acquired by the object it affects as the result of a copy effect or text-changing effect; (3) it does not directly affect the characteristics of any other objects; (4) it is not an ability that an object grants to itself; and (5) it does not set the values of such characteristics only if certain conditions are met.
     RULE_604_3_STATIC_ABILITY_CHARACTERISTIC_DEFINING_ABILITY(Condition),
 
@@ -2456,6 +2606,7 @@ enum Rule {
     // 609.6. Some continuous effects are replacement effects or prevention effects. See rules 614 and 615.
     RULE_609_6_CONTINUOUS_EFFECTS_REPLACEMENT_EFFECTS_PREVENTION,
 
+    // 609.7. Some effects apply to damage from a source—for example, “The next time a red source of your choice would deal damage to you this turn, prevent that damage.”
     // 609.7a. If an effect requires a player to choose a source of damage, they may choose a permanent; a spell on the stack (including a permanent spell); any object referred to by an object on the stack, by a replacement or prevention effect that’s waiting to apply, or by a delayed triggered ability that’s waiting to trigger (even if that object is no longer in the zone it used to be in); or a face-up object in the command zone. A source doesn’t need to be capable of dealing damage to be a legal choice. The source is chosen when the effect is created. If the player chooses a permanent, the effect will apply to the next damage dealt by that permanent, regardless of whether it’s combat damage or damage dealt as the result of a spell or ability. If the player chooses a permanent spell, the effect will apply to any damage dealt by that spell and any damage dealt by the permanent that spell becomes when it resolves.
     // 609.7b. Some effects from resolved spells and abilities prevent or replace damage from sources with certain properties, such as a creature or a source of a particular color. When the source would deal damage, the “shield” rechecks the source’s properties. If the properties no longer match, the damage isn’t prevented or replaced. If for any reason the shield prevents no damage or replaces no damage, the shield isn’t used up.
     // 609.7c. Some effects from static abilities prevent or replace damage from sources with certain properties. For these effects, the prevention or replacement applies to sources that are permanents with that property and to any sources that aren’t on the battlefield that have that property.
@@ -2556,6 +2707,7 @@ enum Rule {
     // 613.4. Within layer 7, apply effects in a series of sublayers in the order described below. Within each sublayer, apply effects in timestamp order. (See rule 613.7.) Note that dependency may alter the order in which effects are applied within a sublayer. (See rule 613.8.)
     // 613.4a. Layer 7a: Effects from characteristic-defining abilities that define power and/or toughness are applied. See rule 604.3.
     // 613.4b. Layer 7b: Effects that set power and/or toughness to a specific number or value are applied. Effects that refer to the base power and/or toughness of a creature apply in this layer.
+    // 613.4c. Layer 7c: Effects and counters that modify power and/or toughness (but don’t set power and/or toughness to a specific number or value) are applied.
     // 613.4d. Layer 7d: Effects that switch a creature’s power and toughness are applied. Such effects take the value of power and apply it to the creature’s toughness, and take the value of toughness and apply it to the creature’s power.
     RULE_613_4_LAYER_APPLY_EFFECTS_SERIES_SUBLAYERS,
 
@@ -2639,6 +2791,7 @@ enum Rule {
     // 614.11b. If an effect would have a player both draw a card and perform an additional action on that card, and the draw is replaced, the additional action is not performed on any cards that are drawn as a result of that replacement effect.
     RULE_614_11_EFFECTS_REPLACE_CARD_DRAWS_EFFECTS(Condition),
 
+    // 614.12. Some replacement effects modify how a permanent enters the battlefield. (See rules 614.1c–d.) Such effects may come from the permanent itself if they affect only that permanent (as opposed to a general subset of permanents that includes it). They may also come from other sources. To determine which replacement effects apply and how they apply, check the characteristics of the permanent as it would exist on the battlefield, taking into account replacement effects that have already modified how it enters the battlefield (see rule 616.1), continuous effects from the permanent’s own static abilities that would apply to it once it’s on the battlefield, and continuous effects that already exist and would apply to the permanent.
     // 614.12a. If a replacement effect that modifies how a permanent enters the battlefield requires a choice, that choice is made before the permanent enters the battlefield.
     // 614.12b. If multiple replacement effects that require choices from a player would modify how multiple permanents enter the battlefield simultaneously, that player may not make choices for those effects that would cause the combined costs of those effects to not be payable.
     // 614.12c. Some replacement effects cause a permanent to enter the battlefield with its controller’s choice of one of two abilities, each marked with an anchor word and preceded by a bullet point. “[Anchor word] — [ability]” means “As long as [anchor word] was chosen as this permanent entered the battlefield, this permanent has [ability].” The abilities preceded by anchor words are each linked to the ability that causes a player to choose between them. See rule 607, “Linked Abilities.”
@@ -2725,6 +2878,7 @@ enum Rule {
     // 700.1. Anything that happens in a game is an event. Multiple events may take place during the resolution of a spell or ability. The text of triggered abilities and replacement effects defines the event they’re looking for. One “happening” may be treated as a single event by one ability and as multiple events by another.
     RULE_700_1_ANYTHING_HAPPENS_GAME_EVENT_MULTIPLE,
 
+    // 700.2. A spell or ability is modal if it has two or more options in a bulleted list preceded by instructions for a player to choose a number of those options, such as “Choose one —.” Each of those options is a mode. Modal cards printed prior to the Khans of Tarkir™ set didn’t use bulleted lists for the modes; these cards have received errata in the Oracle card reference so the modes do appear in a bulleted list.
     // 700.2a. The controller of a modal spell or activated ability chooses the mode(s) as part of casting that spell or activating that ability. If one of the modes would be illegal (due to an inability to choose legal targets, for example), that mode can’t be chosen. (See rule 601.2b.)
     // 700.2b. The controller of a modal triggered ability chooses the mode(s) as part of putting that ability on the stack. If one of the modes would be illegal (due to an inability to choose legal targets, for example), that mode can’t be chosen. If no mode is chosen, the ability is removed from the stack. (See rule 603.3c.)
     // 700.2c. If a spell or ability targets one or more targets only if a particular mode is chosen for it, its controller will need to choose those targets only if they chose that mode. Otherwise, the spell or ability is treated as though it did not have those targets. (See rule 601.2c.)
@@ -2733,6 +2887,7 @@ enum Rule {
     // 700.2f. Modal spells and abilities may have different targeting requirements for each mode. Changing a spell or ability’s target can’t change its mode.
     // 700.2g. A copy of a modal spell or ability copies the mode(s) chosen for it. The controller of the copy can’t choose a different mode. (See rule 707.10.)
     // 700.2h. Some modal spells have one or more modes with a cost listed before the effect of that mode. This indicates that the mode has an additional cost that must be paid as the spell is cast if that mode is chosen. If more than one such mode is chosen, all additional costs must be paid to cast that spell. Paying these costs follows the rules for paying additional costs in rules 601.2b and 601.2f–h.
+    // 700.2i. Some modal spells have one or more pawprint symbols ({P}) rather than bullet points, as well as an instruction to choose up to a specified number of {P} “worth of modes.” While casting such a spell, its controller can choose any number of modes such that the total number of pawprint symbols listed for the chosen modes is not greater than the specified number.
     RULE_700_2_CONTROLLER_MODAL_SPELL_ACTIVATED_ABILITY(Condition),
 
     // 700.3. Some effects cause objects to be temporarily grouped into piles.
@@ -2808,6 +2963,7 @@ enum Rule {
     // 701.5b. To cast a card is to cast it as a spell.
     RULE_701_5_CAST(Condition),
 
+    // 701.6. Counter
     // 701.6a. To counter a spell or ability means to cancel it, removing it from the stack. It doesn’t resolve and none of its effects occur. A countered spell is put into its owner’s graveyard.
     // 701.6b. The player who cast a countered spell or activated a countered ability doesn’t get a “refund” of any costs that were paid.
     RULE_701_6_COUNTER_SPELL_ABILITY_CANCEL_REMOVING,
@@ -2894,6 +3050,7 @@ enum Rule {
     // 701.18e. Previously, the action of using an activated ability was referred to on cards as “playing” that ability. Cards that were printed with that text have received errata in the Oracle card reference so they now refer to “activating” that ability.
     RULE_701_18_PLAY(Condition),
 
+    // 701.19. Regenerate
     // 701.19a. If the effect of a resolving spell or ability regenerates a permanent, it creates a replacement effect that protects the permanent the next time it would be destroyed this turn. In this case, “Regenerate [permanent]” means “The next time [permanent] would be destroyed this turn, instead remove all damage marked on it and its controller taps it. If it’s an attacking or blocking creature, remove it from combat.”
     // 701.19b. If the effect of a static ability regenerates a permanent, it replaces destruction with an alternate effect each time that permanent would be destroyed. In this case, “Regenerate [permanent]” means “Instead remove all damage marked on [permanent] and its controller taps it. If it’s an attacking or blocking creature, remove it from combat.”
     // 701.19c. Neither activating an ability that creates a regeneration shield nor casting a spell that creates a regeneration shield is the same as regenerating a permanent. Effects that say that a permanent can’t be regenerated don’t preclude such abilities from being activated or such spells from being cast; rather, they cause regeneration shields to not be applied.
@@ -3060,6 +3217,7 @@ enum Rule {
     // 701.43d. “You may exert [this creature] as it attacks” is an optional cost to attack (see rule 508.1g). Some objects with this static ability have a triggered ability that triggers “when you do” printed in the same paragraph. These abilities are linked. (See rule 607.2h.)
     RULE_701_43_EXERT(Condition),
 
+    // 701.44. Explore
     // 701.44a. Certain spells and abilities instruct a permanent to explore. To do so, that permanent’s controller reveals the top card of their library. If a land card is revealed this way, that player puts that card into their hand. Otherwise, that player puts a +1/+1 counter on the exploring permanent and may put the revealed card into their graveyard.
     // 701.44b. A permanent “explores” after the process described in rule 701.44a is complete, even if some or all of those actions were impossible.
     // 701.44c. If a permanent changes zones before an effect causes it to explore, its last known information is used to determine which object explored and who controlled it.
@@ -3090,7 +3248,7 @@ enum Rule {
     // 701.49b. If a player is instructed to venture into the dungeon while their venture marker is in any room except a dungeon card’s bottommost room, they choose an adjacent room, following the direction of an arrow pointing away from their current room. If there are multiple arrows pointing away from the room the player’s venture marker is in, they choose one of them to follow. They move their venture marker to that adjacent room.
     // 701.49c. If a player is instructed to venture into the dungeon while their venture marker is in the bottommost room of a dungeon card, they remove that dungeon card from the game. Doing so causes the player to complete that dungeon (see rule 309.7). They then choose an appropriate dungeon card they own from outside the game, put it into the command zone, and put their venture marker on the topmost room of that dungeon.
     // 701.49d. Venture into [quality] is a variant of venture into the dungeon. If a player is instructed to “venture into [quality]” while they don’t own a dungeon card in the command zone, they choose a dungeon card they own from outside the game with the indicated quality and put it into the command zone. They put their venture marker on the topmost room of that dungeon. If they already own a dungeon card in the command zone, they follow the normal procedure for venturing into the dungeon outlined in 701.49b–c.
-    RULE_701_49_VENTURE_DUNGEON(Condition),
+    RULE_701_49_VENTURE_DUNGEON_2(Condition),
 
     // 701.50. Connive
     // 701.50a. Certain spells and abilities instruct a permanent to connive. To do so, that permanent’s controller draws a card, then discards a card. If a nonland card is discarded this way, that player puts a +1/+1 counter on the conniving permanent.
@@ -3236,6 +3394,7 @@ enum Rule {
     // 702.4e. Multiple instances of double strike on the same creature are redundant.
     RULE_702_4_DOUBLE_STRIKE(Condition),
 
+    // 702.5. Enchant
     // 702.5a. Enchant is a static ability, written “Enchant [object or player].” The enchant ability restricts what an Aura spell can target and what an Aura can enchant.
     // 702.5b. For more information about Auras, see rule 303, “Enchantments.”
     // 702.5c. If an Aura has multiple instances of enchant, all of them apply. The Aura’s target must follow the restrictions from all the instances of enchant. The Aura can enchant only objects or players that match all of its enchant abilities.
@@ -3410,7 +3569,7 @@ enum Rule {
     // 702.26m. If an effect causes a player to skip their untap step, the phasing event simply doesn’t occur that turn.
     // 702.26n. In a multiplayer game, game rules may cause a phased-out permanent to leave the game or to be exiled once a player leaves the game. (See rules 800.4a and 800.4c.) If a phased-out permanent phased out under the control of a player who has left the game, that permanent phases in during the next untap step after that player’s next turn would have begun.
     // 702.26p. Multiple instances of phasing on the same permanent are redundant.
-    RULE_702_26_PHASING(Condition),
+    RULE_702_26_PHASING_2(Condition),
 
     // 702.27. Buyback
     // 702.27a. Buyback appears on some instants and sorceries. It represents two static abilities that function while the spell is on the stack. “Buyback [cost]” means “You may pay an additional [cost] as you cast this spell” and “If the buyback cost was paid, put this spell into its owner’s hand instead of into that player’s graveyard as it resolves.” Paying a spell’s buyback cost follows the rules for paying additional costs in rules 601.2b and 601.2f–h.
@@ -3615,6 +3774,7 @@ enum Rule {
     // 702.61c. Multiple instances of split second on the same spell are redundant.
     RULE_702_61_SPLIT,
 
+    // 702.62. Suspend
     // 702.62a. Suspend is a keyword that represents three abilities. The first is a static ability that functions while the card with suspend is in a player’s hand. The second and third are triggered abilities that function in the exile zone. “Suspend N—[cost]” means “If you could begin to cast this card by putting it onto the stack from your hand, you may pay [cost] and exile it with N time counters on it. This action doesn’t use the stack,” and “At the beginning of your upkeep, if this card is suspended, remove a time counter from it,” and “When the last time counter is removed from this card, if it’s exiled, you may play it without paying its mana cost if able. If you don’t, it remains exiled. If you cast a creature spell this way, it gains haste until you lose control of the spell or the permanent it becomes.”
     // 702.62b. A card is “suspended” if it’s in the exile zone, has suspend, and has a time counter on it.
     // 702.62c. While determining if you could begin to cast a card with suspend, take into consideration any effects that would prohibit that card from being cast.
@@ -4037,6 +4197,7 @@ enum Rule {
     // 702.138d. An ability that reads “[This permanent] escapes with [ability]” means “If this permanent escaped, it has [ability].”
     RULE_702_138_ESCAPE(Condition),
 
+    // 702.139. Companion
     // 702.139a. Companion is a keyword ability that functions outside the game. It’s written as “Companion—[Condition].” Before the game begins, you may reveal one card you own from outside the game with a companion ability whose condition is fulfilled by your starting deck. (See rule 103.2b.) Once during the game, any time you have priority and the stack is empty, but only during a main phase of your turn, you may pay {3} and put that card into your hand. This is a special action that doesn’t use the stack (see rule 116.2g). This is a change from previous rules.
     // 702.139b. If a companion ability refers to your starting deck, it refers to your deck after you’ve set aside any sideboard cards. In a Commander game, this is also before you’ve set aside your commander.
     // 702.139c. Once you take the special action and put the card with companion into your hand, it remains in the game until the game ends.
@@ -4061,6 +4222,7 @@ enum Rule {
     // 702.142b. Effects may refer to boast abilities. If an effect refers to a creature boasting, it means its boast ability being activated.
     RULE_702_142_BOAST(Condition),
 
+    // 702.143. Foretell
     // 702.143a. Foretell is a keyword that functions while the card with foretell is in a player’s hand. Any time a player has priority during their turn, that player may pay {2} and exile a card with foretell from their hand face down. That player may look at that card as long as it remains in exile. They may cast that card after the current turn has ended by paying any foretell cost it has rather than paying that spell’s mana cost. Casting a spell this way follows the rules for paying alternative costs in rules 601.2b and 601.2f–h.
     // 702.143b. Exiling a card using its foretell ability is a special action, which doesn’t use the stack. See rule 116, “Special Actions.”
     // 702.143c. If an effect refers to foretelling a card, it means performing the special action associated with a foretell ability. If an effect refers to a card or spell that was foretold, it means a card put in the exile zone as a result of the special action associated with a foretell ability, or a spell that was a foretold card before it was cast, even if it was cast for a cost other than a foretell cost.
@@ -4215,6 +4377,7 @@ enum Rule {
     // 702.169d. For an activated ability, “Solved — [Ability text]” means “[Ability text]. Activate only if this Case is solved.”
     RULE_702_169_SOLVED(Condition),
 
+    // 702.170. Plot
     // 702.170a. Plot is a keyword ability that functions while the card with plot is in a player’s hand. “Plot [cost]” means “Any time you have priority during your main phase while the stack is empty, you may exile this card from your hand and pay [cost]. It becomes a plotted card.”
     // 702.170b. Exiling a card using its plot ability is a special action, which doesn’t use the stack. See rule 116, “Special Actions.”
     // 702.170c. In addition to the plot special action, some spells and abilities cause a card in exile to become plotted.
@@ -4508,6 +4671,7 @@ enum Rule {
     // 707.9g. Some replacement effects that generate copy effects are linked to triggered abilities written in the same paragraph. (See rule 603.11.) If another copy effect is applied to that object after applying the copy effect with the linked triggered ability, the ability doesn’t trigger.
     RULE_707_9_COPY_EFFECTS_INCLUDE_MODIFICATIONS_EXCEPTIONS(Condition),
 
+    // 707.10. To copy a spell, activated ability, or triggered ability means to put a copy of it onto the stack; a copy of a spell isn’t cast and a copy of an activated ability isn’t activated. A copy of a spell or ability copies both the characteristics of the spell or ability and all decisions made for it, including modes, targets, the value of X, and additional or alternative costs. (See rule 601, “Casting Spells.”) Choices that are normally made on resolution are not copied. If an effect of the copy refers to objects used to pay its costs, it uses the objects used to pay the costs of the original spell or ability. A copy of a spell is owned by the player under whose control it was put on the stack. A copy of a spell or ability is controlled by the player under whose control it was put on the stack. A copy of a spell is itself a spell, even though it has no spell card associated with it. A copy of an ability is itself an ability.
     // 707.10a. If a copy of a spell is in a zone other than the stack, it ceases to exist. If a copy of a card is in any zone other than the stack or the battlefield, it ceases to exist. These are state-based actions. See rule 704.
     // 707.10b. A copy of an ability has the same source as the original ability. If the ability refers to its source by name, the copy refers to that same object and not to any other object with the same name. The copy is considered to be the same ability by effects that count how many times that ability has resolved during the turn.
     // 707.10c. Some effects copy a spell or ability and state that its controller may choose new targets for the copy. The player may leave any number of the targets unchanged, even if those targets would be illegal. If the player chooses to change some or all of the targets, the new targets must be legal. Once the player has decided what the copy’s targets will be, the copy is put onto the stack with those targets.
@@ -4519,6 +4683,9 @@ enum Rule {
 
     // 707.11. If an effect refers to a permanent by name, the effect still tracks that permanent even if it changes names or becomes a copy of something else.
     RULE_707_11_EFFECT_PERMANENT_NAME_EFFECT_TRACKS(Condition),
+
+    // 707.12. An effect that instructs a player to cast a copy of an object (and not just copy a spell) follows the rules for casting spells, except that the copy is created in the same zone the object is in and then cast while another spell or ability is resolving. Casting a copy of an object follows steps 601.2a–h of rule 601, “Casting Spells,” and then the copy becomes cast. Once cast, the copy is a spell on the stack, and just like any other spell it can resolve or be countered.
+    RULE_707_12_EFFECT_PLAYER_CAST_COPY_OBJECT,
 
     // 707.13. One card (Garth One-Eye) instructs a player to create a copy of a card defined by name rather than by indicating an object to be copied. To do so, the player uses the Oracle card reference to determine the characteristics of the copy and creates the copy outside of the game.
     RULE_707_13_CARD_GARTH_EYE_PLAYER_CREATE,
@@ -4583,6 +4750,7 @@ enum Rule {
     // 709.4d. The characteristics of a fused split spell on the stack are also those of its two halves combined (see rule 702.102, “Fuse”).
     RULE_709_4_ZONE_EXCEPT_STACK_CHARACTERISTICS_SPLIT(Condition),
 
+    // 709.5. Some split cards are permanent cards with a single shared type line. A shared type line on such an object represents two static abilities that function on the battlefield. These are “As long as this permanent doesn’t have the ‘left half unlocked’ designation, it doesn’t have the name, mana cost, or rules text of this object’s left half” and “As long as this permanent doesn’t have the ‘right half unlocked’ designation, it doesn’t have the name, mana cost, or rules text of this object’s right half.” These abilities, as well as which half of that permanent a characteristic is in, are part of that object’s copiable values.
     // 709.5a. Each half of a split card with a shared type line shares the types and subtypes listed on that card’s shared type line.
     // 709.5b. The existence of each half of an object with a shared type line is part of that object’s copiable values, even if that object is a spell on the stack. This is an exception to rule 709.3b.
     // 709.5c. “Left half unlocked” and “right half unlocked” are designations that a permanent on the battlefield can have. Together, they are called the unlocked designations. A particular half of a permanent is said to be “unlocked” if it has the appropriate unlocked designation. Otherwise, that half is said to be “locked.”
@@ -4902,7 +5070,7 @@ enum Rule {
     RULE_726_1_INITIATIVE_DESIGNATION_PLAYER_INITIATIVE_GAME,
 
     // 726.2. There are three inherent triggered abilities associated with having the initiative. These triggered abilities have no source and are controlled by the player who had the initiative at the time the abilities triggered. This is an exception to rule 113.8. The full text of these abilities are “At the beginning of the upkeep of the player who has the initiative, that player ventures into Undercity,” “Whenever one or more creatures a player controls deal combat damage to the player who has the initiative, the controller of those creatures takes the initiative,” and “Whenever a player takes the initiative, that player ventures into Undercity.” See rule 701.49, “Venture into the Dungeon.”
-    RULE_726_2_INHERENT_TRIGGERED_ABILITIES_ASSOCIATED_INITIATIVE(Condition),
+    RULE_726_2_INHERENT_TRIGGERED_ABILITIES_ASSOCIATED_INITIATIVE_2(Condition),
 
     // 726.3. Only one player can have the initiative at a time. As a player takes the initiative, the player who currently has the initiative ceases to have it.
     RULE_726_3_PLAYER_INITIATIVE_TIME_PLAYER_INITIATIVE(Condition),
@@ -5039,8 +5207,10 @@ enum Rule {
     // 800.3. Many multiplayer Magic tournaments have additional rules not included here, including rules for deck construction. See the most current Magic: The Gathering Tournament Rules for more information. They can be found at WPN.wizards.com/en/rules-documents.
     RULE_800_3_MANY_MULTIPLAYER_MAGIC_TOURNAMENTS_ADDITIONAL(Condition),
 
+    // 800.4. Unlike two-player games, multiplayer games can continue after one or more players have left the game.
     // 800.4a. When a player leaves the game, all objects (see rule 109) owned by that player leave the game and any effects which give that player control of any objects or players end. Then, if that player controlled any objects on the stack not represented by cards, those objects cease to exist. Then, if there are any objects still controlled by that player, those objects are exiled. This is not a state-based action. It happens as soon as the player leaves the game. If the player who left the game had priority at the time they left, priority passes to the next player in turn order who’s still in the game.
     // 800.4b. If an object would change to the control of a player who has left the game, it doesn’t. If a token would be created under the control of a player who has left the game, no token is created. If an object would be put onto the battlefield or onto the stack under the control of a player who has left the game, that object remains in its current zone. If a player would be controlled by a player who has left the game, they aren’t.
+    // 800.4c. If an effect that gives a player still in the game control of an object ends, there is no other effect giving control of that object to another player in the game, and the player who controlled that object by default has left the game, the object is exiled. This is not a state-based action. It happens as soon as the control-changing effect ends.
     // 800.4d. If an object that would be owned by a player who has left the game would be created in any zone, it isn’t created. If a triggered ability that would be controlled by a player who has left the game would be put onto the stack, it isn’t put on the stack.
     // 800.4e. If combat damage would be assigned to a player who has left the game, that damage isn’t assigned.
     // 800.4f. If an object requires a player who has left the game to pay a cost or choose whether to pay a cost, that cost is not paid.
@@ -5201,7 +5371,7 @@ enum Rule {
     // 805.10d. As the declare blockers step begins, the defending team declares blockers. Creatures controlled by the defending players can block creatures attacking any player on the defending team, attacking a planeswalker controlled by one of those players, or a battle protected by one of those players. The defending team has one combined block, and that set of blocking creatures must be legal as a whole. See rule 509.1.
     // 805.10e. Any rule, object, or effect that refers to a “defending player” refers to one specific defending player, not to all of the defending players. If an ability of an attacking creature refers to a defending player, or a spell or ability refers to both an attacking creature and a defending player, then unless otherwise specified, the defending player it’s referring to is the player that creature is attacking, the controller of the planeswalker that creature is attacking, or the protector of the battle that creature is attacking. If that creature is no longer attacking, the defending player it’s referring to is the player that creature was attacking before it was removed from combat, the controller of the planeswalker that creature was attacking before it was removed from combat, or the protector of the battle that creature was attacking before it was removed from combat. If a spell or ability could apply to multiple attacking creatures, the appropriate defending player is individually determined for each of those attacking creatures. If there are multiple defending players that could be chosen, the controller of the spell or ability chooses one.
     // 805.10f. As the combat damage step begins, the active team announces how each attacking creature will assign its combat damage. Then the defending team announces how each blocking creature will assign its combat damage. See rule 510.1.
-    RULE_805_10_SHARED_TEAM_TURNS_OPTION_COMBAT(Condition),
+    RULE_805_10_SHARED_TEAM_TURNS_OPTION_COMBAT_2(Condition),
 
     // 806.1. In Free-for-All multiplayer games, a group of players compete as individuals against each other.
     RULE_806_1_FREE_MULTIPLAYER_GAMES_GROUP_PLAYERS,
@@ -5318,7 +5488,7 @@ enum Rule {
     // 903.5c. A card can be included in a Commander deck only if every color in its color identity is also found in the color identity of the deck’s commander.
     // 903.5d. A card with a basic land type may be included in a Commander deck only if each color of mana it could produce is included in the commander’s color identity.
     // 903.5e. Commander games do not use sideboards.
-    RULE_903_5_COMMANDER_DECK_SUBJECT_DECK_CONSTRUCTION(Condition),
+    RULE_903_5_COMMANDER_DECK_SUBJECT_DECK_CONSTRUCTION_2(Condition),
 
     // 903.6. At the start of the game, each player puts their commander from their deck face up into the command zone. Then each player shuffles the remaining cards of their deck so that the cards are in a random order. Those cards become the player’s library.
     RULE_903_6_START_GAME_PLAYER_PUTS_COMMANDER(Condition),
@@ -5335,6 +5505,7 @@ enum Rule {
     // 903.9c. If a commander is a melded permanent or a merged permanent and its owner chooses to put it into the command zone using the replacement effect described in rule 903.9b, that permanent and each component representing it that isn’t a commander are put into the appropriate zone, and the card that represents it and is a commander is put into the command zone.
     RULE_903_9_COMMANDER_RETURN_COMMAND_ZONE_COMMANDER(Condition),
 
+    // 903.10. The Commander variant includes the following specification for winning and losing the game. All other rules for ending the game also apply. (See rule 104.)
     // 903.10a. A player who’s been dealt 21 or more combat damage by the same commander over the course of the game loses the game. (This is a state-based action. See rule 704.)
     RULE_903_10_PLAYER_WHOS_DEALT_COMBAT_DAMAGE,
 
