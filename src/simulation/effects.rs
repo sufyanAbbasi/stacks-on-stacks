@@ -1,3 +1,4 @@
+use serde::{Serialize, Deserialize};
 use crate::card::{Color, CardType, Subtype};
 
 /// Unique identifier for a card instance in play or inside a zone.
@@ -10,7 +11,7 @@ pub type PlayerId = u32;
 pub type Timestamp = u64;
 
 /// Represents the physical or logical zone an object is in (Section 400.1).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Zone {
     Library,
     Hand,
@@ -22,7 +23,7 @@ pub enum Zone {
 }
 
 /// Represents any targetable game entity (Rule 115).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Target {
     Player(PlayerId),
     Card(CardId),
@@ -31,7 +32,7 @@ pub enum Target {
 }
 
 /// Represents any standard game event that can be replaced or modified (Section 614).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum GameEvent {
     DrawCard { player: PlayerId },
     DealDamage { source: Target, target: Target, amount: u32, is_combat: bool },
@@ -42,7 +43,7 @@ pub enum GameEvent {
     AbilityActivated { player: PlayerId, ability_id: u32 },
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum TokenCreator {
     Predefined(crate::card::PredefinedToken),
     Custom {
@@ -59,7 +60,7 @@ pub enum TokenCreator {
 
 /// --- SECTION 610: ONE-SHOT EFFECTS ---
 /// An effect that does something once and has no duration (Rule 610.1).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum OneShotEffect {
     DealDamage { amount: u32, target: Target },
     DrawCards { player: PlayerId, count: u32 },
@@ -75,7 +76,7 @@ pub enum OneShotEffect {
 
 /// --- SECTION 611: CONTINUOUS EFFECTS (DURATIONS) ---
 /// The period of time a continuous or replacement effect remains active (Rule 611.2).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum EffectDuration {
     /// Persists as long as the permanent with the static ability remains in the relevant zone (Rule 611.3).
     StaticAbility { source_card: CardId, zone: Zone },
@@ -91,7 +92,7 @@ pub enum EffectDuration {
 
 /// --- SECTION 613: INTERACTION OF CONTINUOUS EFFECTS (LAYERS) ---
 /// System of layers/sublayers used to apply continuous effects in a precise order (Rule 613.1).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum ContinuousLayer {
     /// Layer 1: Rules and effects that modify copiable values (Rule 613.1a).
     Layer1CopiableValues,
@@ -116,7 +117,7 @@ pub enum ContinuousLayer {
 }
 
 /// Represents the actual modification applied by a continuous effect.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum ContinuousEffectType {
     AddAbility(String),
     RemoveAbility(String),
@@ -131,7 +132,7 @@ pub enum ContinuousEffectType {
 }
 
 /// A continuous effect active in the game state (Section 611).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct ContinuousEffect {
     pub id: u32,
     pub source: CardId,
@@ -143,7 +144,7 @@ pub struct ContinuousEffect {
 
 /// --- SECTION 614: REPLACEMENT EFFECTS ---
 /// An effect that watches for a game event and replaces it with a different event (Rule 614.1).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct ReplacementEffect {
     pub id: u32,
     pub source: CardId,
@@ -155,7 +156,7 @@ pub struct ReplacementEffect {
 
 /// --- SECTION 615: PREVENTION EFFECTS ---
 /// A specialized continuous effect that prevents some amount of damage (Rule 615.1).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct PreventionEffect {
     pub id: u32,
     pub source: CardId,
@@ -167,7 +168,7 @@ pub struct PreventionEffect {
     pub scope: PreventionScope,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum PreventionScope {
     AnyDamage,
     CombatDamageOnly,
@@ -177,7 +178,7 @@ pub enum PreventionScope {
 
 /// --- RULE 603.7: DELAYED TRIGGERED ABILITIES ---
 /// Wait for a future event to occur, trigger once, and then resolve (Rule 603.7).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct DelayedTrigger {
     pub id: u32,
     pub source: CardId,
@@ -189,7 +190,7 @@ pub struct DelayedTrigger {
 
 /// --- RULE 609.4: "AS THOUGH" EFFECTS ---
 /// Allows a player to perform an action as if some condition were true (Rule 609.4).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct AsThoughEffect {
     pub id: u32,
     pub source: CardId,
@@ -198,7 +199,7 @@ pub struct AsThoughEffect {
     pub as_though_type: AsThoughType,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum AsThoughType {
     /// Play/cast card from non-hand zone, e.g. "as though it were in your hand"
     CastFromZone { card: CardId, zone: Zone },
@@ -210,7 +211,7 @@ pub enum AsThoughType {
 
 /// --- ACTIVE EFFECTS REGISTRY ---
 /// Tracks all active, long-lived effects in the game simulation state.
-#[derive(Debug, Clone, Default, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, Default, PartialEq, Eq)]
 pub struct ActiveEffects {
     pub continuous_effects: Vec<ContinuousEffect>,
     pub replacement_effects: Vec<ReplacementEffect>,

@@ -1,7 +1,8 @@
+use serde::{Serialize, Deserialize};
 use crate::effects::PlayerId;
 
 /// Represents the major phases of a turn as defined in Section 500.1.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum Phase {
     Beginning,
     PrecombatMain,
@@ -11,7 +12,7 @@ pub enum Phase {
 }
 
 /// Represents the individual steps within phases (Section 500.1).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum Step {
     // Beginning Phase Steps
     Untap,
@@ -37,7 +38,7 @@ pub enum Step {
 }
 
 /// Represents an automatic, turn-based action that does not use the stack (Section 703).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum TurnBasedAction {
     /// Active player untaps all permanents they control (Rule 502.2 / 703.4a).
     UntapPermanents,
@@ -56,7 +57,7 @@ pub enum TurnBasedAction {
 }
 
 /// Models the state of a single turn in the simulation (Section 500).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct TurnState {
     pub turn_number: u32,
     pub active_player: PlayerId,

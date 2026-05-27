@@ -1,7 +1,8 @@
+use serde::{Serialize, Deserialize};
 use crate::effects::{CardId, PlayerId, Zone};
 
 /// Represents any action a player can take when they have priority (Rule 117.1).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum PriorityAction {
     /// Cast a spell (Rule 117.1a / 601.2).
     CastSpell {
@@ -51,7 +52,7 @@ impl PriorityAction {
 }
 
 /// Represents a Special Action a player may take that does not use the stack (Rule 116).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum SpecialAction {
     /// Play a land (Rule 116.2a / 305).
     PlayLand {
@@ -122,7 +123,7 @@ impl SpecialAction {
 }
 
 /// Represents a State-Based Action automatically generated and executed by the game (Rule 704).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum StateBasedAction {
     /// 704.5a: If a player has 0 or less life, that player loses the game.
     LoseByLife { player: PlayerId },
@@ -206,7 +207,7 @@ pub enum StateBasedAction {
 }
 
 /// Models who currently has priority and the stack pass status (Rule 117).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct PriorityState {
     /// The player who currently has priority, or None if no one has priority.
     pub current_priority: Option<PlayerId>,

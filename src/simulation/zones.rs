@@ -1,10 +1,11 @@
+use serde::{Serialize, Deserialize};
 use std::collections::HashMap;
 use crate::card::{Card, PermanentStatus};
 use crate::effects::{CardId, PlayerId, Timestamp, Zone, Target};
 
 /// Represents a card instance residing in a zone.
 /// Pairs the Card's static definition with its unique runtime ID and actual owner.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct ZoneCard {
     pub id: CardId,
     pub card: Card,
@@ -15,7 +16,7 @@ pub struct ZoneCard {
 /// --- SECTION 110: PERMANENTS ---
 /// Represents an object on the battlefield (Rule 110.1).
 /// A permanent remains on the battlefield indefinitely until moved to another zone by an effect or rule.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct Permanent {
     pub id: CardId,
     pub card: Card,
@@ -146,7 +147,7 @@ impl Permanent {
 /// --- SECTION 114: EMBLEMS ---
 /// An emblem is a noncard game object that exists only in the command zone (Rule 114.1).
 /// It has one or more abilities, but no other characteristics.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct Emblem {
     pub id: u32,
     pub owner: PlayerId,
@@ -158,7 +159,7 @@ pub struct Emblem {
 /// --- SECTION 406: EXILE ---
 /// Exile is a shared zone (Rule 406.1).
 /// Cards in exile may be kept face up or face down.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct ExiledCard {
     pub id: CardId,
     pub card: Card,
@@ -172,7 +173,7 @@ pub struct ExiledCard {
 /// --- SECTION 401: LIBRARY ---
 /// A library is a player-specific zone.
 /// It is kept face down in a single file, and its order is preserved (Rule 401.1).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct Library {
     pub owner: PlayerId,
     pub cards: Vec<ZoneCard>,
@@ -218,7 +219,7 @@ impl Library {
 /// --- SECTION 402: HAND ---
 /// A hand is a player-specific zone.
 /// It contains a player's hand of cards (Rule 402.1).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct Hand {
     pub owner: PlayerId,
     pub cards: Vec<ZoneCard>,
@@ -250,7 +251,7 @@ impl Hand {
 /// --- SECTION 403: BATTLEFIELD ---
 /// The battlefield is a shared zone (Rule 403.1).
 /// All players share the battlefield, which is where permanents reside.
-#[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
 pub struct Battlefield {
     pub permanents: Vec<Permanent>,
 }
@@ -288,7 +289,7 @@ impl Battlefield {
 /// --- SECTION 404: GRAVEYARD ---
 /// Each player has a graveyard (Rule 404.1).
 /// A graveyard is a player-specific zone representing a face-up discard pile.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct Graveyard {
     pub owner: PlayerId,
     pub cards: Vec<ZoneCard>,
@@ -319,7 +320,7 @@ impl Graveyard {
 
 /// --- SECTION 406: EXILE ---
 /// Exile is a shared zone.
-#[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
 pub struct Exile {
     pub objects: Vec<ExiledCard>,
 }
@@ -357,7 +358,7 @@ impl Exile {
 /// --- SECTION 407: COMMAND ZONE ---
 /// The command zone is a shared zone (Rule 407.1).
 /// It houses commanders, emblems, dungeon cards, and various other game-type items.
-#[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
 pub struct CommandZone {
     pub commanders: Vec<ZoneCard>,
     pub emblems: Vec<Emblem>,
@@ -400,7 +401,7 @@ impl CommandZone {
 
 /// --- COMPREHENSIVE ZONES REGISTRY ---
 /// Tracks all player-specific and shared zones in the simulation game state.
-#[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
 pub struct Zones {
     pub battlefield: Battlefield,
     pub exile: Exile,

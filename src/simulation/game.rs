@@ -1,3 +1,4 @@
+use serde::{Serialize, Deserialize};
 use std::collections::HashMap;
 use crate::effects::{PlayerId, CardId, Zone, Target};
 use crate::player::{Player, ManaPool};
@@ -5,7 +6,7 @@ use crate::zones::{Zones, ZoneCard};
 use crate::stack::{Stack, StackItemId, StackObject};
 use crate::card::{Card, Color};
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Format {
     Standard,
     Pioneer,
@@ -19,7 +20,7 @@ pub enum Format {
 
 /// Represents the central Magic simulation kernel ("operating system").
 /// Coordinates the players, game zones, stack, and transition instructions.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Game {
     pub format: Format,
     pub active_player: PlayerId,
@@ -34,7 +35,7 @@ pub struct Game {
 /// Represents a deterministic, kernel-level state-transition instruction ("machine code").
 /// These instructions have a 1:1 correspondence with the lowest-level state modifications
 /// of our individual game structures.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub enum SimInstruction {
     /// 1:1 with player's mana pool addition (Rule 106.1)
     AddMana {

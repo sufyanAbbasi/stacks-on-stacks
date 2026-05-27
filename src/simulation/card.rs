@@ -1,4 +1,5 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+use serde::{Serialize, Deserialize};
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Color {
     W,
     U,
@@ -8,7 +9,7 @@ pub enum Color {
     C,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum ManaSymbols {
     // Standard mana symbols:
     W,
@@ -66,7 +67,7 @@ pub enum ManaSymbols {
     S,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum CardType {
     Artifact,
     Battle,
@@ -85,7 +86,7 @@ pub enum CardType {
     Vanguard,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum PermanentType {
     Artifact,
     Battle,
@@ -95,7 +96,7 @@ pub enum PermanentType {
     Planeswalker,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub struct PermanentStatus {
     pub tapped: bool,
     pub flipped: bool,
@@ -106,7 +107,7 @@ pub struct PermanentStatus {
 // ==========================================
 // 205.4. SUPERTYPES
 // ==========================================
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Supertype {
     Basic,
     Legendary,
@@ -119,7 +120,7 @@ pub enum Supertype {
 // 205.3. SUBTYPES
 // ==========================================
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum ArtifactType {
     Attraction,
     Blood,
@@ -144,7 +145,7 @@ pub enum ArtifactType {
     Vehicle,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum EnchantmentType {
     Aura,
     Background,
@@ -160,7 +161,7 @@ pub enum EnchantmentType {
     Shrine,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum LandType {
     Cave,
     Desert,
@@ -194,7 +195,7 @@ impl LandType {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum PlaneswalkerType {
     Ajani,
     Aminatou,
@@ -278,7 +279,7 @@ pub enum PlaneswalkerType {
     Zariel,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum SpellType {
     Adventure,
     Arcane,
@@ -287,7 +288,7 @@ pub enum SpellType {
     Trap,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum CreatureType {
     Advisor,
     Aetherborn,
@@ -608,7 +609,7 @@ pub enum CreatureType {
     Zubera,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum PlanarType {
     TheAbyss,
     Alara,
@@ -694,17 +695,17 @@ pub enum PlanarType {
     Zhalfir,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum DungeonType {
     Undercity,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum BattleType {
     Siege,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Subtype {
     Artifact(ArtifactType),
     Enchantment(EnchantmentType),
@@ -721,7 +722,7 @@ pub enum Subtype {
 // CARD & PERMANENT ATTRIBUTES
 // ==========================================
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct CardAttributes {
     pub name: String,
     pub types: Vec<CardType>,
@@ -730,33 +731,33 @@ pub struct CardAttributes {
     pub rules_text: String,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct PermanentAttributes {
     pub types: Vec<PermanentType>,
     pub status: PermanentStatus,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct SpellAttributes {
     pub color: Vec<Color>,
     pub cost: Vec<ManaSymbols>,
     pub cmc: u32,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct LandAttributes {
     pub card: CardAttributes,
     pub permanent: PermanentAttributes,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct PlaneswalkerAttributes {
     pub card: CardAttributes,
     pub permanent: PermanentAttributes,
     pub loyalty_counters: u32,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct LevelerAttributes {
     pub card: CardAttributes,
     pub permanent: PermanentAttributes,
@@ -764,7 +765,7 @@ pub struct LevelerAttributes {
     pub level_counters: u32,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct SagaAttributes {
     pub card: CardAttributes,
     pub permanent: PermanentAttributes,
@@ -772,7 +773,7 @@ pub struct SagaAttributes {
     pub lore_counters: u32,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct ClassAttributes {
     pub card: CardAttributes,
     pub permanent: PermanentAttributes,
@@ -780,7 +781,7 @@ pub struct ClassAttributes {
     pub class_level: u32,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct CreatureAttributes {
     pub card: CardAttributes,
     pub permanent: PermanentAttributes,
@@ -790,21 +791,21 @@ pub struct CreatureAttributes {
     pub damage_marked: u32,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct ArtifactAttributes {
     pub card: CardAttributes,
     pub permanent: PermanentAttributes,
     pub spell: SpellAttributes,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct EnchantmentAttributes {
     pub card: CardAttributes,
     pub permanent: PermanentAttributes,
     pub spell: SpellAttributes,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct BattleAttributes {
     pub card: CardAttributes,
     pub permanent: PermanentAttributes,
@@ -812,25 +813,25 @@ pub struct BattleAttributes {
     pub defense: u32,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct InstantAttributes {
     pub card: CardAttributes,
     pub spell: SpellAttributes,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct SorceryAttributes {
     pub card: CardAttributes,
     pub spell: SpellAttributes,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct KindredAttributes {
     pub card: CardAttributes,
     pub spell: SpellAttributes,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum Card {
     Artifact(ArtifactAttributes),
     Battle(BattleAttributes),
@@ -847,7 +848,7 @@ pub enum Card {
 }
 
 /// --- RULE 111.10: PREDEFINED TOKENS ---
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum PredefinedToken {
     Treasure,
     Food,

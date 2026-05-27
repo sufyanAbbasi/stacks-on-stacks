@@ -19,17 +19,75 @@ use effects::{Target, Zone};
 use scryfall::create_test_card;
 
 fn main() {
-    println!("\x1b[1;35m=========================================================\x1b[0m");
-    println!("\x1b[1;35m*  STACKS-ON-STACKS: MTG SIMULATION KERNEL WALKTHROUGH   *\x1b[0m");
-    println!("\x1b[1;35m=========================================================\x1b[0m");
+    let args: Vec<String> = std::env::args().collect();
+    
+    // Command-line flag parsing
+    if args.iter().any(|arg| arg == "--help" || arg == "-h") {
+        print_help();
+        return;
+    }
 
-    // --- PREMIUM CARD RENDERING SHOWCASE ---
+    let run_card_render = args.iter().any(|arg| arg == "--card-render");
+    let run_walkthrough = args.iter().any(|arg| arg == "--walkthrough");
+    let run_zones = args.iter().any(|arg| arg == "--zones");
+    let run_serialize = args.iter().any(|arg| arg == "--serialize");
+    let run_all = args.iter().any(|arg| arg == "--all") 
+        || (!run_card_render && !run_walkthrough && !run_zones && !run_serialize);
+
+    if run_all {
+        println!("\x1b[1;35m=========================================================\x1b[0m");
+        println!("\x1b[1;35m*  STACKS-ON-STACKS: RUNNING ALL SIMULATION SHOWCASES   *\x1b[0m");
+        println!("\x1b[1;35m=========================================================\x1b[0m");
+    }
+
+    if run_all || run_card_render {
+        run_card_rendering_showcase();
+    }
+
+    let mut game = None;
+
+    if run_all || run_walkthrough || run_zones || run_serialize {
+        game = Some(run_standard_walkthrough());
+    }
+
+    if let Some(ref mut g) = game {
+        if run_all || run_zones {
+            run_secondary_zones_showcase(g);
+        }
+        if run_all || run_serialize {
+            run_serialization_test(g);
+        }
+    }
+}
+
+fn print_help() {
+    println!("\x1b[1;35m=========================================================\x1b[0m");
+    println!("\x1b[1;35m*            STACKS-ON-STACKS SIMULATOR HELP            *\x1b[0m");
+    println!("\x1b[1;35m=========================================================\x1b[0m");
+    println!("Usage: cargo run [options]");
+    println!("\nOptions:");
+    println!("  -h, --help       Show this help message");
+    println!("  --card-render    Run only the dynamic Scryfall ASCII card rendering demo");
+    println!("  --walkthrough    Run only the standard 13-step machine-code game walkthrough");
+    println!("  --zones          Run the walkthrough followed by secondary zones/primitives demo");
+    println!("  --serialize      Run the walkthrough followed by serialization round-trip snapshot test");
+    println!("  --all            Run all simulation showcases and tests sequentially (default if no flags are passed)");
+    println!("\x1b[1;35m=========================================================\x1b[0m\n");
+}
+
+fn run_card_rendering_showcase() {
     println!("\n\x1b[1;36m=========================================================\x1b[0m");
     println!("\x1b[1;36m*             MTG ASCII CARD RENDERING SHOWCASE         *\x1b[0m");
     println!("\x1b[1;36m=========================================================\x1b[0m");
     let _dreadmaw = create_test_card("Colossal Dreadmaw");
     let _bolt = create_test_card("Lightning Bolt");
     println!("\x1b[1;36m=========================================================\x1b[0m\n");
+}
+
+fn run_standard_walkthrough() -> Game {
+    println!("\x1b[1;35m=========================================================\x1b[0m");
+    println!("\x1b[1;35m*  STACKS-ON-STACKS: MTG SIMULATION KERNEL WALKTHROUGH   *\x1b[0m");
+    println!("\x1b[1;35m=========================================================\x1b[0m");
 
     // Initialize Game Kernel and Players
     let mut game = Game::new(Format::Commander);
@@ -87,7 +145,7 @@ fn main() {
         SimInstruction::SpendMana { player_id: 1, color: Color::G, amount: 1 },
         SimInstruction::MoveCard { card_id: 11, from: Zone::Hand, to: Zone::Stack, controller: 1 },
         SimInstruction::PushSpell { card_id: 11, caster: 1 }, // Sol Ring gets Stack Item ID 0
-
+        
         // Operation 4: Resolve Sol Ring (pops Sol Ring and places onto Battlefield)
         SimInstruction::PopStack,
         SimInstruction::MoveCard { card_id: 11, from: Zone::Stack, to: Zone::Battlefield, controller: 1 },
@@ -147,7 +205,10 @@ fn main() {
     println!("  5. All low-level state modifications on players, zones, and stack mapped perfectly (1:1) to the underlying structures!");
     println!("\x1b[1;35m=========================================================\x1b[0m\n");
 
-    // --- SECONDARY ZONE PRIMITIVE & LIBRARY SEARCH SHOWCASE ---
+    game
+}
+
+fn run_secondary_zones_showcase(game: &mut Game) {
     println!("\x1b[1;36m=========================================================\x1b[0m");
     println!("\x1b[1;36m*      SECONDARY ZONE PRIMITIVES & LIBRARY SEARCH        *\x1b[0m");
     println!("\x1b[1;36m=========================================================\x1b[0m");
@@ -192,7 +253,7 @@ fn main() {
     for (step, instruction) in showcase_instructions.into_iter().enumerate() {
         println!("\n\x1b[1;36m--- SHOWCASE CLOCK CYCLE / STEP {} ---\x1b[0m", step + 1);
         game.execute_instruction(instruction);
-        print_game_state(&game);
+        print_game_state(game);
     }
 
     println!("\n\x1b[1;32m[SHOWCASE COMPLETED SUCCESSFULY]\x1b[0m");
@@ -202,6 +263,28 @@ fn main() {
     println!("  3. Battlefield token creation functions flawlessly.");
     println!("  4. Detailed permanent status properties (tapped/untapped, flipped/unflipped, face-up/face-down, phased-in/phased-out), counters, marked damage, and attachment targets are fully represented.");
     println!("  5. Shared exile card visibility (face-up/face-down) changes are tracked properly.");
+    println!("\x1b[1;35m=========================================================\x1b[0m\n");
+}
+
+fn run_serialization_test(game: &Game) {
+    // --- GAME STATE SERIALIZATION & ROUND-TRIP VERIFICATION ---
+    println!("\x1b[1;35m=========================================================\x1b[0m");
+    println!("\x1b[1;35m*    GAME STATE SERIALIZATION & ROUND-TRIP TEST         *\x1b[0m");
+    println!("\x1b[1;35m=========================================================\x1b[0m");
+    println!("\x1b[1;33m[SERIALIZATION] Serializing active game state to JSON...\x1b[0m");
+    
+    let serialized_state = serde_json::to_string_pretty(game).unwrap();
+    
+    // Print first 1000 characters of the JSON state representation
+    let preview_len = std::cmp::min(1000, serialized_state.len());
+    println!("\x1b[1;30m--- JSON PREVIEW (First 1000 chars) ---\n{}\n...[TRUNCATED]...\x1b[0m", &serialized_state[..preview_len]);
+    
+    println!("\x1b[1;33m[DESERIALIZATION] Deserializing JSON back to Game struct...\x1b[0m");
+    let restored_game: Game = serde_json::from_str(&serialized_state).unwrap();
+    
+    // Check structural and logical equality
+    assert_eq!(game, &restored_game);
+    println!("\x1b[1;32m[SUCCESS] State matches perfectly! Snapshot/Restore is 100% sound.\x1b[0m");
     println!("\x1b[1;35m=========================================================\x1b[0m\n");
 }
 

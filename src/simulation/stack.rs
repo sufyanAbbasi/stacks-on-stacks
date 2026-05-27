@@ -1,3 +1,4 @@
+use serde::{Serialize, Deserialize};
 use crate::effects::{CardId, PlayerId, OneShotEffect, Target};
 
 /// Unique identifier for an item currently resting on the stack.
@@ -5,7 +6,7 @@ use crate::effects::{CardId, PlayerId, OneShotEffect, Target};
 pub type StackItemId = u32;
 
 /// Represents an unresolved spell or ability object on the stack (Rule 405.1).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum StackObject {
     /// A cast spell on the stack (Rule 405.1 / 601.2).
     /// Once resolved, permanent spells enter the battlefield (Rule 608.3),
@@ -37,7 +38,7 @@ pub enum StackObject {
 }
 
 /// Represents a single wrapper item on the stack with a unique ID for targeting/countering.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct StackItem {
     pub id: StackItemId,
     pub object: StackObject,
@@ -45,7 +46,7 @@ pub struct StackItem {
 }
 
 /// Represents the Stack zone, modeled as a last-in, first-out (LIFO) queue (Section 405).
-#[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
 pub struct Stack {
     /// The actual ordered queue of stack items, where the last item is the top of the stack (Rule 405.5).
     pub items: Vec<StackItem>,

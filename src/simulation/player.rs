@@ -1,8 +1,9 @@
+use serde::{Serialize, Deserialize};
 use std::collections::HashMap;
 use crate::card::{Card, Color};
 
 /// Models a player's mana pool tracking colored and colorless mana (Section 106.1).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub struct ManaPool {
     pub white: u32,
     pub blue: u32,
@@ -87,7 +88,7 @@ impl ManaPool {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Player {
     pub id: u32,
     pub name: String,
