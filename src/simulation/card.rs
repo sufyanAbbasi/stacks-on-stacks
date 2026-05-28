@@ -1243,3 +1243,39 @@ impl PredefinedToken {
     }
 }
 
+impl Card {
+    pub fn name(&self) -> &str {
+        match self {
+            Card::Artifact(attrs) => &attrs.card.name,
+            Card::Battle(attrs) => &attrs.card.name,
+            Card::Creature(attrs) => &attrs.card.name,
+            Card::Enchantment(attrs) => &attrs.card.name,
+            Card::Instant(attrs) => &attrs.card.name,
+            Card::Land(attrs) => &attrs.card.name,
+            Card::Planeswalker(attrs) => &attrs.card.name,
+            Card::Sorcery(attrs) => &attrs.card.name,
+            Card::Kindred(attrs) => &attrs.card.name,
+            Card::Leveler(attrs) => &attrs.card.name,
+            Card::Saga(attrs) => &attrs.card.name,
+            Card::Class(attrs) => &attrs.card.name,
+        }
+    }
+
+    pub fn get_spell_cost(&self) -> Option<&[ManaSymbols]> {
+        match self {
+            Card::Artifact(attrs) => Some(&attrs.spell.cost),
+            Card::Battle(attrs) => Some(&attrs.spell.cost),
+            Card::Creature(attrs) => Some(&attrs.spell.cost),
+            Card::Enchantment(attrs) => Some(&attrs.spell.cost),
+            Card::Instant(attrs) => Some(&attrs.spell.cost),
+            Card::Land(_) => None,
+            Card::Planeswalker(_) => None,
+            Card::Sorcery(attrs) => Some(&attrs.spell.cost),
+            Card::Kindred(attrs) => Some(&attrs.spell.cost),
+            Card::Leveler(attrs) => Some(&attrs.spell.cost),
+            Card::Saga(attrs) => Some(&attrs.spell.cost),
+            Card::Class(attrs) => Some(&attrs.spell.cost),
+        }
+    }
+}
+

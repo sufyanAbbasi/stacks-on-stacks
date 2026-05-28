@@ -9,6 +9,7 @@ pub enum PriorityAction {
         player: PlayerId,
         card_id: CardId,
         is_instant_speed: bool,
+        target: Option<crate::effects::Target>,
     },
     /// Activate an activated ability (Rule 117.1b / 602.2).
     ActivateAbility {

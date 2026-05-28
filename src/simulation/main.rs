@@ -10,6 +10,9 @@ pub mod zones;
 pub mod rules;
 #[path = "../compiler/scryfall.rs"]
 pub mod scryfall;
+pub mod graph;
+pub mod abilities;
+
 
 use game::{Game, SimInstruction, Format};
 use player::Player;
@@ -31,8 +34,9 @@ fn main() {
     let run_walkthrough = args.iter().any(|arg| arg == "--walkthrough");
     let run_zones = args.iter().any(|arg| arg == "--zones");
     let run_serialize = args.iter().any(|arg| arg == "--serialize");
+    let run_graph = args.iter().any(|arg| arg == "--graph");
     let run_all = args.iter().any(|arg| arg == "--all") 
-        || (!run_card_render && !run_walkthrough && !run_zones && !run_serialize);
+        || (!run_card_render && !run_walkthrough && !run_zones && !run_serialize && !run_graph);
 
     if run_all {
         println!("\x1b[1;35m=========================================================\x1b[0m");
@@ -40,13 +44,20 @@ fn main() {
         println!("\x1b[1;35m=========================================================\x1b[0m");
     }
 
+    // Extract any additional arguments passed as custom card names to render
+    let custom_card_names: Vec<String> = args.iter()
+        .skip(1)
+        .filter(|arg| !arg.starts_with("-"))
+        .cloned()
+        .collect();
+
     if run_all || run_card_render {
-        run_card_rendering_showcase();
+        run_card_rendering_showcase(&custom_card_names);
     }
 
     let mut game = None;
 
-    if run_all || run_walkthrough || run_zones || run_serialize {
+    if run_all || run_walkthrough || run_zones || run_serialize || run_graph {
         game = Some(run_standard_walkthrough());
     }
 
@@ -57,6 +68,9 @@ fn main() {
         if run_all || run_serialize {
             run_serialization_test(g);
         }
+        if run_all || run_graph {
+            run_graph_showcase(g);
+        }
     }
 }
 
@@ -64,24 +78,114 @@ fn print_help() {
     println!("\x1b[1;35m=========================================================\x1b[0m");
     println!("\x1b[1;35m*            STACKS-ON-STACKS SIMULATOR HELP            *\x1b[0m");
     println!("\x1b[1;35m=========================================================\x1b[0m");
-    println!("Usage: cargo run [options]");
+    println!("Usage: cargo run [options] [card_names]");
     println!("\nOptions:");
     println!("  -h, --help       Show this help message");
-    println!("  --card-render    Run only the dynamic Scryfall ASCII card rendering demo");
+    println!("  --card-render    Run dynamic Scryfall ASCII card rendering demo. Add names as trailing args.");
+    println!("                   Example: cargo run -- --card-render \"Opposition Agent\"");
     println!("  --walkthrough    Run only the standard 13-step machine-code game walkthrough");
     println!("  --zones          Run the walkthrough followed by secondary zones/primitives demo");
     println!("  --serialize      Run the walkthrough followed by serialization round-trip snapshot test");
+    println!("  --graph          Run the state-based actions check and priority decision graph demo");
     println!("  --all            Run all simulation showcases and tests sequentially (default if no flags are passed)");
     println!("\x1b[1;35m=========================================================\x1b[0m\n");
 }
 
-fn run_card_rendering_showcase() {
+fn run_card_rendering_showcase(custom_names: &[String]) {
     println!("\n\x1b[1;36m=========================================================\x1b[0m");
     println!("\x1b[1;36m*             MTG ASCII CARD RENDERING SHOWCASE         *\x1b[0m");
     println!("\x1b[1;36m=========================================================\x1b[0m");
-    let _dreadmaw = create_test_card("Colossal Dreadmaw");
-    let _bolt = create_test_card("Lightning Bolt");
+    
+    let names = if custom_names.is_empty() {
+        vec!["Colossal Dreadmaw".to_string(), "Lightning Bolt".to_string()]
+    } else {
+        custom_names.to_vec()
+    };
+
+    for name in names {
+        println!("[SCRYFALL] Fetching and compiling: {}...", name);
+        let _card = create_test_card(&name);
+    }
     println!("\x1b[1;36m=========================================================\x1b[0m\n");
+}
+
+fn run_graph_showcase(_old_game: &mut Game) {
+    println!("\n\x1b[1;35m=========================================================\x1b[0m");
+    println!("\x1b[1;35m*    ALGORITHMIC MTG DECISION GRAPH & STATE-BASED ACTIONS*\x1b[0m");
+    println!("\x1b[1;35m=========================================================\x1b[0m");
+
+    // 1. Initialize a completely custom state for this scenario
+    println!("\n[SBA SCENARIO] Constructing initial custom MTG scenario board state...");
+    let mut game = Game::new(Format::Commander);
+
+    let player_a = Player::new(1, "Player A".to_string(), 20);
+    let player_b = Player::new(2, "Player B".to_string(), 20);
+
+    game.add_player(player_a);
+    game.add_player(player_b);
+
+    // Compile/Fetch the cards
+    let forest = create_test_card("Forest");
+    let mountain = create_test_card("Mountain");
+    let island = create_test_card("Island");
+    let fireball = create_test_card("Fireball");
+    let counterspell = create_test_card("Counterspell");
+    let bear = create_test_card("Runeclaw Bear");
+
+    // Player A Battlefield: Forest (ID 10) and Mountain (ID 13)
+    game.card_registry.insert(10, ZoneCard { id: 10, card: forest, owner: 1, is_token: false });
+    game.zones.insert_card(game.card_registry[&10].clone(), Zone::Battlefield, 1);
+
+    game.card_registry.insert(13, ZoneCard { id: 13, card: mountain, owner: 1, is_token: false });
+    game.zones.insert_card(game.card_registry[&13].clone(), Zone::Battlefield, 1);
+
+    // Player A Hand: Fireball (ID 15)
+    game.card_registry.insert(15, ZoneCard { id: 15, card: fireball, owner: 1, is_token: false });
+    game.zones.insert_card(game.card_registry[&15].clone(), Zone::Hand, 1);
+
+    // Player B Battlefield: Island 1 (ID 20), Island 2 (ID 21), and Runeclaw Bear (ID 30)
+    game.card_registry.insert(20, ZoneCard { id: 20, card: island.clone(), owner: 2, is_token: false });
+    game.zones.insert_card(game.card_registry[&20].clone(), Zone::Battlefield, 2);
+
+    game.card_registry.insert(21, ZoneCard { id: 21, card: island, owner: 2, is_token: false });
+    game.zones.insert_card(game.card_registry[&21].clone(), Zone::Battlefield, 2);
+
+    game.card_registry.insert(30, ZoneCard { id: 30, card: bear, owner: 2, is_token: false });
+    game.zones.insert_card(game.card_registry[&30].clone(), Zone::Battlefield, 2);
+
+    // Player B Hand: Counterspell (ID 22)
+    game.card_registry.insert(22, ZoneCard { id: 22, card: counterspell, owner: 2, is_token: false });
+    game.zones.insert_card(game.card_registry[&22].clone(), Zone::Hand, 2);
+
+    // Priority begins with Player 1 (A)
+    game.priority_player = Some(1);
+    game.active_player = 1;
+    game.consecutive_passes = 0;
+
+    println!("\x1b[1;32m[SYSTEM] Custom Starting Board State Configured successfully.\x1b[0m");
+    print_game_state(&game);
+
+    // 2. Algorithmically build decision graph using BFS state-space search
+    println!("\n[GRAPH GENERATOR] Programmatically expanding state-space graph (BFS)...");
+    let graph = graph::GameGraph::build_algorithmic_graph(&game, 150);
+
+    println!("\n[GRAPH GENERATOR] Success! Constructed decision tree graph with {} states.", graph.nodes.len());
+    graph.print_ascii_visualization();
+
+    // Export Mermaid flowchart markdown to both workspace Graphs folder and Gemini artifacts
+    let markdown_content = graph.export_mermaid_markdown();
+    
+    // Create 'graphs' folder in the workspace root
+    let workspace_graphs_dir = "./graphs";
+    if let Err(e) = std::fs::create_dir_all(workspace_graphs_dir) {
+        println!("[ERROR] Failed to create workspace graphs directory: {}", e);
+    }
+    let workspace_filepath = "./graphs/decision_graph.md";
+    println!("[EXPORT] Mermaid decision flowchart to workspace: {}", workspace_filepath);
+    if let Err(e) = std::fs::write(workspace_filepath, &markdown_content) {
+        println!("[ERROR] Failed to write workspace decision_graph.md: {}", e);
+    }
+    println!("\x1b[1;35m=========================================================\x1b[0m\n");
 }
 
 fn run_standard_walkthrough() -> Game {
