@@ -9,138 +9,138 @@ flowchart TD
     classDef napColor fill:#3498db,stroke:#2980b9,stroke-width:2px,color:#fff;
     classDef systemColor fill:#9b59b6,stroke:#8e44ad,stroke-width:2px,color:#fff;
 
-    Node_30("**Node 30**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_30 apColor;
-    Node_6("**Node 6**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_6 napColor;
-    Node_5["**Node 5**<br/>Stack is empty. Mana pools: Player A: empty; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_5 systemColor;
-    Node_38("**Node 38**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_38 apColor;
-    Node_32("**Node 32**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_32 napColor;
-    Node_40["**Node 40**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_40 systemColor;
-    Node_45("**Node 45**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_45 napColor;
-    Node_58("**Node 58**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_58 napColor;
-    Node_3("**Node 3**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_3 apColor;
-    Node_11("**Node 11**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_11 apColor;
-    Node_14["**Node 14**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_14 systemColor;
-    Node_61["**Node 61**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_61 systemColor;
-    Node_37("**Node 37**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_37 napColor;
-    Node_62("**Node 62**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_62 apColor;
-    Node_8("**Node 8**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_8 napColor;
-    Node_51("**Node 51**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_51 apColor;
-    Node_53("**Node 53**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_53 apColor;
-    Node_50("**Node 50**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_50 napColor;
-    Node_35("**Node 35**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_35 napColor;
-    Node_41("**Node 41**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_41 apColor;
-    Node_56("**Node 56**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_56 napColor;
-    Node_55("**Node 55**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_55 napColor;
-    Node_64["**Node 64**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_64 systemColor;
-    Node_60["**Node 60**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_60 systemColor;
-    Node_42("**Node 42**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_42 apColor;
-    Node_65("**Node 65**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_65 napColor;
-    Node_7("**Node 7**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_7 napColor;
-    Node_48["**Node 48**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_48 systemColor;
-    Node_15("**Node 15**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_15 napColor;
-    Node_59("**Node 59**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_59 napColor;
-    Node_18["**Node 18**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_18 systemColor;
-    Node_24("**Node 24**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_24 apColor;
-    Node_54["**Node 54**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_54 systemColor;
     Node_25["**Node 25**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
     class Node_25 systemColor;
-    Node_9("**Node 9**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_9 apColor;
-    Node_13("**Node 13**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_13 apColor;
-    Node_2("**Node 2**<br/>Stack is empty. Mana pools: Player A: empty; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_2 napColor;
-    Node_66["**Node 66**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_66 systemColor;
-    Node_22("**Node 22**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_22 apColor;
-    Node_28("**Node 28**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_28 apColor;
-    Node_4("**Node 4**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_4 apColor;
-    Node_20("**Node 20**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_20 napColor;
-    Node_1_Start("**Node 1 Start**<br/>Initial State: Player A has priority.")
-    class Node_1_Start apColor;
-    Node_39("**Node 39**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_39 napColor;
-    Node_10("**Node 10**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_10 napColor;
     Node_17("**Node 17**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
     class Node_17 napColor;
-    Node_16("**Node 16**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_16 napColor;
-    Node_52["**Node 52**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_52 systemColor;
-    Node_36("**Node 36**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_36 apColor;
-    Node_33("**Node 33**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_33 napColor;
-    Node_23("**Node 23**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_23 apColor;
-    Node_49("**Node 49**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_49 apColor;
-    Node_44("**Node 44**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_44 apColor;
-    Node_12("**Node 12**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_12 napColor;
-    Node_21["**Node 21**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_21 systemColor;
-    Node_26("**Node 26**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_26 apColor;
-    Node_29("**Node 29**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_29 napColor;
-    Node_47("**Node 47**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_47 apColor;
+    Node_18["**Node 18**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_18 systemColor;
+    Node_42("**Node 42**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_42 apColor;
+    Node_50("**Node 50**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_50 napColor;
     Node_27("**Node 27**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
     class Node_27 apColor;
-    Node_63["**Node 63**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_63 systemColor;
-    Node_43("**Node 43**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_43 napColor;
-    Node_19("**Node 19**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_19 napColor;
-    Node_31["**Node 31**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_31 systemColor;
-    Node_34("**Node 34**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
-    class Node_34 apColor;
-    Node_46["**Node 46**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
-    class Node_46 systemColor;
+    Node_47("**Node 47**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_47 apColor;
+    Node_12("**Node 12**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_12 napColor;
+    Node_51("**Node 51**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_51 apColor;
+    Node_60["**Node 60**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_60 systemColor;
+    Node_33("**Node 33**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_33 napColor;
+    Node_3("**Node 3**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_3 apColor;
+    Node_9("**Node 9**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_9 apColor;
+    Node_10("**Node 10**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_10 napColor;
+    Node_28("**Node 28**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_28 apColor;
+    Node_32("**Node 32**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_32 napColor;
+    Node_22("**Node 22**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_22 apColor;
     Node_57("**Node 57**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
     class Node_57 apColor;
+    Node_53("**Node 53**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_53 apColor;
+    Node_66["**Node 66**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_66 systemColor;
+    Node_48["**Node 48**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_48 systemColor;
+    Node_14["**Node 14**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_14 systemColor;
+    Node_63["**Node 63**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_63 systemColor;
+    Node_46["**Node 46**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_46 systemColor;
+    Node_24("**Node 24**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_24 apColor;
+    Node_26("**Node 26**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_26 apColor;
+    Node_52["**Node 52**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_52 systemColor;
+    Node_61["**Node 61**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_61 systemColor;
+    Node_2("**Node 2**<br/>Stack is empty. Mana pools: Player A: empty; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_2 napColor;
+    Node_37("**Node 37**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_37 napColor;
+    Node_54["**Node 54**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_54 systemColor;
+    Node_58("**Node 58**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_58 napColor;
+    Node_59("**Node 59**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_59 napColor;
+    Node_8("**Node 8**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_8 napColor;
+    Node_6("**Node 6**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_6 napColor;
+    Node_64["**Node 64**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_64 systemColor;
+    Node_62("**Node 62**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_62 apColor;
+    Node_34("**Node 34**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_34 apColor;
+    Node_15("**Node 15**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_15 napColor;
+    Node_35("**Node 35**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_35 napColor;
+    Node_7("**Node 7**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_7 napColor;
+    Node_1_Start("**Node 1 Start**<br/>Initial State: Player A has priority.")
+    class Node_1_Start apColor;
+    Node_16("**Node 16**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_16 napColor;
+    Node_30("**Node 30**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_30 apColor;
+    Node_40["**Node 40**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_40 systemColor;
+    Node_21["**Node 21**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_21 systemColor;
+    Node_19("**Node 19**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_19 napColor;
+    Node_55("**Node 55**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_55 napColor;
+    Node_43("**Node 43**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_43 napColor;
+    Node_45("**Node 45**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_45 napColor;
+    Node_13("**Node 13**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_13 apColor;
+    Node_23("**Node 23**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_23 apColor;
+    Node_5["**Node 5**<br/>Stack is empty. Mana pools: Player A: empty; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_5 systemColor;
+    Node_29("**Node 29**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_29 napColor;
+    Node_39("**Node 39**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_39 napColor;
+    Node_56("**Node 56**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_56 napColor;
+    Node_65("**Node 65**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_65 napColor;
+    Node_44("**Node 44**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_44 apColor;
+    Node_36("**Node 36**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_36 apColor;
+    Node_20("**Node 20**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_20 napColor;
+    Node_49("**Node 49**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_49 apColor;
+    Node_31["**Node 31**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1."]
+    class Node_31 systemColor;
+    Node_41("**Node 41**<br/>Stack is empty. Mana pools: Player A: {G: 1}; Player B: {U: 2}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_41 apColor;
+    Node_38("**Node 38**<br/>Stack is empty. Mana pools: Player A: {R: 1, G: 1}; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_38 apColor;
+    Node_4("**Node 4**<br/>Stack is empty. Mana pools: Player A: {R: 1}; Player B: empty. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_4 apColor;
+    Node_11("**Node 11**<br/>Stack is empty. Mana pools: Player A: empty; Player B: {U: 1}. Battlefield: Runeclaw Bear (ID: 30, damage: 0). Hands: Player A: 1, Player B: 1.")
+    class Node_11 apColor;
 
     %% Transitions / Edges
     Node_1_Start -->|"Player A Passes"| Node_2

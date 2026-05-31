@@ -10,6 +10,8 @@ pub mod zones;
 pub mod rules;
 #[path = "../compiler/scryfall.rs"]
 pub mod scryfall;
+#[path = "../compiler/rules_text_ast.rs"]
+pub mod rules_text_ast;
 pub mod graph;
 pub mod abilities;
 
@@ -35,8 +37,9 @@ fn main() {
     let run_zones = args.iter().any(|arg| arg == "--zones");
     let run_serialize = args.iter().any(|arg| arg == "--serialize");
     let run_graph = args.iter().any(|arg| arg == "--graph");
+    let run_test_ast = args.iter().any(|arg| arg == "--test-ast");
     let run_all = args.iter().any(|arg| arg == "--all") 
-        || (!run_card_render && !run_walkthrough && !run_zones && !run_serialize && !run_graph);
+        || (!run_card_render && !run_walkthrough && !run_zones && !run_serialize && !run_graph && !run_test_ast);
 
     if run_all {
         println!("\x1b[1;35m=========================================================\x1b[0m");
@@ -72,6 +75,144 @@ fn main() {
             run_graph_showcase(g);
         }
     }
+
+    if run_all || run_test_ast {
+        run_ast_deserialization_test();
+    }
+}
+
+fn run_ast_deserialization_test() {
+    println!("\x1b[1;36m=========================================================\x1b[0m");
+    println!("\x1b[1;36m*             MTG COMPILER AST PARSE & VERIFY TEST      *\x1b[0m");
+    println!("\x1b[1;36m=========================================================\x1b[0m");
+    
+    let path = "parsed_cards.json";
+    if !std::path::Path::new(path).exists() {
+        println!("\x1b[1;31m[ERROR] File 'parsed_cards.json' not found!\x1b[0m");
+        println!("Please run 'node scratch_parser.js' first to fetch and parse cards from Scryfall.");
+        println!("\x1b[1;36m=========================================================\x1b[0m\n");
+        return;
+    }
+    
+    println!("\x1b[1;33m[LOAD] Reading 'parsed_cards.json'...\x1b[0m");
+    let content = match std::fs::read_to_string(path) {
+        Ok(s) => s,
+        Err(e) => {
+            println!("\x1b[1;31m[ERROR] Failed to read file: {}\x1b[0m", e);
+            println!("\x1b[1;36m=========================================================\x1b[0m\n");
+            return;
+        }
+    };
+    
+    #[derive(serde::Deserialize, Debug)]
+    struct ScryfallParseTest {
+        name: String,
+        oracle_text: String,
+        parse_result: ScryfallParseResultInner,
+    }
+
+    #[derive(serde::Deserialize, Debug)]
+    struct ScryfallParseResultInner {
+        result: Option<Vec<Vec<serde_json::Value>>>,
+        error: Option<serde_json::Value>,
+    }
+    
+    println!("\x1b[1;33m[DESERIALIZE] Validating schema compatibility of parsed AST objects...\x1b[0m");
+    let cards: Result<Vec<ScryfallParseTest>, _> = serde_json::from_str(&content);
+    
+    match cards {
+        Ok(parsed_list) => {
+            println!("\x1b[1;32m[SUCCESS] Read JSON file successfully! Inspecting structures...\x1b[0m");
+            let mut total_errors = 0;
+            for card in parsed_list {
+                match card.parse_result.result {
+                    Some(ref parses) => {
+                        let mut parsed_trees = Vec::new();
+                        let mut card_has_error = false;
+                        for (tree_idx, parse_tree) in parses.iter().enumerate() {
+                            let mut parsed_tree = Vec::new();
+                            for (ability_idx, val) in parse_tree.iter().enumerate() {
+                                let res: Result<rules_text_ast::AbilityOrRemind, _> = serde_json::from_value(val.clone());
+                                match res {
+                                    Ok(ability) => {
+                                        parsed_tree.push(ability);
+                                    }
+                                    Err(e) => {
+                                        total_errors += 1;
+                                        card_has_error = true;
+                                        println!("\x1b[1;31m[ERROR] Card '{}' failed to deserialize at parse_tree {}, ability_idx {}:\x1b[0m", card.name, tree_idx, ability_idx);
+                                        println!("JSON value: {}", serde_json::to_string_pretty(val).unwrap());
+                                        println!("Error Details: {:?}", e);
+                                        
+                                        println!("\x1b[1;33mTargeted Diagnostics:\x1b[0m");
+                                        let act_res: Result<rules_text_ast::ActivatedAbility, _> = serde_json::from_value(val.clone());
+                                        println!("  - Try ActivatedAbility: {:?}", act_res);
+                                        
+                                        let trigger_res: Result<rules_text_ast::TriggeredAbility, _> = serde_json::from_value(val.clone());
+                                        println!("  - Try TriggeredAbility: {:?}", trigger_res);
+                                        
+                                        let sentence_res: Result<rules_text_ast::Sentence, _> = serde_json::from_value(val.clone());
+                                        println!("  - Try Sentence: {:?}", sentence_res);
+                                        
+                                        if let Some(as_long_as) = val.get("asLongAs") {
+                                            let cond_res: Result<rules_text_ast::Condition, _> = serde_json::from_value(as_long_as.clone());
+                                            println!("    - Try asLongAs as Condition: {:?}", cond_res);
+                                            let sent_res: Result<rules_text_ast::Sentence, _> = serde_json::from_value(as_long_as.clone());
+                                            println!("    - Try asLongAs as Sentence: {:?}", sent_res);
+                                            if let Some(does) = as_long_as.get("does") {
+                                                let pvp_res: Result<rules_text_ast::PlayerVerbPhrase, _> = serde_json::from_value(does.clone());
+                                                println!("      - Try asLongAs.does as PlayerVerbPhrase: {:?}", pvp_res);
+                                                let imp_res: Result<rules_text_ast::Imperative, _> = serde_json::from_value(does.clone());
+                                                println!("      - Try asLongAs.does as Imperative: {:?}", imp_res);
+                                            }
+                                        }
+                                        if let Some(duration) = val.get("duration") {
+                                            let dur_res: Result<rules_text_ast::Duration, _> = serde_json::from_value(duration.clone());
+                                            println!("    - Try duration as Duration: {:?}", dur_res);
+                                        }
+                                        if let Some(effect) = val.get("effect") {
+                                            let sent_res: Result<rules_text_ast::Sentence, _> = serde_json::from_value(effect.clone());
+                                            println!("    - Try effect as Sentence: {:?}", sent_res);
+                                            if let Some(what) = effect.get("what") {
+                                                let obj_res: Result<rules_text_ast::Object, _> = serde_json::from_value(what.clone());
+                                                println!("      - Try effect.what as Object: {:?}", obj_res);
+                                                let po_res: Result<rules_text_ast::PureObject, _> = serde_json::from_value(what.clone());
+                                                println!("      - Try effect.what as PureObject: {:?}", po_res);
+                                            }
+                                        }
+                                        println!("---------------------------------------------------------");
+                                    }
+                                }
+                            }
+                            if !card_has_error {
+                                parsed_trees.push(parsed_tree);
+                            }
+                        }
+                        if !card_has_error && !parsed_trees.is_empty() {
+                            println!("  - \x1b[1;32m{}\x1b[0m: Parsed successfully with {} possible parse tree(s).", card.name, parsed_trees.len());
+                            println!("    Parsed structure (First parse tree):");
+                            for (idx, ability) in parsed_trees[0].iter().enumerate() {
+                                println!("      [{}] {:?}", idx + 1, ability);
+                            }
+                        }
+                    }
+                    None => {
+                        println!("  - \x1b[1;31m{}\x1b[0m: FAILED to parse upstream (Error: {:?})", card.name, card.parse_result.error);
+                    }
+                }
+            }
+            if total_errors > 0 {
+                println!("\x1b[1;31m[FAILURE] Finished with {} deserialization errors.\x1b[0m", total_errors);
+            } else {
+                println!("\x1b[1;32m[SUCCESS] All cards matched the Rust schema perfectly!\x1b[0m");
+            }
+        }
+        Err(e) => {
+            println!("\x1b[1;31m[ERROR] Deserialization failed! Schema mismatch or corrupted JSON.\x1b[0m");
+            println!("Details: {}", e);
+        }
+    }
+    println!("\x1b[1;36m=========================================================\x1b[0m\n");
 }
 
 fn print_help() {
@@ -87,6 +228,7 @@ fn print_help() {
     println!("  --zones          Run the walkthrough followed by secondary zones/primitives demo");
     println!("  --serialize      Run the walkthrough followed by serialization round-trip snapshot test");
     println!("  --graph          Run the state-based actions check and priority decision graph demo");
+    println!("  --test-ast       Verify that Scryfall cards parsed by magic-card-parser match our Rust AST schema");
     println!("  --all            Run all simulation showcases and tests sequentially (default if no flags are passed)");
     println!("\x1b[1;35m=========================================================\x1b[0m\n");
 }

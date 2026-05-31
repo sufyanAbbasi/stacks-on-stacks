@@ -1,0 +1,4327 @@
+[
+  {
+    "name": "Thraben Doomsayer",
+    "oracle_text": "{T}: Create a 1/1 white Human creature token.\nFateful hour — As long as you have 5 or less life, other creatures you control get +2/+2.",
+    "parse_result": {
+      "result": [
+        [
+          {
+            "costs": "tap",
+            "activatedAbility": {
+              "create": {
+                "amount": 1,
+                "type": {
+                  "and": [
+                    "human",
+                    {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  ]
+                },
+                "size": {
+                  "power": 1,
+                  "toughness": 1
+                },
+                "color": "w"
+              }
+            }
+          },
+          {
+            "asLongAs": {
+              "actor": "you",
+              "does": {
+                "comparison": {
+                  "lte": 5
+                },
+                "value": "life"
+              }
+            },
+            "effect": {
+              "what": {
+                "type": {
+                  "and": [
+                    "creature"
+                  ]
+                },
+                "prefixes": [
+                  "other"
+                ],
+                "suffix": {
+                  "actor": "you",
+                  "does": "control"
+                }
+              },
+              "does": {
+                "powerToughnessMod": {
+                  "powerMod": 2,
+                  "toughnessMod": 2
+                }
+              }
+            }
+          }
+        ],
+        [
+          {
+            "costs": "tap",
+            "activatedAbility": {
+              "create": {
+                "amount": 1,
+                "type": {
+                  "and": [
+                    "human",
+                    {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  ]
+                },
+                "size": {
+                  "power": 1,
+                  "toughness": 1
+                },
+                "color": "w"
+              }
+            }
+          },
+          {
+            "duration": {
+              "asLongAs": {
+                "actor": "you",
+                "does": {
+                  "comparison": {
+                    "lte": 5
+                  },
+                  "value": "life"
+                }
+              }
+            },
+            "effect": {
+              "what": {
+                "type": {
+                  "and": [
+                    "creature"
+                  ]
+                },
+                "prefixes": [
+                  "other"
+                ],
+                "suffix": {
+                  "actor": "you",
+                  "does": "control"
+                }
+              },
+              "does": {
+                "powerToughnessMod": {
+                  "powerMod": 2,
+                  "toughnessMod": 2
+                }
+              }
+            }
+          }
+        ],
+        [
+          {
+            "costs": "tap",
+            "activatedAbility": {
+              "create": {
+                "amount": 1,
+                "type": {
+                  "and": [
+                    "human",
+                    {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  ]
+                },
+                "size": {
+                  "power": 1,
+                  "toughness": 1
+                },
+                "color": "w"
+              }
+            }
+          },
+          {
+            "asLongAs": {
+              "actor": "you",
+              "does": {
+                "comparison": {
+                  "lte": 5
+                },
+                "value": "life"
+              }
+            },
+            "effect": {
+              "what": {
+                "object": {
+                  "type": {
+                    "and": [
+                      "creature"
+                    ]
+                  },
+                  "prefixes": [
+                    "other"
+                  ]
+                },
+                "suffix": {
+                  "actor": "you",
+                  "does": "control"
+                }
+              },
+              "does": {
+                "powerToughnessMod": {
+                  "powerMod": 2,
+                  "toughnessMod": 2
+                }
+              }
+            }
+          }
+        ],
+        [
+          {
+            "costs": "tap",
+            "activatedAbility": {
+              "create": {
+                "amount": 1,
+                "type": {
+                  "and": [
+                    "human",
+                    {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  ]
+                },
+                "size": {
+                  "power": 1,
+                  "toughness": 1
+                },
+                "color": "w"
+              }
+            }
+          },
+          {
+            "duration": {
+              "asLongAs": {
+                "actor": "you",
+                "does": {
+                  "comparison": {
+                    "lte": 5
+                  },
+                  "value": "life"
+                }
+              }
+            },
+            "effect": {
+              "what": {
+                "object": {
+                  "type": {
+                    "and": [
+                      "creature"
+                    ]
+                  },
+                  "prefixes": [
+                    "other"
+                  ]
+                },
+                "suffix": {
+                  "actor": "you",
+                  "does": "control"
+                }
+              },
+              "does": {
+                "powerToughnessMod": {
+                  "powerMod": 2,
+                  "toughnessMod": 2
+                }
+              }
+            }
+          }
+        ]
+      ],
+      "error": "Ambiguous parse",
+      "oracleText": "{t}: create a 1/1 white human creature token.\nfateful hour — as long as you have 5 or less life, other creatures you control get +2/+2.",
+      "card": {
+        "name": "Thraben Doomsayer",
+        "oracle_text": "{T}: Create a 1/1 white Human creature token.\nFateful hour — As long as you have 5 or less life, other creatures you control get +2/+2.",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Colossal Dreadmaw",
+    "oracle_text": "Trample (This creature can deal excess combat damage to the player or planeswalker it's attacking.)",
+    "parse_result": {
+      "result": [
+        [
+          [
+            "trample"
+          ]
+        ]
+      ],
+      "error": null,
+      "oracleText": "trample (this creature can deal excess combat damage to the player or planeswalker it's attacking.)",
+      "card": {
+        "name": "Colossal Dreadmaw",
+        "oracle_text": "Trample (This creature can deal excess combat damage to the player or planeswalker it's attacking.)",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Sol Ring",
+    "oracle_text": "{T}: Add {C}{C}.",
+    "parse_result": {
+      "result": [
+        [
+          {
+            "costs": "tap",
+            "activatedAbility": {
+              "addOneOf": [
+                [
+                  "c",
+                  "c"
+                ]
+              ]
+            }
+          }
+        ]
+      ],
+      "error": null,
+      "oracleText": "{t}: add {c}{c}.",
+      "card": {
+        "name": "Sol Ring",
+        "oracle_text": "{T}: Add {C}{C}.",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Runeclaw Bear",
+    "oracle_text": "",
+    "parse_result": {
+      "result": [
+        []
+      ],
+      "error": null,
+      "oracleText": "",
+      "card": {
+        "name": "Runeclaw Bear",
+        "oracle_text": "",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Giant Growth",
+    "oracle_text": "Target creature gets +3/+3 until end of turn.",
+    "parse_result": {
+      "result": [
+        [
+          {
+            "what": {
+              "reference": {
+                "targetCount": 1
+              },
+              "object": {
+                "type": {
+                  "and": [
+                    "creature"
+                  ]
+                }
+              }
+            },
+            "does": {
+              "does": {
+                "powerToughnessMod": {
+                  "powerMod": 3,
+                  "toughnessMod": 3
+                }
+              },
+              "duration": {
+                "until": "endOfTurn"
+              }
+            }
+          }
+        ],
+        [
+          {
+            "what": {
+              "reference": {
+                "targetCount": 1
+              },
+              "object": {
+                "type": {
+                  "and": [
+                    "creature"
+                  ]
+                }
+              }
+            },
+            "does": {
+              "powerToughnessMod": {
+                "powerMod": 3,
+                "toughnessMod": 3
+              },
+              "until": "endOfTurn"
+            }
+          }
+        ]
+      ],
+      "error": "Ambiguous parse",
+      "oracleText": "target creature gets +3/+3 until end of turn.",
+      "card": {
+        "name": "Giant Growth",
+        "oracle_text": "Target creature gets +3/+3 until end of turn.",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Behold the Multiverse",
+    "oracle_text": "Scry 2, then draw two cards.\nForetell {1}{U} (During your turn, you may pay {2} and exile this card from your hand face down. Cast it on a later turn for its foretell cost.)",
+    "parse_result": {
+      "result": [
+        [
+          {
+            "and": [
+              {
+                "scry": 2
+              },
+              {
+                "draw": 2
+              }
+            ]
+          },
+          [
+            {
+              "foretell": {
+                "mana": [
+                  1,
+                  "u"
+                ]
+              }
+            }
+          ]
+        ]
+      ],
+      "error": null,
+      "oracleText": "scry 2, then draw two cards.\nforetell {1}{u} (during your turn, you may pay {2} and exile this card from your hand face down. cast it on a later turn for its foretell cost.)",
+      "card": {
+        "name": "Behold the Multiverse",
+        "oracle_text": "Scry 2, then draw two cards.\nForetell {1}{U} (During your turn, you may pay {2} and exile this card from your hand face down. Cast it on a later turn for its foretell cost.)",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Slickshot Show-Off",
+    "oracle_text": "Flying, haste\nWhenever you cast a noncreature spell, this creature gets +2/+0 until end of turn.\nPlot {1}{R} (You may pay {1}{R} and exile this card from your hand. Cast it as a sorcery on a later turn without paying its mana cost. Plot only as a sorcery.)",
+    "parse_result": {
+      "result": [
+        [
+          [
+            "flying",
+            "haste"
+          ],
+          {
+            "trigger": {
+              "when": {
+                "actor": "you",
+                "does": {
+                  "cast": {
+                    "reference": {
+                      "count": 1
+                    },
+                    "object": {
+                      "object": "spell",
+                      "prefixes": [
+                        {
+                          "not": {
+                            "type": {
+                              "and": [
+                                "creature"
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "effect": {
+              "what": {
+                "reference": "this",
+                "object": {
+                  "type": {
+                    "and": [
+                      "creature"
+                    ]
+                  }
+                }
+              },
+              "does": {
+                "does": {
+                  "powerToughnessMod": {
+                    "powerMod": 2,
+                    "toughnessMod": 0
+                  }
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            }
+          },
+          [
+            {
+              "plot": {
+                "mana": [
+                  1,
+                  "r"
+                ]
+              }
+            }
+          ]
+        ],
+        [
+          [
+            "flying",
+            "haste"
+          ],
+          {
+            "trigger": {
+              "when": {
+                "actor": "you",
+                "does": {
+                  "cast": {
+                    "reference": {
+                      "count": 1
+                    },
+                    "object": {
+                      "object": "spell",
+                      "types": {
+                        "and": [
+                          {
+                            "not": "creature"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "effect": {
+              "what": {
+                "reference": "this",
+                "object": {
+                  "type": {
+                    "and": [
+                      "creature"
+                    ]
+                  }
+                }
+              },
+              "does": {
+                "does": {
+                  "powerToughnessMod": {
+                    "powerMod": 2,
+                    "toughnessMod": 0
+                  }
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            }
+          },
+          [
+            {
+              "plot": {
+                "mana": [
+                  1,
+                  "r"
+                ]
+              }
+            }
+          ]
+        ],
+        [
+          [
+            "flying",
+            "haste"
+          ],
+          {
+            "trigger": {
+              "when": {
+                "actor": "you",
+                "does": {
+                  "cast": {
+                    "reference": {
+                      "count": 1
+                    },
+                    "object": {
+                      "object": "spell",
+                      "prefixes": [
+                        {
+                          "not": {
+                            "type": {
+                              "and": [
+                                "creature"
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "effect": {
+              "what": {
+                "reference": "this",
+                "object": {
+                  "type": {
+                    "and": [
+                      "creature"
+                    ]
+                  }
+                }
+              },
+              "does": {
+                "powerToughnessMod": {
+                  "powerMod": 2,
+                  "toughnessMod": 0
+                },
+                "until": "endOfTurn"
+              }
+            }
+          },
+          [
+            {
+              "plot": {
+                "mana": [
+                  1,
+                  "r"
+                ]
+              }
+            }
+          ]
+        ],
+        [
+          [
+            "flying",
+            "haste"
+          ],
+          {
+            "trigger": {
+              "when": {
+                "actor": "you",
+                "does": {
+                  "cast": {
+                    "reference": {
+                      "count": 1
+                    },
+                    "object": {
+                      "object": "spell",
+                      "types": {
+                        "and": [
+                          {
+                            "not": "creature"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "effect": {
+              "what": {
+                "reference": "this",
+                "object": {
+                  "type": {
+                    "and": [
+                      "creature"
+                    ]
+                  }
+                }
+              },
+              "does": {
+                "powerToughnessMod": {
+                  "powerMod": 2,
+                  "toughnessMod": 0
+                },
+                "until": "endOfTurn"
+              }
+            }
+          },
+          [
+            {
+              "plot": {
+                "mana": [
+                  1,
+                  "r"
+                ]
+              }
+            }
+          ]
+        ]
+      ],
+      "error": "Ambiguous parse",
+      "oracleText": "flying, haste\nwhenever you cast a noncreature spell, this creature gets +2/+0 until end of turn.\nplot {1}{r} (you may pay {1}{r} and exile this card from your hand. cast it as a sorcery on a later turn without paying its mana cost. plot only as a sorcery.)",
+      "card": {
+        "name": "Slickshot Show-Off",
+        "oracle_text": "Flying, haste\nWhenever you cast a noncreature spell, this creature gets +2/+0 until end of turn.\nPlot {1}{R} (You may pay {1}{R} and exile this card from your hand. Cast it as a sorcery on a later turn without paying its mana cost. Plot only as a sorcery.)",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Giant Beaver",
+    "oracle_text": "Vigilance\nWhenever this creature attacks while saddled, put a +1/+1 counter on target creature that saddled it this turn.\nSaddle 3 (Tap any number of other creatures you control with total power 3 or more: This Mount becomes saddled until end of turn. Saddle only as a sorcery.)",
+    "parse_result": {
+      "result": [
+        [
+          [
+            "vigilance"
+          ],
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": "this",
+                  "object": {
+                    "type": {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  }
+                },
+                "does": {
+                  "does": "attacks",
+                  "condition": "saddled"
+                }
+              }
+            },
+            "effect": {
+              "amount": 1,
+              "counterKind": {
+                "powerMod": 1,
+                "toughnessMod": 1
+              },
+              "putOn": {
+                "reference": {
+                  "targetCount": 1
+                },
+                "object": {
+                  "object": {
+                    "type": {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "didAction": "saddledIt",
+                    "when": {
+                      "reference": "this",
+                      "what": "turn"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          [
+            {
+              "saddle": 3
+            }
+          ]
+        ],
+        [
+          [
+            "vigilance"
+          ],
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": "this",
+                  "object": {
+                    "type": {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  }
+                },
+                "does": {
+                  "does": "attacks",
+                  "condition": "saddled"
+                }
+              }
+            },
+            "effect": {
+              "amount": 1,
+              "counterKind": {
+                "powerMod": 1,
+                "toughnessMod": 1
+              },
+              "putOn": {
+                "reference": {
+                  "targetCount": 1
+                },
+                "object": {
+                  "type": {
+                    "and": [
+                      "creature"
+                    ]
+                  },
+                  "suffix": {
+                    "didAction": "saddledIt",
+                    "when": {
+                      "reference": "this",
+                      "what": "turn"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          [
+            {
+              "saddle": 3
+            }
+          ]
+        ]
+      ],
+      "error": "Ambiguous parse",
+      "oracleText": "vigilance\nwhenever this creature attacks while saddled, put a +1/+1 counter on target creature that saddled it this turn.\nsaddle 3 (tap any number of other creatures you control with total power 3 or more: this mount becomes saddled until end of turn. saddle only as a sorcery.)",
+      "card": {
+        "name": "Giant Beaver",
+        "oracle_text": "Vigilance\nWhenever this creature attacks while saddled, put a +1/+1 counter on target creature that saddled it this turn.\nSaddle 3 (Tap any number of other creatures you control with total power 3 or more: This Mount becomes saddled until end of turn. Saddle only as a sorcery.)",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Dawn's Truce",
+    "oracle_text": "Gift a card (You may promise an opponent a gift as you cast this spell. If you do, they draw a card before its other effects.)\nYou and permanents you control gain hexproof until end of turn. If the gift was promised, permanents you control also gain indestructible until end of turn.",
+    "parse_result": {
+      "result": [
+        [
+          [
+            {
+              "gift": "a card"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "reference": "the",
+                  "object": "gift"
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "object": {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card (you may promise an opponent a gift as you cast this spell. if you do, they draw a card before its other effects.)"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "reference": "the",
+                  "object": "gift"
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "object": {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "object": {
+                      "type": {
+                        "and": [
+                          "permanent"
+                        ]
+                      }
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "reference": "the",
+                  "object": "gift"
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "object": {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card (you may promise an opponent a gift as you cast this spell. if you do, they draw a card before its other effects.)"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "object": {
+                      "type": {
+                        "and": [
+                          "permanent"
+                        ]
+                      }
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "reference": "the",
+                  "object": "gift"
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "object": {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "object": "gift",
+                  "prefixes": [
+                    "the"
+                  ]
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "object": {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card (you may promise an opponent a gift as you cast this spell. if you do, they draw a card before its other effects.)"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "object": "gift",
+                  "prefixes": [
+                    "the"
+                  ]
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "object": {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "object": {
+                      "type": {
+                        "and": [
+                          "permanent"
+                        ]
+                      }
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "object": "gift",
+                  "prefixes": [
+                    "the"
+                  ]
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "object": {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card (you may promise an opponent a gift as you cast this spell. if you do, they draw a card before its other effects.)"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "object": {
+                      "type": {
+                        "and": [
+                          "permanent"
+                        ]
+                      }
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "object": "gift",
+                  "prefixes": [
+                    "the"
+                  ]
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "object": {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "reference": "the",
+                  "object": "gift"
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "type": {
+                    "and": [
+                      "permanent"
+                    ]
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card (you may promise an opponent a gift as you cast this spell. if you do, they draw a card before its other effects.)"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "reference": "the",
+                  "object": "gift"
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "type": {
+                    "and": [
+                      "permanent"
+                    ]
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "object": {
+                      "type": {
+                        "and": [
+                          "permanent"
+                        ]
+                      }
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "reference": "the",
+                  "object": "gift"
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "type": {
+                    "and": [
+                      "permanent"
+                    ]
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card (you may promise an opponent a gift as you cast this spell. if you do, they draw a card before its other effects.)"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "object": {
+                      "type": {
+                        "and": [
+                          "permanent"
+                        ]
+                      }
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "reference": "the",
+                  "object": "gift"
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "type": {
+                    "and": [
+                      "permanent"
+                    ]
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "object": "gift",
+                  "prefixes": [
+                    "the"
+                  ]
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "type": {
+                    "and": [
+                      "permanent"
+                    ]
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card (you may promise an opponent a gift as you cast this spell. if you do, they draw a card before its other effects.)"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "type": {
+                      "and": [
+                        "permanent"
+                      ]
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "object": "gift",
+                  "prefixes": [
+                    "the"
+                  ]
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "type": {
+                    "and": [
+                      "permanent"
+                    ]
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "object": {
+                      "type": {
+                        "and": [
+                          "permanent"
+                        ]
+                      }
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "object": "gift",
+                  "prefixes": [
+                    "the"
+                  ]
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "type": {
+                    "and": [
+                      "permanent"
+                    ]
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "gift": "a card (you may promise an opponent a gift as you cast this spell. if you do, they draw a card before its other effects.)"
+            }
+          ],
+          [
+            {
+              "what": {
+                "and": [
+                  "you",
+                  {
+                    "object": {
+                      "type": {
+                        "and": [
+                          "permanent"
+                        ]
+                      }
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                ]
+              },
+              "does": {
+                "does": {
+                  "gains": "hexproof"
+                },
+                "duration": {
+                  "until": "endOfTurn"
+                }
+              }
+            },
+            {
+              "condition": {
+                "what": {
+                  "object": "gift",
+                  "prefixes": [
+                    "the"
+                  ]
+                },
+                "does": "promised"
+              },
+              "effect": {
+                "what": {
+                  "type": {
+                    "and": [
+                      "permanent"
+                    ]
+                  },
+                  "suffix": {
+                    "actor": "you",
+                    "does": "control"
+                  }
+                },
+                "does": {
+                  "does": {
+                    "gains": "indestructible"
+                  },
+                  "duration": {
+                    "until": "endOfTurn"
+                  }
+                }
+              }
+            }
+          ]
+        ]
+      ],
+      "error": "Ambiguous parse",
+      "oracleText": "gift a card (you may promise an opponent a gift as you cast this spell. if you do, they draw a card before its other effects.)\nyou and permanents you control gain hexproof until end of turn. if the gift was promised, permanents you control also gain indestructible until end of turn.",
+      "card": {
+        "name": "Dawn's Truce",
+        "oracle_text": "Gift a card (You may promise an opponent a gift as you cast this spell. If you do, they draw a card before its other effects.)\nYou and permanents you control gain hexproof until end of turn. If the gift was promised, permanents you control also gain indestructible until end of turn.",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Abhorrent Oculus",
+    "oracle_text": "As an additional cost to cast this spell, exile six cards from your graveyard.\nFlying\nAt the beginning of each opponent's upkeep, manifest dread. (Look at the top two cards of your library. Put one onto the battlefield face down as a 2/2 creature and the other into your graveyard. Turn it face up any time for its mana cost if it's a creature card.)",
+    "parse_result": {
+      "result": [
+        [
+          {
+            "additionalCost": {
+              "exile": {
+                "reference": {
+                  "count": 6
+                },
+                "object": {
+                  "object": "card",
+                  "suffix": {
+                    "from": {
+                      "owner": "your",
+                      "zone": "graveyard"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          [
+            "flying"
+          ],
+          {
+            "trigger": {
+              "turnPhase": {
+                "qualification": {
+                  "whose": {
+                    "references": [
+                      "each"
+                    ],
+                    "player": "opponents"
+                  }
+                },
+                "partOfTurn": "upkeep"
+              }
+            },
+            "effect": "manifestDread"
+          }
+        ]
+      ],
+      "error": null,
+      "oracleText": "as an additional cost to cast this spell, exile six cards from your graveyard.\nflying\nat the beginning of each opponent's upkeep, manifest dread. (look at the top two cards of your library. put one onto the battlefield face down as a 2/2 creature and the other into your graveyard. turn it face up any time for its mana cost if it's a creature card.)",
+      "card": {
+        "name": "Abhorrent Oculus",
+        "oracle_text": "As an additional cost to cast this spell, exile six cards from your graveyard.\nFlying\nAt the beginning of each opponent's upkeep, manifest dread. (Look at the top two cards of your library. Put one onto the battlefield face down as a 2/2 creature and the other into your graveyard. Turn it face up any time for its mana cost if it's a creature card.)",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Case of the Filched Falcon",
+    "oracle_text": "When this Case enters, investigate. (Create a Clue token. It's an artifact with \"{2}, Sacrifice this token: Draw a card.\")\nTo solve — You control three or more artifacts. (If unsolved, solve at the beginning of your end step.)\nSolved — {2}{U}, Sacrifice this Case: Put four +1/+1 counters on target noncreature artifact. It becomes a 0/0 Bird creature with flying in addition to its other types.",
+    "parse_result": {
+      "result": [
+        [
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": "this",
+                  "object": "case"
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": "investigate"
+          },
+          {
+            "actor": "you",
+            "does": {
+              "controls": {
+                "reference": {
+                  "count": {
+                    "atLeast": 3
+                  }
+                },
+                "object": {
+                  "type": {
+                    "and": [
+                      "artifact"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "costs": {
+              "and": [
+                {
+                  "mana": [
+                    2,
+                    "u"
+                  ]
+                },
+                {
+                  "sacrifice": {
+                    "reference": "this",
+                    "object": {
+                      "type": {
+                        "and": [
+                          "case"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "activatedAbility": [
+              {
+                "amount": 4,
+                "counterKind": {
+                  "powerMod": 1,
+                  "toughnessMod": 1
+                },
+                "putOn": {
+                  "reference": {
+                    "targetCount": 1
+                  },
+                  "object": {
+                    "type": {
+                      "and": [
+                        {
+                          "not": "creature"
+                        },
+                        "artifact"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "what": "it",
+                "does": {
+                  "become": {
+                    "type": {
+                      "and": [
+                        "bird",
+                        "creature"
+                      ]
+                    },
+                    "size": {
+                      "power": 0,
+                      "toughness": 0
+                    },
+                    "with": "flying",
+                    "inAddition": true
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": "this",
+                  "object": {
+                    "type": {
+                      "and": [
+                        "case"
+                      ]
+                    }
+                  }
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": "investigate"
+          },
+          {
+            "actor": "you",
+            "does": {
+              "controls": {
+                "reference": {
+                  "count": {
+                    "atLeast": 3
+                  }
+                },
+                "object": {
+                  "type": {
+                    "and": [
+                      "artifact"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "costs": {
+              "and": [
+                {
+                  "mana": [
+                    2,
+                    "u"
+                  ]
+                },
+                {
+                  "sacrifice": {
+                    "reference": "this",
+                    "object": {
+                      "type": {
+                        "and": [
+                          "case"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "activatedAbility": [
+              {
+                "amount": 4,
+                "counterKind": {
+                  "powerMod": 1,
+                  "toughnessMod": 1
+                },
+                "putOn": {
+                  "reference": {
+                    "targetCount": 1
+                  },
+                  "object": {
+                    "type": {
+                      "and": [
+                        {
+                          "not": "creature"
+                        },
+                        "artifact"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "what": "it",
+                "does": {
+                  "become": {
+                    "type": {
+                      "and": [
+                        "bird",
+                        "creature"
+                      ]
+                    },
+                    "size": {
+                      "power": 0,
+                      "toughness": 0
+                    },
+                    "with": "flying",
+                    "inAddition": true
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": "this",
+                  "object": "case"
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": "investigate"
+          },
+          {
+            "actor": "you",
+            "does": {
+              "controls": {
+                "reference": {
+                  "count": {
+                    "atLeast": 3
+                  }
+                },
+                "object": {
+                  "type": {
+                    "and": [
+                      "artifact"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "costs": {
+              "and": [
+                {
+                  "mana": [
+                    2,
+                    "u"
+                  ]
+                },
+                {
+                  "sacrifice": {
+                    "reference": "this",
+                    "object": "case"
+                  }
+                }
+              ]
+            },
+            "activatedAbility": [
+              {
+                "amount": 4,
+                "counterKind": {
+                  "powerMod": 1,
+                  "toughnessMod": 1
+                },
+                "putOn": {
+                  "reference": {
+                    "targetCount": 1
+                  },
+                  "object": {
+                    "type": {
+                      "and": [
+                        {
+                          "not": "creature"
+                        },
+                        "artifact"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "what": "it",
+                "does": {
+                  "become": {
+                    "type": {
+                      "and": [
+                        "bird",
+                        "creature"
+                      ]
+                    },
+                    "size": {
+                      "power": 0,
+                      "toughness": 0
+                    },
+                    "with": "flying",
+                    "inAddition": true
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": "this",
+                  "object": {
+                    "type": {
+                      "and": [
+                        "case"
+                      ]
+                    }
+                  }
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": "investigate"
+          },
+          {
+            "actor": "you",
+            "does": {
+              "controls": {
+                "reference": {
+                  "count": {
+                    "atLeast": 3
+                  }
+                },
+                "object": {
+                  "type": {
+                    "and": [
+                      "artifact"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "costs": {
+              "and": [
+                {
+                  "mana": [
+                    2,
+                    "u"
+                  ]
+                },
+                {
+                  "sacrifice": {
+                    "reference": "this",
+                    "object": "case"
+                  }
+                }
+              ]
+            },
+            "activatedAbility": [
+              {
+                "amount": 4,
+                "counterKind": {
+                  "powerMod": 1,
+                  "toughnessMod": 1
+                },
+                "putOn": {
+                  "reference": {
+                    "targetCount": 1
+                  },
+                  "object": {
+                    "type": {
+                      "and": [
+                        {
+                          "not": "creature"
+                        },
+                        "artifact"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "what": "it",
+                "does": {
+                  "become": {
+                    "type": {
+                      "and": [
+                        "bird",
+                        "creature"
+                      ]
+                    },
+                    "size": {
+                      "power": 0,
+                      "toughness": 0
+                    },
+                    "with": "flying",
+                    "inAddition": true
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": "this",
+                  "object": "case"
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": "investigate"
+          },
+          {
+            "actor": "you",
+            "does": {
+              "controls": {
+                "reference": {
+                  "count": {
+                    "atLeast": 3
+                  }
+                },
+                "object": {
+                  "type": {
+                    "and": [
+                      "artifact"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "costs": {
+              "and": [
+                {
+                  "mana": [
+                    2,
+                    "u"
+                  ]
+                },
+                {
+                  "sacrifice": {
+                    "reference": "this",
+                    "object": {
+                      "type": {
+                        "and": [
+                          "case"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "activatedAbility": [
+              {
+                "amount": 4,
+                "counterKind": {
+                  "powerMod": 1,
+                  "toughnessMod": 1
+                },
+                "putOn": {
+                  "reference": {
+                    "targetCount": 1
+                  },
+                  "object": {
+                    "type": {
+                      "and": [
+                        "artifact"
+                      ]
+                    },
+                    "prefixes": [
+                      {
+                        "not": {
+                          "type": {
+                            "and": [
+                              "creature"
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "what": "it",
+                "does": {
+                  "become": {
+                    "type": {
+                      "and": [
+                        "bird",
+                        "creature"
+                      ]
+                    },
+                    "size": {
+                      "power": 0,
+                      "toughness": 0
+                    },
+                    "with": "flying",
+                    "inAddition": true
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": "this",
+                  "object": {
+                    "type": {
+                      "and": [
+                        "case"
+                      ]
+                    }
+                  }
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": "investigate"
+          },
+          {
+            "actor": "you",
+            "does": {
+              "controls": {
+                "reference": {
+                  "count": {
+                    "atLeast": 3
+                  }
+                },
+                "object": {
+                  "type": {
+                    "and": [
+                      "artifact"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "costs": {
+              "and": [
+                {
+                  "mana": [
+                    2,
+                    "u"
+                  ]
+                },
+                {
+                  "sacrifice": {
+                    "reference": "this",
+                    "object": {
+                      "type": {
+                        "and": [
+                          "case"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "activatedAbility": [
+              {
+                "amount": 4,
+                "counterKind": {
+                  "powerMod": 1,
+                  "toughnessMod": 1
+                },
+                "putOn": {
+                  "reference": {
+                    "targetCount": 1
+                  },
+                  "object": {
+                    "type": {
+                      "and": [
+                        "artifact"
+                      ]
+                    },
+                    "prefixes": [
+                      {
+                        "not": {
+                          "type": {
+                            "and": [
+                              "creature"
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "what": "it",
+                "does": {
+                  "become": {
+                    "type": {
+                      "and": [
+                        "bird",
+                        "creature"
+                      ]
+                    },
+                    "size": {
+                      "power": 0,
+                      "toughness": 0
+                    },
+                    "with": "flying",
+                    "inAddition": true
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": "this",
+                  "object": "case"
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": "investigate"
+          },
+          {
+            "actor": "you",
+            "does": {
+              "controls": {
+                "reference": {
+                  "count": {
+                    "atLeast": 3
+                  }
+                },
+                "object": {
+                  "type": {
+                    "and": [
+                      "artifact"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "costs": {
+              "and": [
+                {
+                  "mana": [
+                    2,
+                    "u"
+                  ]
+                },
+                {
+                  "sacrifice": {
+                    "reference": "this",
+                    "object": "case"
+                  }
+                }
+              ]
+            },
+            "activatedAbility": [
+              {
+                "amount": 4,
+                "counterKind": {
+                  "powerMod": 1,
+                  "toughnessMod": 1
+                },
+                "putOn": {
+                  "reference": {
+                    "targetCount": 1
+                  },
+                  "object": {
+                    "type": {
+                      "and": [
+                        "artifact"
+                      ]
+                    },
+                    "prefixes": [
+                      {
+                        "not": {
+                          "type": {
+                            "and": [
+                              "creature"
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "what": "it",
+                "does": {
+                  "become": {
+                    "type": {
+                      "and": [
+                        "bird",
+                        "creature"
+                      ]
+                    },
+                    "size": {
+                      "power": 0,
+                      "toughness": 0
+                    },
+                    "with": "flying",
+                    "inAddition": true
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": "this",
+                  "object": {
+                    "type": {
+                      "and": [
+                        "case"
+                      ]
+                    }
+                  }
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": "investigate"
+          },
+          {
+            "actor": "you",
+            "does": {
+              "controls": {
+                "reference": {
+                  "count": {
+                    "atLeast": 3
+                  }
+                },
+                "object": {
+                  "type": {
+                    "and": [
+                      "artifact"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "costs": {
+              "and": [
+                {
+                  "mana": [
+                    2,
+                    "u"
+                  ]
+                },
+                {
+                  "sacrifice": {
+                    "reference": "this",
+                    "object": "case"
+                  }
+                }
+              ]
+            },
+            "activatedAbility": [
+              {
+                "amount": 4,
+                "counterKind": {
+                  "powerMod": 1,
+                  "toughnessMod": 1
+                },
+                "putOn": {
+                  "reference": {
+                    "targetCount": 1
+                  },
+                  "object": {
+                    "type": {
+                      "and": [
+                        "artifact"
+                      ]
+                    },
+                    "prefixes": [
+                      {
+                        "not": {
+                          "type": {
+                            "and": [
+                              "creature"
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "what": "it",
+                "does": {
+                  "become": {
+                    "type": {
+                      "and": [
+                        "bird",
+                        "creature"
+                      ]
+                    },
+                    "size": {
+                      "power": 0,
+                      "toughness": 0
+                    },
+                    "with": "flying",
+                    "inAddition": true
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      ],
+      "error": "Ambiguous parse",
+      "oracleText": "when this case enters, investigate. (create a clue token. it's an artifact with \"{2}, sacrifice this token: draw a card.\")\nto solve — you control three or more artifacts. (if unsolved, solve at the beginning of your end step.)\nsolved — {2}{u}, sacrifice this case: put four +1/+1 counters on target noncreature artifact. it becomes a 0/0 bird creature with flying in addition to its other types.",
+      "card": {
+        "name": "Case of the Filched Falcon",
+        "oracle_text": "When this Case enters, investigate. (Create a Clue token. It's an artifact with \"{2}, Sacrifice this token: Draw a card.\")\nTo solve — You control three or more artifacts. (If unsolved, solve at the beginning of your end step.)\nSolved — {2}{U}, Sacrifice this Case: Put four +1/+1 counters on target noncreature artifact. It becomes a 0/0 Bird creature with flying in addition to its other types.",
+        "layout": "case"
+      }
+    }
+  },
+  {
+    "name": "Adrix and Nev, Twincasters",
+    "oracle_text": "Ward {2} (Whenever this creature becomes the target of a spell or ability an opponent controls, counter it unless that player pays {2}.)\nIf one or more tokens would be created under your control, twice that many of those tokens are created instead.",
+    "parse_result": {
+      "result": [
+        [
+          [
+            {
+              "ward": {
+                "mana": [
+                  2
+                ]
+              }
+            }
+          ],
+          {
+            "what": {
+              "reference": {
+                "count": {
+                  "atLeast": 1
+                }
+              },
+              "object": "token"
+            },
+            "does": {
+              "reference": {
+                "actor": "you",
+                "does": "control"
+              },
+              "does": "create"
+            },
+            "instead": {
+              "instead": {
+                "what": {
+                  "reference": {
+                    "count": {
+                      "reference": "twiceThat",
+                      "what": "amount"
+                    },
+                    "reference": "ofThose"
+                  },
+                  "object": "token"
+                },
+                "does": "created"
+              }
+            }
+          }
+        ]
+      ],
+      "error": null,
+      "oracleText": "ward {2} (whenever this creature becomes the target of a spell or ability an opponent controls, counter it unless that player pays {2}.)\nif one or more tokens would be created under your control, twice that many of those tokens are created instead.",
+      "card": {
+        "name": "Adrix and Nev, Twincasters",
+        "oracle_text": "Ward {2} (Whenever this creature becomes the target of a spell or ability an opponent controls, counter it unless that player pays {2}.)\nIf one or more tokens would be created under your control, twice that many of those tokens are created instead.",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Ranger Class",
+    "oracle_text": "(Gain the next level as a sorcery to add its ability.)\nWhen this Class enters, create a 2/2 green Wolf creature token.\n{1}{G}: Level 2\nWhenever you attack, put a +1/+1 counter on target attacking creature.\n{3}{G}: Level 3\nYou may look at the top card of your library any time.\nYou may cast creature spells from the top of your library.",
+    "parse_result": {
+      "result": [
+        [
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": "this",
+                  "object": "class"
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": {
+              "create": {
+                "amount": 1,
+                "type": {
+                  "and": [
+                    "wolf",
+                    {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  ]
+                },
+                "size": {
+                  "power": 2,
+                  "toughness": 2
+                },
+                "color": "g"
+              }
+            }
+          },
+          {
+            "costs": {
+              "mana": [
+                1,
+                "g"
+              ]
+            },
+            "activatedAbility": {
+              "level": 2
+            }
+          },
+          {
+            "trigger": {
+              "when": {
+                "what": "you",
+                "does": "attacks"
+              }
+            },
+            "effect": {
+              "amount": 1,
+              "counterKind": {
+                "powerMod": 1,
+                "toughnessMod": 1
+              },
+              "putOn": {
+                "reference": {
+                  "targetCount": 1
+                },
+                "object": {
+                  "type": {
+                    "and": [
+                      "creature"
+                    ]
+                  },
+                  "prefixes": [
+                    "attacking"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "costs": {
+              "mana": [
+                3,
+                "g"
+              ]
+            },
+            "activatedAbility": {
+              "level": 3
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "duration": "anyTime",
+                "effect": {
+                  "lookAt": {
+                    "topCards": 1,
+                    "whose": "your",
+                    "what": "library"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "cast": {
+                  "object": {
+                    "object": "spell",
+                    "types": {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "from": {
+                      "topOf": {
+                        "whose": "your",
+                        "what": "library"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        [
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": "this",
+                  "object": {
+                    "type": {
+                      "and": [
+                        "class"
+                      ]
+                    }
+                  }
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": {
+              "create": {
+                "amount": 1,
+                "type": {
+                  "and": [
+                    "wolf",
+                    {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  ]
+                },
+                "size": {
+                  "power": 2,
+                  "toughness": 2
+                },
+                "color": "g"
+              }
+            }
+          },
+          {
+            "costs": {
+              "mana": [
+                1,
+                "g"
+              ]
+            },
+            "activatedAbility": {
+              "level": 2
+            }
+          },
+          {
+            "trigger": {
+              "when": {
+                "what": "you",
+                "does": "attacks"
+              }
+            },
+            "effect": {
+              "amount": 1,
+              "counterKind": {
+                "powerMod": 1,
+                "toughnessMod": 1
+              },
+              "putOn": {
+                "reference": {
+                  "targetCount": 1
+                },
+                "object": {
+                  "type": {
+                    "and": [
+                      "creature"
+                    ]
+                  },
+                  "prefixes": [
+                    "attacking"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "costs": {
+              "mana": [
+                3,
+                "g"
+              ]
+            },
+            "activatedAbility": {
+              "level": 3
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "duration": "anyTime",
+                "effect": {
+                  "lookAt": {
+                    "topCards": 1,
+                    "whose": "your",
+                    "what": "library"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "cast": {
+                  "object": {
+                    "object": "spell",
+                    "types": {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "from": {
+                      "topOf": {
+                        "whose": "your",
+                        "what": "library"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        [
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": "this",
+                  "object": "class"
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": {
+              "create": {
+                "amount": 1,
+                "type": {
+                  "and": [
+                    "wolf",
+                    {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  ]
+                },
+                "size": {
+                  "power": 2,
+                  "toughness": 2
+                },
+                "color": "g"
+              }
+            }
+          },
+          {
+            "costs": {
+              "mana": [
+                1,
+                "g"
+              ]
+            },
+            "activatedAbility": {
+              "level": 2
+            }
+          },
+          {
+            "trigger": {
+              "when": {
+                "actor": "you",
+                "does": "attack"
+              }
+            },
+            "effect": {
+              "amount": 1,
+              "counterKind": {
+                "powerMod": 1,
+                "toughnessMod": 1
+              },
+              "putOn": {
+                "reference": {
+                  "targetCount": 1
+                },
+                "object": {
+                  "type": {
+                    "and": [
+                      "creature"
+                    ]
+                  },
+                  "prefixes": [
+                    "attacking"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "costs": {
+              "mana": [
+                3,
+                "g"
+              ]
+            },
+            "activatedAbility": {
+              "level": 3
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "duration": "anyTime",
+                "effect": {
+                  "lookAt": {
+                    "topCards": 1,
+                    "whose": "your",
+                    "what": "library"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "cast": {
+                  "object": {
+                    "object": "spell",
+                    "types": {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "from": {
+                      "topOf": {
+                        "whose": "your",
+                        "what": "library"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        [
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": "this",
+                  "object": {
+                    "type": {
+                      "and": [
+                        "class"
+                      ]
+                    }
+                  }
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": {
+              "create": {
+                "amount": 1,
+                "type": {
+                  "and": [
+                    "wolf",
+                    {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  ]
+                },
+                "size": {
+                  "power": 2,
+                  "toughness": 2
+                },
+                "color": "g"
+              }
+            }
+          },
+          {
+            "costs": {
+              "mana": [
+                1,
+                "g"
+              ]
+            },
+            "activatedAbility": {
+              "level": 2
+            }
+          },
+          {
+            "trigger": {
+              "when": {
+                "actor": "you",
+                "does": "attack"
+              }
+            },
+            "effect": {
+              "amount": 1,
+              "counterKind": {
+                "powerMod": 1,
+                "toughnessMod": 1
+              },
+              "putOn": {
+                "reference": {
+                  "targetCount": 1
+                },
+                "object": {
+                  "type": {
+                    "and": [
+                      "creature"
+                    ]
+                  },
+                  "prefixes": [
+                    "attacking"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "costs": {
+              "mana": [
+                3,
+                "g"
+              ]
+            },
+            "activatedAbility": {
+              "level": 3
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "duration": "anyTime",
+                "effect": {
+                  "lookAt": {
+                    "topCards": 1,
+                    "whose": "your",
+                    "what": "library"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "cast": {
+                  "object": {
+                    "object": "spell",
+                    "types": {
+                      "and": [
+                        "creature"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "from": {
+                      "topOf": {
+                        "whose": "your",
+                        "what": "library"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ],
+      "error": "Ambiguous parse",
+      "oracleText": "(gain the next level as a sorcery to add its ability.)\nwhen this class enters, create a 2/2 green wolf creature token.\n{1}{g}: level 2\nwhenever you attack, put a +1/+1 counter on target attacking creature.\n{3}{g}: level 3\nyou may look at the top card of your library any time.\nyou may cast creature spells from the top of your library.",
+      "card": {
+        "name": "Ranger Class",
+        "oracle_text": "(Gain the next level as a sorcery to add its ability.)\nWhen this Class enters, create a 2/2 green Wolf creature token.\n{1}{G}: Level 2\nWhenever you attack, put a +1/+1 counter on target attacking creature.\n{3}{G}: Level 3\nYou may look at the top card of your library any time.\nYou may cast creature spells from the top of your library.",
+        "layout": "class"
+      }
+    }
+  },
+  {
+    "name": "Future Sight",
+    "oracle_text": "Play with the top card of your library revealed.\nYou may play lands and cast spells from the top of your library.",
+    "parse_result": {
+      "result": [
+        [
+          {
+            "playWithRevealed": {
+              "topCards": 1,
+              "whose": "your",
+              "what": "library"
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "and": [
+                  {
+                    "play": {
+                      "type": {
+                        "and": [
+                          "land"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "cast": {
+                      "object": "spell",
+                      "suffix": {
+                        "from": {
+                          "topOf": {
+                            "whose": "your",
+                            "what": "library"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        [
+          {
+            "playWithRevealed": {
+              "topCards": 1,
+              "whose": "your",
+              "what": "library"
+            }
+          },
+          {
+            "and": [
+              {
+                "actor": "you",
+                "does": {
+                  "may": {
+                    "play": {
+                      "type": {
+                        "and": [
+                          "land"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "cast": {
+                  "object": "spell",
+                  "suffix": {
+                    "from": {
+                      "topOf": {
+                        "whose": "your",
+                        "what": "library"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "playWithRevealed": {
+              "topCards": 1,
+              "whose": "your",
+              "what": "library"
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "and": [
+                {
+                  "may": {
+                    "play": {
+                      "type": {
+                        "and": [
+                          "land"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "cast": {
+                    "object": "spell",
+                    "suffix": {
+                      "from": {
+                        "topOf": {
+                          "whose": "your",
+                          "what": "library"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      ],
+      "error": "Ambiguous parse",
+      "oracleText": "play with the top card of your library revealed.\nyou may play lands and cast spells from the top of your library.",
+      "card": {
+        "name": "Future Sight",
+        "oracle_text": "Play with the top card of your library revealed.\nYou may play lands and cast spells from the top of your library.",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Courser of Kruphix",
+    "oracle_text": "Play with the top card of your library revealed.\nYou may play lands from the top of your library.\nLandfall — Whenever a land you control enters, you gain 1 life.",
+    "parse_result": {
+      "result": [
+        [
+          {
+            "playWithRevealed": {
+              "topCards": 1,
+              "whose": "your",
+              "what": "library"
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "play": {
+                  "type": {
+                    "and": [
+                      "land"
+                    ]
+                  },
+                  "suffix": {
+                    "from": {
+                      "topOf": {
+                        "whose": "your",
+                        "what": "library"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": {
+                    "count": 1
+                  },
+                  "object": {
+                    "type": {
+                      "and": [
+                        "land"
+                      ]
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": {
+              "actor": "you",
+              "does": {
+                "gainLife": 1
+              }
+            }
+          }
+        ],
+        [
+          {
+            "playWithRevealed": {
+              "topCards": 1,
+              "whose": "your",
+              "what": "library"
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "play": {
+                  "object": {
+                    "type": {
+                      "and": [
+                        "land"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "from": {
+                      "topOf": {
+                        "whose": "your",
+                        "what": "library"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": {
+                    "count": 1
+                  },
+                  "object": {
+                    "type": {
+                      "and": [
+                        "land"
+                      ]
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": {
+              "actor": "you",
+              "does": {
+                "gainLife": 1
+              }
+            }
+          }
+        ],
+        [
+          {
+            "playWithRevealed": {
+              "topCards": 1,
+              "whose": "your",
+              "what": "library"
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "play": {
+                  "type": {
+                    "and": [
+                      "land"
+                    ]
+                  },
+                  "suffix": {
+                    "from": {
+                      "topOf": {
+                        "whose": "your",
+                        "what": "library"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": {
+                    "count": 1
+                  },
+                  "object": {
+                    "object": {
+                      "type": {
+                        "and": [
+                          "land"
+                        ]
+                      }
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": {
+              "actor": "you",
+              "does": {
+                "gainLife": 1
+              }
+            }
+          }
+        ],
+        [
+          {
+            "playWithRevealed": {
+              "topCards": 1,
+              "whose": "your",
+              "what": "library"
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "play": {
+                  "object": {
+                    "type": {
+                      "and": [
+                        "land"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "from": {
+                      "topOf": {
+                        "whose": "your",
+                        "what": "library"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": {
+                    "count": 1
+                  },
+                  "object": {
+                    "object": {
+                      "type": {
+                        "and": [
+                          "land"
+                        ]
+                      }
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": {
+              "actor": "you",
+              "does": {
+                "gainLife": 1
+              }
+            }
+          }
+        ],
+        [
+          {
+            "playWithRevealed": {
+              "topCards": 1,
+              "whose": "your",
+              "what": "library"
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "play": {
+                  "type": {
+                    "and": [
+                      "land"
+                    ]
+                  },
+                  "suffix": {
+                    "from": {
+                      "topOf": {
+                        "whose": "your",
+                        "what": "library"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": {
+                    "count": 1
+                  },
+                  "object": {
+                    "type": {
+                      "and": [
+                        "land"
+                      ]
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": {
+              "actor": "you",
+              "does": {
+                "lifeGain": 1
+              }
+            }
+          }
+        ],
+        [
+          {
+            "playWithRevealed": {
+              "topCards": 1,
+              "whose": "your",
+              "what": "library"
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "play": {
+                  "object": {
+                    "type": {
+                      "and": [
+                        "land"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "from": {
+                      "topOf": {
+                        "whose": "your",
+                        "what": "library"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": {
+                    "count": 1
+                  },
+                  "object": {
+                    "type": {
+                      "and": [
+                        "land"
+                      ]
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": {
+              "actor": "you",
+              "does": {
+                "lifeGain": 1
+              }
+            }
+          }
+        ],
+        [
+          {
+            "playWithRevealed": {
+              "topCards": 1,
+              "whose": "your",
+              "what": "library"
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "play": {
+                  "type": {
+                    "and": [
+                      "land"
+                    ]
+                  },
+                  "suffix": {
+                    "from": {
+                      "topOf": {
+                        "whose": "your",
+                        "what": "library"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": {
+                    "count": 1
+                  },
+                  "object": {
+                    "object": {
+                      "type": {
+                        "and": [
+                          "land"
+                        ]
+                      }
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": {
+              "actor": "you",
+              "does": {
+                "lifeGain": 1
+              }
+            }
+          }
+        ],
+        [
+          {
+            "playWithRevealed": {
+              "topCards": 1,
+              "whose": "your",
+              "what": "library"
+            }
+          },
+          {
+            "actor": "you",
+            "does": {
+              "may": {
+                "play": {
+                  "object": {
+                    "type": {
+                      "and": [
+                        "land"
+                      ]
+                    }
+                  },
+                  "suffix": {
+                    "from": {
+                      "topOf": {
+                        "whose": "your",
+                        "what": "library"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "trigger": {
+              "when": {
+                "what": {
+                  "reference": {
+                    "count": 1
+                  },
+                  "object": {
+                    "object": {
+                      "type": {
+                        "and": [
+                          "land"
+                        ]
+                      }
+                    },
+                    "suffix": {
+                      "actor": "you",
+                      "does": "control"
+                    }
+                  }
+                },
+                "does": {
+                  "enter": "battlefield"
+                }
+              }
+            },
+            "effect": {
+              "actor": "you",
+              "does": {
+                "lifeGain": 1
+              }
+            }
+          }
+        ]
+      ],
+      "error": "Ambiguous parse",
+      "oracleText": "play with the top card of your library revealed.\nyou may play lands from the top of your library.\nlandfall — whenever a land you control enters, you gain 1 life.",
+      "card": {
+        "name": "Courser of Kruphix",
+        "oracle_text": "Play with the top card of your library revealed.\nYou may play lands from the top of your library.\nLandfall — Whenever a land you control enters, you gain 1 life.",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Emeritus of Ideation",
+    "oracle_text": "Emeritus of Ideation enters the battlefield prepared.",
+    "parse_result": {
+      "result": [
+        [
+          {
+            "what": "CARD_NAME",
+            "does": {
+              "enter": "battlefield",
+              "prepared": true
+            }
+          }
+        ]
+      ],
+      "error": null,
+      "oracleText": "~ enters the battlefield prepared.",
+      "card": {
+        "name": "Emeritus of Ideation",
+        "oracle_text": "Emeritus of Ideation enters the battlefield prepared.",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Abigale",
+    "oracle_text": "Whenever you cast a creature spell, Abigale becomes prepared.",
+    "parse_result": {
+      "result": [
+        [
+          {
+            "trigger": {
+              "when": {
+                "actor": "you",
+                "does": {
+                  "cast": {
+                    "reference": {
+                      "count": 1
+                    },
+                    "object": {
+                      "object": "spell",
+                      "types": {
+                        "and": [
+                          "creature"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "effect": {
+              "what": "CARD_NAME",
+              "does": {
+                "become": "prepared"
+              }
+            }
+          }
+        ]
+      ],
+      "error": null,
+      "oracleText": "whenever you cast a creature spell, ~ becomes prepared.",
+      "card": {
+        "name": "Abigale",
+        "oracle_text": "Whenever you cast a creature spell, Abigale becomes prepared.",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Saddle Beaver",
+    "oracle_text": "Saddle 3",
+    "parse_result": {
+      "result": [
+        [
+          [
+            {
+              "saddle": 3
+            }
+          ]
+        ]
+      ],
+      "error": null,
+      "oracleText": "saddle 3",
+      "card": {
+        "name": "Saddle Beaver",
+        "oracle_text": "Saddle 3",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Adrix Ward",
+    "oracle_text": "Ward {2}",
+    "parse_result": {
+      "result": [
+        [
+          [
+            {
+              "ward": {
+                "mana": [
+                  2
+                ]
+              }
+            }
+          ]
+        ]
+      ],
+      "error": null,
+      "oracleText": "ward {2}",
+      "card": {
+        "name": "Adrix Ward",
+        "oracle_text": "Ward {2}",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Dawn Gift",
+    "oracle_text": "Gift a card",
+    "parse_result": {
+      "result": [
+        [
+          [
+            {
+              "gift": "a card"
+            }
+          ]
+        ]
+      ],
+      "error": null,
+      "oracleText": "gift a card",
+      "card": {
+        "name": "Dawn Gift",
+        "oracle_text": "Gift a card",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Foretell Multiverse",
+    "oracle_text": "Foretell {1}{U}",
+    "parse_result": {
+      "result": [
+        [
+          [
+            {
+              "foretell": {
+                "mana": [
+                  1,
+                  "u"
+                ]
+              }
+            }
+          ]
+        ]
+      ],
+      "error": null,
+      "oracleText": "foretell {1}{u}",
+      "card": {
+        "name": "Foretell Multiverse",
+        "oracle_text": "Foretell {1}{U}",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Slickshot Plot",
+    "oracle_text": "Plot {1}{R}",
+    "parse_result": {
+      "result": [
+        [
+          [
+            {
+              "plot": {
+                "mana": [
+                  1,
+                  "r"
+                ]
+              }
+            }
+          ]
+        ]
+      ],
+      "error": null,
+      "oracleText": "plot {1}{r}",
+      "card": {
+        "name": "Slickshot Plot",
+        "oracle_text": "Plot {1}{R}",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Evidence Collector",
+    "oracle_text": "Collect evidence 6",
+    "parse_result": {
+      "result": [
+        [
+          {
+            "collectEvidence": 6
+          }
+        ]
+      ],
+      "error": null,
+      "oracleText": "collect evidence 6",
+      "card": {
+        "name": "Evidence Collector",
+        "oracle_text": "Collect evidence 6",
+        "layout": "normal"
+      }
+    }
+  },
+  {
+    "name": "Discoverer",
+    "oracle_text": "Discover 4.",
+    "parse_result": {
+      "result": [
+        [
+          {
+            "discover": 4
+          }
+        ]
+      ],
+      "error": null,
+      "oracleText": "discover 4.",
+      "card": {
+        "name": "Discoverer",
+        "oracle_text": "Discover 4.",
+        "layout": "normal"
+      }
+    }
+  }
+]

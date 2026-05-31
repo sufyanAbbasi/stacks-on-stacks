@@ -1,0 +1,242 @@
+Fetching from Scryfall: Thraben Doomsayer...
+Parsing card: Thraben Doomsayer...
+⚠️ Warning: Parser returned error for Thraben Doomsayer: Ambiguous parse
+Fetching from Scryfall: Colossal Dreadmaw...
+Parsing card: Colossal Dreadmaw...
+✅ Success parsing: Colossal Dreadmaw
+Fetching from Scryfall: Sol Ring...
+Parsing card: Sol Ring...
+✅ Success parsing: Sol Ring
+Fetching from Scryfall: Runeclaw Bear...
+Parsing card: Runeclaw Bear...
+✅ Success parsing: Runeclaw Bear
+Fetching from Scryfall: Giant Growth...
+Parsing card: Giant Growth...
+⚠️ Warning: Parser returned error for Giant Growth: Ambiguous parse
+Fetching from Scryfall: Behold the Multiverse...
+Parsing card: Behold the Multiverse...
+✅ Success parsing: Behold the Multiverse
+Fetching from Scryfall: Slickshot Show-Off...
+Parsing card: Slickshot Show-Off...
+⚠️ Warning: Parser returned error for Slickshot Show-Off: Ambiguous parse
+Fetching from Scryfall: Giant Beaver...
+Parsing card: Giant Beaver...
+⚠️ Warning: Parser returned error for Giant Beaver: Ambiguous parse
+Fetching from Scryfall: Dawn's Truce...
+Parsing card: Dawn's Truce...
+⚠️ Warning: Parser returned error for Dawn's Truce: Ambiguous parse
+Fetching from Scryfall: Abhorrent Oculus...
+Parsing card: Abhorrent Oculus...
+✅ Success parsing: Abhorrent Oculus
+Fetching from Scryfall: Case of the Filched Falcon...
+Parsing card: Case of the Filched Falcon...
+⚠️ Warning: Parser returned error for Case of the Filched Falcon: Error: Syntax error at line 1 col 13:
+
+1 when this case enters, investigate. (create a clue token. it's an artifact with "{2}, sacrifice this token: draw a card.")
+              ^
+
+Unexpected "s". Instead, I was expecting to see one of the following:
+
+A "g" based on:
+    counterKind$subexpression$1$string$12 → "c" "a" ● "g" "e"
+    counterKind$subexpression$1 →  ● counterKind$subexpression$1$string$12
+    counterKind →  ● counterKind$subexpression$1
+    objectInner$ebnf$1$subexpression$1 →  ● counterKind __
+    objectInner$ebnf$1 →  ● objectInner$ebnf$1$subexpression$1
+    objectInner →  ● objectInner$ebnf$1 objectInner$string$13 objectInner$ebnf$2 __ objectInner$string$14 __ object
+    object → object$ebnf$1 ● objectInner
+    triggerConditionInner →  ● object __ triggerConditionInner$string$2
+    triggerCondition → triggerCondition$subexpression$1 __ ● triggerConditionInner triggerCondition$ebnf$1
+    triggeredAbility →  ● triggerCondition "," __ triggeredAbility$ebnf$1 effect
+    ability$subexpression$1 →  ● triggeredAbility
+    ability →  ● ability$subexpression$1 ability$ebnf$1 ability$ebnf$2
+    abilityOrRemind →  ● ability
+    card → card$ebnf$1 ● abilityOrRemind card$ebnf$2 card$ebnf$3
+A "r" based on:
+    counterKind$subexpression$1$string$13 → "c" "a" ● "r" "r" "i" "o" "n"
+    counterKind$subexpression$1 →  ● counterKind$subexpression$1$string$13
+    counterKind →  ● counterKind$subexpression$1
+    objectInner$ebnf$1$subexpression$1 →  ● counterKind __
+    objectInner$ebnf$1 →  ● objectInner$ebnf$1$subexpression$1
+    objectInner →  ● objectInner$ebnf$1 objectInner$string$13 objectInner$ebnf$2 __ objectInner$string$14 __ object
+    object → object$ebnf$1 ● objectInner
+    triggerConditionInner →  ● object __ triggerConditionInner$string$2
+    triggerCondition → triggerCondition$subexpression$1 __ ● triggerConditionInner triggerCondition$ebnf$1
+    triggeredAbility →  ● triggerCondition "," __ triggeredAbility$ebnf$1 effect
+    ability$subexpression$1 →  ● triggeredAbility
+    ability →  ● ability$subexpression$1 ability$ebnf$1 ability$ebnf$2
+    abilityOrRemind →  ● ability
+    card → card$ebnf$1 ● abilityOrRemind card$ebnf$2 card$ebnf$3
+A "r" based on:
+    pureObjectInner$string$1 → "c" "a" ● "r" "d"
+    pureObjectInner →  ● pureObjectInner$string$1 pureObjectInner$ebnf$2
+    pureObject1 → pureObject1$ebnf$1 pureObject1$ebnf$2 ● pureObjectInner
+    pureObject →  ● pureObject1 pureObject$ebnf$2
+    objectInner →  ● pureObject
+    object → object$ebnf$1 ● objectInner
+    triggerConditionInner →  ● object __ triggerConditionInner$string$2
+    triggerCondition → triggerCondition$subexpression$1 __ ● triggerConditionInner triggerCondition$ebnf$1
+    triggeredAbility →  ● triggerCondition "," __ triggeredAbility$ebnf$1 effect
+    ability$subexpression$1 →  ● triggeredAbility
+    ability →  ● ability$subexpression$1 ability$ebnf$1 ability$ebnf$2
+    abilityOrRemind →  ● ability
+    card → card$ebnf$1 ● abilityOrRemind card$ebnf$2 card$ebnf$3
+A "m" based on:
+    creatureType$subexpression$1$string$30 → "c" "a" ● "m" "a" "r" "i" "d"
+    creatureType$subexpression$1 →  ● creatureType$subexpression$1$string$30
+    creatureType →  ● creatureType$subexpression$1
+    subType$subexpression$1 →  ● creatureType
+    subType →  ● subType$subexpression$1
+    anyTypeInner →  ● subType
+    anyType →  ● anyTypeInner anyType$ebnf$1
+    pureObject1 → pureObject1$ebnf$3 ● anyType pureObject1$ebnf$4 pureObject1$ebnf$5
+    pureObject →  ● pureObject1 pureObject$ebnf$2
+    objectInner →  ● pureObject
+    object → object$ebnf$1 ● objectInner
+    triggerConditionInner →  ● object __ triggerConditionInner$string$2
+    triggerCondition → triggerCondition$subexpression$1 __ ● triggerConditionInner triggerCondition$ebnf$1
+    triggeredAbility →  ● triggerCondition "," __ triggeredAbility$ebnf$1 effect
+    ability$subexpression$1 →  ● triggeredAbility
+    ability →  ● ability$subexpression$1 ability$ebnf$1 ability$ebnf$2
+    abilityOrRemind →  ● ability
+    card → card$ebnf$1 ● abilityOrRemind card$ebnf$2 card$ebnf$3
+A "m" based on:
+    creatureType$subexpression$1$string$31 → "c" "a" ● "m" "e" "l"
+    creatureType$subexpression$1 →  ● creatureType$subexpression$1$string$31
+    creatureType →  ● creatureType$subexpression$1
+    subType$subexpression$1 →  ● creatureType
+    subType →  ● subType$subexpression$1
+    anyTypeInner →  ● subType
+    anyType →  ● anyTypeInner anyType$ebnf$1
+    pureObject1 → pureObject1$ebnf$3 ● anyType pureObject1$ebnf$4 pureObject1$ebnf$5
+    pureObject →  ● pureObject1 pureObject$ebnf$2
+    objectInner →  ● pureObject
+    object → object$ebnf$1 ● objectInner
+    triggerConditionInner →  ● object __ triggerConditionInner$string$2
+    triggerCondition → triggerCondition$subexpression$1 __ ● triggerConditionInner triggerCondition$ebnf$1
+    triggeredAbility →  ● triggerCondition "," __ triggeredAbility$ebnf$1 effect
+    ability$subexpression$1 →  ● triggeredAbility
+    ability →  ● ability$subexpression$1 ability$ebnf$1 ability$ebnf$2
+    abilityOrRemind →  ● ability
+    card → card$ebnf$1 ● abilityOrRemind card$ebnf$2 card$ebnf$3
+A "r" based on:
+    creatureType$subexpression$1$string$32 → "c" "a" ● "r" "i" "b" "o" "u"
+    creatureType$subexpression$1 →  ● creatureType$subexpression$1$string$32
+    creatureType →  ● creatureType$subexpression$1
+    subType$subexpression$1 →  ● creatureType
+    subType →  ● subType$subexpression$1
+    anyTypeInner →  ● subType
+    anyType →  ● anyTypeInner anyType$ebnf$1
+    pureObject1 → pureObject1$ebnf$3 ● anyType pureObject1$ebnf$4 pureObject1$ebnf$5
+    pureObject →  ● pureObject1 pureObject$ebnf$2
+    objectInner →  ● pureObject
+    object → object$ebnf$1 ● objectInner
+    triggerConditionInner →  ● object __ triggerConditionInner$string$2
+    triggerCondition → triggerCondition$subexpression$1 __ ● triggerConditionInner triggerCondition$ebnf$1
+    triggeredAbility →  ● triggerCondition "," __ triggeredAbility$ebnf$1 effect
+    ability$subexpression$1 →  ● triggeredAbility
+    ability →  ● ability$subexpression$1 ability$ebnf$1 ability$ebnf$2
+    abilityOrRemind →  ● ability
+    card → card$ebnf$1 ● abilityOrRemind card$ebnf$2 card$ebnf$3
+A "r" based on:
+    creatureType$subexpression$1$string$33 → "c" "a" ● "r" "r" "i" "e" "r"
+    creatureType$subexpression$1 →  ● creatureType$subexpression$1$string$33
+    creatureType →  ● creatureType$subexpression$1
+    subType$subexpression$1 →  ● creatureType
+    subType →  ● subType$subexpression$1
+    anyTypeInner →  ● subType
+    anyType →  ● anyTypeInner anyType$ebnf$1
+    pureObject1 → pureObject1$ebnf$3 ● anyType pureObject1$ebnf$4 pureObject1$ebnf$5
+    pureObject →  ● pureObject1 pureObject$ebnf$2
+    objectInner →  ● pureObject
+    object → object$ebnf$1 ● objectInner
+    triggerConditionInner →  ● object __ triggerConditionInner$string$2
+    triggerCondition → triggerCondition$subexpression$1 __ ● triggerConditionInner triggerCondition$ebnf$1
+    triggeredAbility →  ● triggerCondition "," __ triggeredAbility$ebnf$1 effect
+    ability$subexpression$1 →  ● triggeredAbility
+    ability →  ● ability$subexpression$1 ability$ebnf$1 ability$ebnf$2
+    abilityOrRemind →  ● ability
+    card → card$ebnf$1 ● abilityOrRemind card$ebnf$2 card$ebnf$3
+A "t" based on:
+    creatureType$subexpression$1$string$34 → "c" "a" ● "t"
+    creatureType$subexpression$1 →  ● creatureType$subexpression$1$string$34
+    creatureType →  ● creatureType$subexpression$1
+    subType$subexpression$1 →  ● creatureType
+    subType →  ● subType$subexpression$1
+    anyTypeInner →  ● subType
+    anyType →  ● anyTypeInner anyType$ebnf$1
+    pureObject1 → pureObject1$ebnf$3 ● anyType pureObject1$ebnf$4 pureObject1$ebnf$5
+    pureObject →  ● pureObject1 pureObject$ebnf$2
+    objectInner →  ● pureObject
+    object → object$ebnf$1 ● objectInner
+    triggerConditionInner →  ● object __ triggerConditionInner$string$2
+    triggerCondition → triggerCondition$subexpression$1 __ ● triggerConditionInner triggerCondition$ebnf$1
+    triggeredAbility →  ● triggerCondition "," __ triggeredAbility$ebnf$1 effect
+    ability$subexpression$1 →  ● triggeredAbility
+    ability →  ● ability$subexpression$1 ability$ebnf$1 ability$ebnf$2
+    abilityOrRemind →  ● ability
+    card → card$ebnf$1 ● abilityOrRemind card$ebnf$2 card$ebnf$3
+A "r" based on:
+    enchantmentType$subexpression$1$string$2 → "c" "a" ● "r" "t" "o" "u" "c" "h" "e"
+    enchantmentType$subexpression$1 →  ● enchantmentType$subexpression$1$string$2
+    enchantmentType →  ● enchantmentType$subexpression$1
+    subType$subexpression$1 →  ● enchantmentType
+    subType →  ● subType$subexpression$1
+    anyTypeInner →  ● subType
+    anyType →  ● anyTypeInner anyType$ebnf$1
+    pureObject1 → pureObject1$ebnf$3 ● anyType pureObject1$ebnf$4 pureObject1$ebnf$5
+    pureObject →  ● pureObject1 pureObject$ebnf$2
+    objectInner →  ● pureObject
+    object → object$ebnf$1 ● objectInner
+    triggerConditionInner →  ● object __ triggerConditionInner$string$2
+    triggerCondition → triggerCondition$subexpression$1 __ ● triggerConditionInner triggerCondition$ebnf$1
+    triggeredAbility →  ● triggerCondition "," __ triggeredAbility$ebnf$1 effect
+    ability$subexpression$1 →  ● triggeredAbility
+    ability →  ● ability$subexpression$1 ability$ebnf$1 ability$ebnf$2
+    abilityOrRemind →  ● ability
+    card → card$ebnf$1 ● abilityOrRemind card$ebnf$2 card$ebnf$3
+A "l" based on:
+    planeswalkerType$subexpression$1$string$7 → "c" "a" ● "l" "i" "x"
+    planeswalkerType$subexpression$1 →  ● planeswalkerType$subexpression$1$string$7
+    planeswalkerType →  ● planeswalkerType$subexpression$1
+    subType$subexpression$1 →  ● planeswalkerType
+    subType →  ● subType$subexpression$1
+    anyTypeInner →  ● subType
+    anyType →  ● anyTypeInner anyType$ebnf$1
+    pureObject1 → pureObject1$ebnf$3 ● anyType pureObject1$ebnf$4 pureObject1$ebnf$5
+    pureObject →  ● pureObject1 pureObject$ebnf$2
+    objectInner →  ● pureObject
+    object → object$ebnf$1 ● objectInner
+    triggerConditionInner →  ● object __ triggerConditionInner$string$2
+    triggerCondition → triggerCondition$subexpression$1 __ ● triggerConditionInner triggerCondition$ebnf$1
+    triggeredAbility →  ● triggerCondition "," __ triggeredAbility$ebnf$1 effect
+    ability$subexpression$1 →  ● triggeredAbility
+    ability →  ● ability$subexpression$1 ability$ebnf$1 ability$ebnf$2
+    abilityOrRemind →  ● ability
+    card → card$ebnf$1 ● abilityOrRemind card$ebnf$2 card$ebnf$3
+
+    at Parser.feed (/Users/Sufyan/Sites/stacks-on-stacks/vendor/magic-card-parser/node_modules/nearley/lib/nearley.js:343:27)
+    at parseCard (/Users/Sufyan/Sites/stacks-on-stacks/vendor/magic-card-parser/src/magicCardParser.js:36:25)
+    at main (/Users/Sufyan/Sites/stacks-on-stacks/scratch_parser.js:93:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  offset: 12,
+  token: { value: 's' }
+}
+Fetching from Scryfall: Adrix and Nev, Twincasters...
+Failed to fetch card Adrix and Nev, Twincasters: HTTP error! status: 429
+Parsing custom card: Emeritus of Ideation...
+✅ Success parsing: Emeritus of Ideation
+Parsing custom card: Abigale...
+✅ Success parsing: Abigale
+Parsing custom card: Saddle Beaver...
+✅ Success parsing: Saddle Beaver
+Parsing custom card: Adrix Ward...
+✅ Success parsing: Adrix Ward
+Parsing custom card: Dawn Gift...
+✅ Success parsing: Dawn Gift
+Parsing custom card: Foretell Multiverse...
+✅ Success parsing: Foretell Multiverse
+Parsing custom card: Slickshot Plot...
+✅ Success parsing: Slickshot Plot
+
+All done! Results saved to: /Users/Sufyan/Sites/stacks-on-stacks/parsed_cards.json
