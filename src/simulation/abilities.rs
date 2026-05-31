@@ -358,3 +358,99 @@ pub fn compute_all_playable_abilities(game: &Game, player_id: PlayerId) -> Vec<P
 
     actions
 }
+
+/// Helper to determine the layout string expected by the magic-card-parser.
+pub fn get_parser_layout(card: &Card) -> &'static str {
+    match card {
+        Card::Saga(_) => "saga",
+        Card::Class(_) => "class",
+        Card::Leveler(_) => "leveler",
+        _ => {
+            let attrs = card.get_attributes();
+            if attrs.rules_text.to_lowercase().contains("case of the") {
+                "case"
+            } else {
+                "normal"
+            }
+        }
+    }
+}
+
+/// Dynamically invokes the NodeJS natural language parser to parse a card's (potentially modified) rules text on-the-fly.
+pub fn parse_rules_text_dynamic(name: &str, oracle_text: &str, layout: &str) -> Result<Vec<crate::rules_text_ast::AbilityOrRemind>, Box<dyn std::error::Error>> {
+    use std::process::{Command, Stdio};
+    use std::io::Write;
+
+    #[derive(serde::Serialize)]
+    struct Payload<'a> {
+        name: &'a str,
+        oracle_text: &'a str,
+        layout: &'a str,
+    }
+    let payload = Payload { name, oracle_text, layout };
+    let json_input = serde_json::to_string(&payload)?;
+
+    let mut child = Command::new("node")
+        .arg("parse_card.js")
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()?;
+
+    if let Some(mut stdin) = child.stdin.take() {
+        stdin.write_all(json_input.as_bytes())?;
+    }
+
+    let output = child.wait_with_output()?;
+    if !output.status.success() {
+        let err_str = String::from_utf8_lossy(&output.stderr);
+        return Err(format!("Node parser failed with status {}: {}", output.status, err_str).into());
+    }
+
+    #[derive(serde::Deserialize)]
+    struct ParseOutput {
+        result: Option<Vec<Vec<serde_json::Value>>>,
+        error: Option<serde_json::Value>,
+    }
+
+    let parsed: ParseOutput = serde_json::from_slice(&output.stdout)?;
+    if let Some(err) = parsed.error {
+        return Err(format!("Nearley parser error: {:?}", err).into());
+    }
+
+    if let Some(trees) = parsed.result {
+        if !trees.is_empty() {
+            let mut abilities = Vec::new();
+            for val in &trees[0] {
+                let ability: crate::rules_text_ast::AbilityOrRemind = serde_json::from_value(val.clone())?;
+                abilities.push(ability);
+            }
+            return Ok(abilities);
+        }
+    }
+
+    Err("No parse trees returned from parser".into())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_rules_text_dynamic() {
+        let abilities = parse_rules_text_dynamic("Runeclaw Bear", "Flying", "normal").unwrap();
+        assert!(!abilities.is_empty());
+        if let crate::rules_text_ast::AbilityOrRemind::Ability(crate::rules_text_ast::Ability::Keyword(keywords)) = &abilities[0] {
+            assert_eq!(keywords.len(), 1);
+            if let crate::rules_text_ast::KeywordAbility::Basic(name) = &keywords[0] {
+                assert_eq!(name, "flying");
+            } else {
+                panic!("Expected Basic keyword");
+            }
+        } else {
+            panic!("Expected Keyword ability, got: {:?}", abilities[0]);
+        }
+    }
+}
+
+
