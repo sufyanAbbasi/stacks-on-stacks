@@ -1301,6 +1301,23 @@ impl Card {
         }
     }
 
+    pub fn get_spell_attributes(&self) -> Option<&SpellAttributes> {
+        match self {
+            Card::Artifact(attrs) => Some(&attrs.spell),
+            Card::Battle(attrs) => Some(&attrs.spell),
+            Card::Creature(attrs) => Some(&attrs.spell),
+            Card::Enchantment(attrs) => Some(&attrs.spell),
+            Card::Instant(attrs) => Some(&attrs.spell),
+            Card::Land(_) => None,
+            Card::Planeswalker(_) => None,
+            Card::Sorcery(attrs) => Some(&attrs.spell),
+            Card::Kindred(attrs) => Some(&attrs.spell),
+            Card::Leveler(attrs) => Some(&attrs.spell),
+            Card::Saga(attrs) => Some(&attrs.spell),
+            Card::Class(attrs) => Some(&attrs.spell),
+        }
+    }
+
     pub fn get_attributes(&self) -> &CardAttributes {
         match self {
             Card::Artifact(attrs) => &attrs.card,

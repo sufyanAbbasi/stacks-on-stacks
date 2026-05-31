@@ -116,6 +116,32 @@ pub enum ContinuousLayer {
     Layer7dSwitchPT,
 }
 
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+pub enum EffectCondition {
+    /// Matches if the card being evaluated has the specified CardType (Rule 300)
+    HasType(crate::card::CardType),
+    /// Matches if the card being evaluated has the specified Subtype
+    HasSubtype(crate::card::Subtype),
+    /// Matches if the card being evaluated has the specified Color
+    HasColor(crate::card::Color),
+    /// Matches if the player initiating the query is an opponent of the effect's source controller (Rule 102.2)
+    IsOpponentOfSource,
+    /// Matches if the player initiating the query is the controller of the effect's source
+    IsSourceController,
+    /// Matches if it is currently the turn of the player who controls the source of this effect
+    IsSourceControllerTurn,
+    /// Matches if the current phase is the specified Phase (Section 500)
+    IsPhase(crate::turns::Phase),
+    /// Matches if the stack is empty (Rule 117.4)
+    IsStackEmpty,
+    /// Negation of a condition
+    Not(Box<EffectCondition>),
+    /// Matches if all nested conditions are true
+    And(Vec<EffectCondition>),
+    /// Matches if any nested condition is true
+    Or(Vec<EffectCondition>),
+}
+
 /// Represents the actual modification applied by a continuous effect.
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum ContinuousEffectType {
@@ -129,6 +155,8 @@ pub enum ContinuousEffectType {
     RemoveSubtype(Subtype),
     ChangeColor(Color),
     TextChange { from: String, to: String },
+    TaxSpells { cost_increase: u32 },
+    ActionRestriction { restrict_instructions: Vec<crate::game::SimInstruction> },
 }
 
 /// A continuous effect active in the game state (Section 611).
@@ -140,6 +168,8 @@ pub struct ContinuousEffect {
     pub duration: EffectDuration,
     pub timestamp: Timestamp,
     pub effect: ContinuousEffectType,
+    #[serde(default)]
+    pub conditions: Vec<EffectCondition>,
 }
 
 /// --- SECTION 614: REPLACEMENT EFFECTS ---

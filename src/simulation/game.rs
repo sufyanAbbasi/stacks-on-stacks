@@ -33,12 +33,13 @@ pub struct Game {
     pub active_effects: crate::effects::ActiveEffects,
     pub priority_player: Option<PlayerId>,
     pub consecutive_passes: u32,
+    pub current_phase: crate::turns::Phase,
 }
 
 /// Represents a deterministic, kernel-level state-transition instruction ("machine code").
 /// These instructions have a 1:1 correspondence with the lowest-level state modifications
 /// of our individual game structures.
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum SimInstruction {
     /// 1:1 with player's mana pool addition (Rule 106.1)
     AddMana {
@@ -166,6 +167,41 @@ pub enum SimInstruction {
         token_id: CardId,
         card: Card,
     },
+    /// 1:1 with player life gain (Rule 119.3)
+    GainLife {
+        player_id: PlayerId,
+        amount: u32,
+    },
+    /// 1:1 with player life loss (Rule 119.3)
+    LoseLife {
+        player_id: PlayerId,
+        amount: u32,
+    },
+    /// Assert that a card has a specific type (Rule 300)
+    CheckType {
+        card_id: CardId,
+        expected_type: crate::card::CardType,
+    },
+    /// Assert that a card does NOT have a specific type (Rule 300)
+    CheckNotType {
+        card_id: CardId,
+        not_type: crate::card::CardType,
+    },
+    /// Assert that the stack is empty (Rule 117.4)
+    CheckStackEmpty,
+    /// Assert that the current phase is a specific phase (Rule 500)
+    CheckPhase {
+        expected_phase: crate::turns::Phase,
+    },
+    /// Assert that the active player is an opponent of the effect source (for Grand Abolisher style checks)
+    CheckIsOpponent {
+        player_id: PlayerId,
+        source_card_id: CardId,
+    },
+    /// Assert that it is the turn of the player who controls the source card
+    CheckIsSourceControllerTurn {
+        source_card_id: CardId,
+    },
 }
 
 impl Game {
@@ -182,6 +218,7 @@ impl Game {
             active_effects: crate::effects::ActiveEffects::new(),
             priority_player: Some(1),
             consecutive_passes: 0,
+            current_phase: crate::turns::Phase::PrecombatMain,
         }
     }
 
@@ -209,7 +246,7 @@ impl Game {
     }
 
     /// Executes a single, deterministic low-level "machine code" instruction and modifies the simulator states.
-    pub fn execute_instruction(&mut self, instruction: SimInstruction) {
+    pub fn execute_instruction_raw(&mut self, instruction: SimInstruction) -> Result<(), String> {
         println!("\x1b[36m[CPU INSTRUCTION]\x1b[0m {:?}", instruction);
 
         match instruction {
@@ -530,7 +567,195 @@ impl Game {
                     card_name, token_id, controller
                 );
             }
+
+            SimInstruction::GainLife { player_id, amount } => {
+                if let Some(player) = self.players.get_mut(&player_id) {
+                    player.life_total += amount as u128;
+                    println!(
+                        "  -> \x1b[32mLife Gained:\x1b[0m +{} to Player {} (New total: {})",
+                        amount, player.name, player.life_total
+                    );
+                }
+            }
+
+            SimInstruction::LoseLife { player_id, amount } => {
+                if let Some(player) = self.players.get_mut(&player_id) {
+                    player.life_total = player.life_total.saturating_sub(amount as u128);
+                    println!(
+                        "  -> \x1b[31mLife Lost:\x1b[0m -{} from Player {} (New total: {})",
+                        amount, player.name, player.life_total
+                    );
+                }
+            }
+
+            SimInstruction::CheckType { card_id, expected_type } => {
+                if let Some(err) = self.evaluate_check(&SimInstruction::CheckType { card_id, expected_type }) {
+                    println!("  -> \x1b[31mCheck Failed:\x1b[0m {}", err);
+                    return Err(err);
+                }
+            }
+            SimInstruction::CheckNotType { card_id, not_type } => {
+                if let Some(err) = self.evaluate_check(&SimInstruction::CheckNotType { card_id, not_type }) {
+                    println!("  -> \x1b[31mCheck Failed:\x1b[0m {}", err);
+                    return Err(err);
+                }
+            }
+            SimInstruction::CheckStackEmpty => {
+                if let Some(err) = self.evaluate_check(&SimInstruction::CheckStackEmpty) {
+                    println!("  -> \x1b[31mCheck Failed:\x1b[0m {}", err);
+                    return Err(err);
+                }
+            }
+            SimInstruction::CheckPhase { expected_phase } => {
+                if let Some(err) = self.evaluate_check(&SimInstruction::CheckPhase { expected_phase }) {
+                    println!("  -> \x1b[31mCheck Failed:\x1b[0m {}", err);
+                    return Err(err);
+                }
+            }
+            SimInstruction::CheckIsOpponent { player_id, source_card_id } => {
+                if let Some(err) = self.evaluate_check(&SimInstruction::CheckIsOpponent { player_id, source_card_id }) {
+                    println!("  -> \x1b[31mCheck Failed:\x1b[0m {}", err);
+                    return Err(err);
+                }
+            }
+            SimInstruction::CheckIsSourceControllerTurn { source_card_id } => {
+                if let Some(err) = self.evaluate_check(&SimInstruction::CheckIsSourceControllerTurn { source_card_id }) {
+                    println!("  -> \x1b[31mCheck Failed:\x1b[0m {}", err);
+                    return Err(err);
+                }
+            }
         }
+        Ok(())
+    }
+
+    /// Intercepts a SimInstruction, resolves replacement/prevention effects, and executes the raw mutations.
+    pub fn execute_instruction(&mut self, instruction: SimInstruction) -> Result<(), String> {
+        let resolved_insts = self.apply_replacement_and_prevention_effects(instruction);
+        for inst in resolved_insts {
+            self.execute_instruction_raw(inst)?;
+        }
+        Ok(())
+    }
+
+    /// Executes multiple deterministic CPU instructions sequentially, aborting if any instruction fails (e.g. check failures).
+    pub fn execute_instructions(&mut self, instructions: Vec<SimInstruction>) -> Result<(), String> {
+        for inst in instructions {
+            self.execute_instruction(inst)?;
+        }
+        Ok(())
+    }
+
+    /// Intercepts a SimInstruction and applies active replacement (Rule 614) and prevention (Rule 615) effects.
+    /// Returns the final vector of instructions to actually execute.
+    pub fn apply_replacement_and_prevention_effects(&mut self, inst: SimInstruction) -> Vec<SimInstruction> {
+        let mut instructions = vec![inst];
+        let mut changed = true;
+        let mut loop_count = 0;
+        let mut applied_ids = std::collections::HashSet::new();
+
+        // Loop to allow multiple replacements to chain (up to a limit to prevent infinite loops)
+        while changed && loop_count < 10 {
+            changed = false;
+            let mut next_instructions = Vec::new();
+
+            for current_inst in instructions {
+                let mut replaced = false;
+
+                // Check replacement effects
+                for rep in &self.active_effects.replacement_effects {
+                    if applied_ids.contains(&rep.id) {
+                        continue;
+                    }
+
+                    // Match replacement effect description
+                    if rep.description == "enters the battlefield tapped" {
+                        if let SimInstruction::MoveCard { card_id, from, to, controller } = current_inst.clone() {
+                            if to == Zone::Battlefield {
+                                next_instructions.push(SimInstruction::MoveCard { card_id, from, to, controller });
+                                next_instructions.push(SimInstruction::TapPermanent { card_id });
+                                replaced = true;
+                                applied_ids.insert(rep.id);
+                                break;
+                            }
+                        }
+                    } else if rep.description == "if you would draw a card, draw two cards instead" {
+                        if let SimInstruction::DrawCard { player_id } = current_inst {
+                            next_instructions.push(SimInstruction::DrawCard { player_id });
+                            next_instructions.push(SimInstruction::DrawCard { player_id });
+                            replaced = true;
+                            applied_ids.insert(rep.id);
+                            break;
+                        }
+                    } else if rep.description == "if you would gain life, gain twice that much life instead" {
+                        if let SimInstruction::GainLife { player_id, amount } = current_inst {
+                            next_instructions.push(SimInstruction::GainLife { player_id, amount: amount * 2 });
+                            replaced = true;
+                            applied_ids.insert(rep.id);
+                            break;
+                        }
+                    } else if rep.description == "if a card would be put into a graveyard, exile it instead" {
+                        if let SimInstruction::MoveCard { card_id, from, to, controller } = current_inst.clone() {
+                            if to == Zone::Graveyard {
+                                next_instructions.push(SimInstruction::MoveCard { card_id, from, to: Zone::Exile, controller });
+                                replaced = true;
+                                applied_ids.insert(rep.id);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if replaced {
+                    changed = true;
+                    continue;
+                }
+
+                // Check prevention effects (Rule 615)
+                if let SimInstruction::MarkDamage { card_id, amount } = current_inst {
+                    let mut damage_remaining = amount;
+                    // Find active prevention effects
+                    for prev in &mut self.active_effects.prevention_effects {
+                        if prev.amount_remaining > 0 && damage_remaining > 0 {
+                            // Check scope
+                            let applies = match prev.scope {
+                                crate::effects::PreventionScope::AnyDamage => true,
+                                crate::effects::PreventionScope::DamageToTarget(Target::Card(tid)) => tid == card_id,
+                                _ => false,
+                            };
+
+                            if applies {
+                                let prevent = damage_remaining.min(prev.amount_remaining);
+                                damage_remaining -= prevent;
+                                prev.amount_remaining -= prevent;
+                                println!(
+                                    "  -> \x1b[32mPrevention Shield Applied:\x1b[0m Prevented {} damage to Card ID {} using effect from Card ID {}. (Remaining shield: {})",
+                                    prevent, card_id, prev.source, prev.amount_remaining
+                                );
+                            }
+                        }
+                    }
+
+                    // Retain prevention effects with remaining capacity
+                    self.active_effects.prevention_effects.retain(|p| p.amount_remaining > 0);
+
+                    if damage_remaining < amount {
+                        if damage_remaining > 0 {
+                            next_instructions.push(SimInstruction::MarkDamage { card_id, amount: damage_remaining });
+                        }
+                        replaced = true;
+                    }
+                }
+
+                if !replaced {
+                    next_instructions.push(current_inst);
+                }
+            }
+
+            instructions = next_instructions;
+            loop_count += 1;
+        }
+
+        instructions
     }
 }
 
@@ -575,10 +800,25 @@ impl Game {
     pub fn apply_active_effects(&self, card_id: CardId, mut card: Card) -> Card {
         let sorted_effects = self.active_effects.get_sorted_continuous_effects();
         for effect in sorted_effects {
-            // Check if the effect applies to this card.
-            // For our abstract model, we assume the effect applies if the effect source is this card,
-            // or if it's targeted, or if we do a mock mapping (matching odd/even IDs for demo).
-            if effect.source == card_id || effect.id % 2 == card_id % 2 {
+            // Find the player associated with this card (controller if on battlefield, else owner)
+            let player_id_opt = if let Some(p) = self.zones.battlefield.permanents.iter().find(|p| p.id == card_id) {
+                Some(p.controller)
+            } else if let Some(zc) = self.card_registry.get(&card_id) {
+                Some(zc.owner)
+            } else {
+                None
+            };
+
+            let applies = if !effect.conditions.is_empty() {
+                effect.conditions.iter().all(|cond| {
+                    self.evaluate_condition(cond, Some(&card), Some(card_id), player_id_opt, effect.source)
+                })
+            } else {
+                // Fall back to simple default logic if no conditions are defined
+                effect.source == card_id || effect.id % 2 == card_id % 2
+            };
+
+            if applies {
                 match effect.effect {
                     crate::effects::ContinuousEffectType::ModifyPowerToughness { power_offset, toughness_offset } => {
                         if let Card::Creature(ref mut attrs) = card {
@@ -612,6 +852,10 @@ impl Game {
                             attrs.spell.color = vec![color];
                         }
                     }
+                    crate::effects::ContinuousEffectType::TextChange { ref from, ref to } => {
+                        let attrs = get_card_attributes_mut(&mut card);
+                        attrs.rules_text = attrs.rules_text.replace(from, to);
+                    }
                     _ => {}
                 }
             }
@@ -619,8 +863,226 @@ impl Game {
         card
     }
 
+    /// Evaluates a compiled continuous effect condition dynamically against the current game state and query context.
+    pub fn evaluate_condition(
+        &self,
+        cond: &crate::effects::EffectCondition,
+        card_opt: Option<&Card>,
+        _card_id_opt: Option<CardId>,
+        player_id_opt: Option<PlayerId>,
+        source_card_id: CardId,
+    ) -> bool {
+        match cond {
+            crate::effects::EffectCondition::HasType(expected_type) => {
+                if let Some(card) = card_opt {
+                    card.get_attributes().types.contains(expected_type)
+                } else {
+                    false
+                }
+            }
+            crate::effects::EffectCondition::HasSubtype(expected_subtype) => {
+                if let Some(card) = card_opt {
+                    card.get_attributes().subtypes.contains(expected_subtype)
+                } else {
+                    false
+                }
+            }
+            crate::effects::EffectCondition::HasColor(expected_color) => {
+                if let Some(card) = card_opt {
+                    if let Some(spell_attrs) = card.get_spell_attributes() {
+                        spell_attrs.color.contains(expected_color)
+                    } else {
+                        false
+                    }
+                } else {
+                    false
+                }
+            }
+            crate::effects::EffectCondition::IsOpponentOfSource => {
+                if let Some(player_id) = player_id_opt {
+                    let source_controller = if let Some(perm) = self.zones.battlefield.permanents.iter().find(|p| p.id == source_card_id) {
+                        Some(perm.controller)
+                    } else if let Some(zc) = self.card_registry.get(&source_card_id) {
+                        Some(zc.owner)
+                    } else {
+                        None
+                    };
+                    if let Some(controller) = source_controller {
+                        controller != player_id
+                    } else {
+                        false
+                    }
+                } else {
+                    false
+                }
+            }
+            crate::effects::EffectCondition::IsSourceController => {
+                if let Some(player_id) = player_id_opt {
+                    let source_controller = if let Some(perm) = self.zones.battlefield.permanents.iter().find(|p| p.id == source_card_id) {
+                        Some(perm.controller)
+                    } else if let Some(zc) = self.card_registry.get(&source_card_id) {
+                        Some(zc.owner)
+                    } else {
+                        None
+                    };
+                    if let Some(controller) = source_controller {
+                        controller == player_id
+                    } else {
+                        false
+                    }
+                } else {
+                    false
+                }
+            }
+            crate::effects::EffectCondition::IsSourceControllerTurn => {
+                let source_controller = if let Some(perm) = self.zones.battlefield.permanents.iter().find(|p| p.id == source_card_id) {
+                    Some(perm.controller)
+                } else if let Some(zc) = self.card_registry.get(&source_card_id) {
+                    Some(zc.owner)
+                } else {
+                    None
+                };
+                if let Some(controller) = source_controller {
+                    self.active_player == controller
+                } else {
+                    false
+                }
+            }
+            crate::effects::EffectCondition::IsPhase(expected_phase) => {
+                self.current_phase == *expected_phase
+            }
+            crate::effects::EffectCondition::IsStackEmpty => {
+                self.stack.items.is_empty()
+            }
+            crate::effects::EffectCondition::Not(nested) => {
+                !self.evaluate_condition(nested, card_opt, _card_id_opt, player_id_opt, source_card_id)
+            }
+            crate::effects::EffectCondition::And(nested_list) => {
+                nested_list.iter().all(|c| self.evaluate_condition(c, card_opt, _card_id_opt, player_id_opt, source_card_id))
+            }
+            crate::effects::EffectCondition::Or(nested_list) => {
+                nested_list.iter().any(|c| self.evaluate_condition(c, card_opt, _card_id_opt, player_id_opt, source_card_id))
+            }
+        }
+    }
+
+    /// Evaluates a check instruction. Returns None if the check passes, or Some(error_message) if it fails.
+    pub fn evaluate_check(&self, check: &SimInstruction) -> Option<String> {
+        match check {
+            SimInstruction::CheckType { card_id, expected_type } => {
+                let card = self.card_registry.get(card_id).map(|zc| zc.card.clone())?;
+                let card_effective = self.apply_active_effects(*card_id, card);
+                let attrs = card_effective.get_attributes();
+                if !attrs.types.contains(expected_type) {
+                    Some(format!("CheckType Failed: Card ID {} is not of type {:?}", card_id, expected_type))
+                } else {
+                    None
+                }
+            }
+            SimInstruction::CheckNotType { card_id, not_type } => {
+                let card = self.card_registry.get(card_id).map(|zc| zc.card.clone())?;
+                let card_effective = self.apply_active_effects(*card_id, card);
+                let attrs = card_effective.get_attributes();
+                if attrs.types.contains(not_type) {
+                    Some(format!("CheckNotType Failed: Card ID {} is of type {:?}", card_id, not_type))
+                } else {
+                    None
+                }
+            }
+            SimInstruction::CheckStackEmpty => {
+                if !self.stack.items.is_empty() {
+                    Some("CheckStackEmpty Failed: Stack is not empty".to_string())
+                } else {
+                    None
+                }
+            }
+            SimInstruction::CheckPhase { expected_phase } => {
+                if self.current_phase != *expected_phase {
+                    Some(format!("CheckPhase Failed: Current phase is {:?}, expected {:?}", self.current_phase, expected_phase))
+                } else {
+                    None
+                }
+            }
+            SimInstruction::CheckIsOpponent { player_id, source_card_id } => {
+                let source_controller = if let Some(perm) = self.zones.battlefield.permanents.iter().find(|p| p.id == *source_card_id) {
+                    Some(perm.controller)
+                } else if let Some(zc) = self.card_registry.get(source_card_id) {
+                    Some(zc.owner)
+                } else {
+                    None
+                };
+                if let Some(controller) = source_controller {
+                    if controller == *player_id {
+                        Some(format!("CheckIsOpponent Failed: Player {} is controller, not opponent", player_id))
+                    } else {
+                        None
+                    }
+                } else {
+                    Some("CheckIsOpponent Failed: Source controller not found".to_string())
+                }
+            }
+            SimInstruction::CheckIsSourceControllerTurn { source_card_id } => {
+                let source_controller = if let Some(perm) = self.zones.battlefield.permanents.iter().find(|p| p.id == *source_card_id) {
+                    Some(perm.controller)
+                } else if let Some(zc) = self.card_registry.get(source_card_id) {
+                    Some(zc.owner)
+                } else {
+                    None
+                };
+                if let Some(controller) = source_controller {
+                    if self.active_player != controller {
+                        Some(format!("CheckIsSourceControllerTurn Failed: Active player is {}, but source controller is {}", self.active_player, controller))
+                    } else {
+                        None
+                    }
+                } else {
+                    Some("CheckIsSourceControllerTurn Failed: Source controller not found".to_string())
+                }
+            }
+            _ => None,
+        }
+    }
+
+    /// Checks if a player's activated abilities are suppressed by active ActionRestriction effects.
+    pub fn is_activated_ability_suppressed(&self, player_id: PlayerId) -> bool {
+        for effect in &self.active_effects.continuous_effects {
+            if let crate::effects::ContinuousEffectType::ActionRestriction { restrict_instructions } = &effect.effect {
+                let mut all_match = true;
+                for cond in &effect.conditions {
+                    if !self.evaluate_condition(cond, None, None, Some(player_id), effect.source) {
+                        all_match = false;
+                        break;
+                    }
+                }
+                if all_match {
+                    // Conditions match, now run the compiled restrict_instructions!
+                    let mut restricted = true;
+                    for inst in restrict_instructions {
+                        // Dynamically bind player_id to the check being evaluated
+                        let active_inst = match inst {
+                            SimInstruction::CheckIsOpponent { source_card_id, .. } => {
+                                SimInstruction::CheckIsOpponent { player_id, source_card_id: *source_card_id }
+                            }
+                            other => other.clone(),
+                        };
+                        if self.evaluate_check(&active_inst).is_some() {
+                            // A check failed, so this restriction does not apply
+                            restricted = false;
+                            break;
+                        }
+                    }
+                    if restricted {
+                        return true; // Action is suppressed/restricted!
+                    }
+                }
+            }
+        }
+        false
+    }
+
     /// Run the Magic State-Based Action trigger-resolution loop (Rule 704).
     /// Loops continuously until a stable state is reached where no more SBAs trigger.
+    #[allow(unused_must_use)]
     pub fn check_state_based_actions(&mut self) -> Vec<String> {
         let mut sba_logs = Vec::new();
         let mut executed_any = true;
@@ -704,17 +1166,19 @@ impl Game {
         actions.push(crate::actions::PriorityAction::PassPriority { player: player_id });
 
         // 2. Mana abilities (Rule 605) are dynamically gathered from permanents
-        for p in &self.zones.battlefield.permanents {
-            if p.controller == player_id && !p.status.tapped {
-                let mana_abilities = crate::abilities::compute_all_mana_abilities(self, player_id, p.id);
-                for (idx, _color) in mana_abilities.iter().enumerate() {
-                    actions.push(crate::actions::PriorityAction::ActivateAbility {
-                        player: player_id,
-                        ability_id: idx as u32,
-                        source_id: p.id,
-                        is_instant_speed: true,
-                        is_mana_ability: true,
-                    });
+        if !self.is_activated_ability_suppressed(player_id) {
+            for p in &self.zones.battlefield.permanents {
+                if p.controller == player_id && !p.status.tapped {
+                    let mana_abilities = crate::abilities::compute_all_mana_abilities(self, player_id, p.id);
+                    for (idx, _color) in mana_abilities.iter().enumerate() {
+                        actions.push(crate::actions::PriorityAction::ActivateAbility {
+                            player: player_id,
+                            ability_id: idx as u32,
+                            source_id: p.id,
+                            is_instant_speed: true,
+                            is_mana_ability: true,
+                        });
+                    }
                 }
             }
         }
@@ -727,6 +1191,7 @@ impl Game {
     }
 
     /// Executes a PriorityAction algorithmically on the game state and returns logs of any state-based actions that resolve.
+    #[allow(unused_must_use)]
     pub fn execute_action(&mut self, action: crate::actions::PriorityAction) -> Vec<String> {
         let mut logs = Vec::new();
 
@@ -754,10 +1219,11 @@ impl Game {
 
             crate::actions::PriorityAction::CastSpell { player, card_id, target, .. } => {
                 let card = self.card_registry[&card_id].card.clone();
+                let card_effective = self.apply_active_effects(card_id, card.clone());
                 
                 // Get and execute payment instructions
                 if let Some(player_obj) = self.players.get(&player) {
-                    if let Some(pay_insts) = crate::abilities::get_payment_instructions(&card, player, &player_obj.mana_pool) {
+                    if let Some(pay_insts) = crate::abilities::get_payment_instructions(&card_effective, card_id, player, &player_obj.mana_pool, self) {
                         for inst in pay_insts {
                             self.execute_instruction(inst);
                         }
@@ -839,8 +1305,22 @@ impl Game {
                                 let (res_insts, res_log) = crate::abilities::get_resolution_instructions(&card, card_id, target, caster, self);
                                 logs.push(res_log);
 
-                                for inst in res_insts {
-                                    self.execute_instruction(inst);
+                                if let Err(e) = self.execute_instructions(res_insts) {
+                                    logs.push(format!("[SPELL FIZZLED] Resolution aborted: {}", e));
+                                    
+                                    // If a resolution is aborted, the card must go to the graveyard.
+                                    // Check if the card is already in the graveyard or battlefield
+                                    let is_in_graveyard = self.zones.graveyards.values().any(|g| g.cards.iter().any(|zc| zc.id == card_id));
+                                    let is_on_battlefield = self.zones.battlefield.permanents.iter().any(|p| p.id == card_id);
+                                    if !is_in_graveyard && !is_on_battlefield {
+                                        let owner = self.card_registry[&card_id].owner;
+                                        let _ = self.execute_instruction(SimInstruction::MoveCard {
+                                            card_id,
+                                            from: Zone::Stack,
+                                            to: Zone::Graveyard,
+                                            controller: owner,
+                                        });
+                                    }
                                 }
                             }
                             _ => {
