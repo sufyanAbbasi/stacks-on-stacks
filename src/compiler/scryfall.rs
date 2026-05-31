@@ -188,26 +188,15 @@ pub fn parse_type_line(type_line: &str) -> (Vec<Supertype>, Vec<CardType>, Vec<S
     (supertypes, card_types, subtypes)
 }
 
-/// Fetches a card by name from the Scryfall API and compiles it into a type-safe `Card`.
-pub fn fetch_and_compile(name: &str) -> Result<Card, Box<dyn std::error::Error>> {
-    let client = reqwest::blocking::Client::builder()
-        .user_agent("stacks-on-stacks/0.1.0")
-        .build()?;
-    
-    let url = format!("https://api.scryfall.com/cards/named?exact={}", urlencoding::encode(name));
-    let response = client.get(&url).send()?;
-    
-    if !response.status().is_success() {
-        return Err(format!("Scryfall API returned status: {}", response.status()).into());
-    }
-
-    let scry_card: ScryfallCard = response.json()?;
-
-    // Resolve front face properties
+/// Helper function to compile a specific face of a Scryfall card.
+fn compile_scryfall_face(
+    scry_card: &ScryfallCard,
+    face_idx: usize,
+) -> Result<Card, Box<dyn std::error::Error>> {
     let (face_name, face_cost, face_type_line, face_oracle, face_colors, face_power, face_toughness, face_loyalty, face_defense) = {
         if let Some(ref faces) = scry_card.card_faces {
-            if !faces.is_empty() {
-                let f = &faces[0];
+            if face_idx < faces.len() {
+                let f = &faces[face_idx];
                 (
                     f.name.clone(),
                     f.mana_cost.clone().unwrap_or_default(),
@@ -220,19 +209,12 @@ pub fn fetch_and_compile(name: &str) -> Result<Card, Box<dyn std::error::Error>>
                     f.defense.clone(),
                 )
             } else {
-                (
-                    scry_card.name.clone(),
-                    scry_card.mana_cost.clone().unwrap_or_default(),
-                    scry_card.type_line.clone().unwrap_or_default(),
-                    scry_card.oracle_text.clone().unwrap_or_default(),
-                    scry_card.colors.clone().unwrap_or_default(),
-                    scry_card.power.clone(),
-                    scry_card.toughness.clone(),
-                    scry_card.loyalty.clone(),
-                    scry_card.defense.clone(),
-                )
+                return Err(format!("Face index {} out of bounds", face_idx).into());
             }
         } else {
+            if face_idx > 0 {
+                return Err("Card has only one face".into());
+            }
             (
                 scry_card.name.clone(),
                 scry_card.mana_cost.clone().unwrap_or_default(),
@@ -255,6 +237,7 @@ pub fn fetch_and_compile(name: &str) -> Result<Card, Box<dyn std::error::Error>>
         supertypes: supertypes.clone(),
         subtypes: subtypes.clone(),
         rules_text: face_oracle.clone(),
+        faces: None,
     };
 
     let spell_attr = SpellAttributes {
@@ -389,6 +372,43 @@ pub fn fetch_and_compile(name: &str) -> Result<Card, Box<dyn std::error::Error>>
         }
     }
 }
+
+/// Compiles a top-level ScryfallCard, recursively compiling any additional card faces.
+fn compile_scryfall_card(scry_card: &ScryfallCard) -> Result<Card, Box<dyn std::error::Error>> {
+    let mut front_card = compile_scryfall_face(scry_card, 0)?;
+
+    if let Some(ref faces) = scry_card.card_faces {
+        if faces.len() > 1 {
+            let mut back_faces = Vec::new();
+            for i in 1..faces.len() {
+                let face_card = compile_scryfall_face(scry_card, i)?;
+                back_faces.push(Box::new(face_card));
+            }
+            let attrs = front_card.get_attributes_mut();
+            attrs.faces = Some(back_faces);
+        }
+    }
+
+    Ok(front_card)
+}
+
+/// Fetches a card by name from the Scryfall API and compiles it into a type-safe `Card`.
+pub fn fetch_and_compile(name: &str) -> Result<Card, Box<dyn std::error::Error>> {
+    let client = reqwest::blocking::Client::builder()
+        .user_agent("stacks-on-stacks/0.1.0")
+        .build()?;
+    
+    let url = format!("https://api.scryfall.com/cards/named?exact={}", urlencoding::encode(name));
+    let response = client.get(&url).send()?;
+    
+    if !response.status().is_success() {
+        return Err(format!("Scryfall API returned status: {}", response.status()).into());
+    }
+
+    let scry_card: ScryfallCard = response.json()?;
+    compile_scryfall_card(&scry_card)
+}
+
 
 fn format_subtype(s: &Subtype) -> String {
     let s_str = format!("{:?}", s);
@@ -729,6 +749,12 @@ pub fn create_test_card(name: &str) -> Card {
     match fetch_and_compile(name) {
         Ok(card) => {
             print_ascii_card(&card);
+            if let Some(ref back_faces) = card.get_attributes().faces {
+                for (i, back_card) in back_faces.iter().enumerate() {
+                    println!("                          // Face {} //", i + 1);
+                    print_ascii_card(back_card);
+                }
+            }
             card
         }
         Err(e) => panic!("Failed to compile card '{}' from Scryfall: {}", name, e),

@@ -729,7 +729,10 @@ pub struct CardAttributes {
     pub supertypes: Vec<Supertype>,
     pub subtypes: Vec<Subtype>,
     pub rules_text: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub faces: Option<Vec<Box<Card>>>,
 }
+
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct PermanentAttributes {
@@ -883,7 +886,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Artifact(ArtifactType::Treasure)],
                     rules_text: "{T}, Sacrifice this token: Add one mana of any color.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Artifact],
                     status: PermanentStatus::default(),
@@ -901,7 +905,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Artifact(ArtifactType::Food)],
                     rules_text: "{2}, {T}, Sacrifice this token: You gain 3 life.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Artifact],
                     status: PermanentStatus::default(),
@@ -919,7 +924,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Artifact(ArtifactType::Gold)],
                     rules_text: "Sacrifice this token: Add one mana of any color.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Artifact],
                     status: PermanentStatus::default(),
@@ -937,7 +943,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Artifact(ArtifactType::Clue)],
                     rules_text: "{2}, Sacrifice this token: Draw a card.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Artifact],
                     status: PermanentStatus::default(),
@@ -955,7 +962,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Artifact(ArtifactType::Blood)],
                     rules_text: "{1}, {T}, Discard a card, Sacrifice this token: Draw a card.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Artifact],
                     status: PermanentStatus::default(),
@@ -973,7 +981,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Artifact(ArtifactType::Powerstone)],
                     rules_text: "{T}: Add {C}. This mana can't be spent to cast a nonartifact spell.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Artifact],
                     status: PermanentStatus::default(),
@@ -991,7 +1000,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Artifact(ArtifactType::Map)],
                     rules_text: "{1}, {T}, Sacrifice this token: Target creature you control explores. Activate only as a sorcery.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Artifact],
                     status: PermanentStatus::default(),
@@ -1009,7 +1019,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Artifact(ArtifactType::Junk)],
                     rules_text: "{T}, Sacrifice this token: Exile the top card of your library. You may play that card this turn. Activate only as a sorcery.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Artifact],
                     status: PermanentStatus::default(),
@@ -1027,7 +1038,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Artifact(ArtifactType::Lander)],
                     rules_text: "{2}, {T}, Sacrifice this token: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Artifact],
                     status: PermanentStatus::default(),
@@ -1045,7 +1057,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Artifact(ArtifactType::Mutagen)],
                     rules_text: "{1}, {T}, Sacrifice this token: Put a +1/+1 counter on target creature. Activate only as a sorcery.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Artifact],
                     status: PermanentStatus::default(),
@@ -1063,7 +1076,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Creature(CreatureType::Zombie)],
                     rules_text: "".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Creature],
                     status: PermanentStatus::default(),
@@ -1084,7 +1098,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Enchantment(EnchantmentType::Shard)],
                     rules_text: "{2}, Sacrifice this token: Scry 1, then draw a card.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Enchantment],
                     status: PermanentStatus::default(),
@@ -1102,7 +1117,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Artifact(ArtifactType::Incubator)],
                     rules_text: "{2}: Transform this token.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Artifact],
                     status: PermanentStatus::default(),
@@ -1120,7 +1136,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Enchantment(EnchantmentType::Role)],
                     rules_text: "Enchant creature. Enchanted creature has base power and toughness 1/1.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Enchantment],
                     status: PermanentStatus::default(),
@@ -1138,7 +1155,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Enchantment(EnchantmentType::Role)],
                     rules_text: "Enchant creature. Enchanted creature gets +1/+1 and has trample.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Enchantment],
                     status: PermanentStatus::default(),
@@ -1156,7 +1174,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Enchantment(EnchantmentType::Role)],
                     rules_text: "Enchant creature. Enchanted creature gets +1/+1 and has ward {1}.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Enchantment],
                     status: PermanentStatus::default(),
@@ -1174,7 +1193,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Enchantment(EnchantmentType::Role)],
                     rules_text: "Enchant creature. Enchanted creature gets +1/+1 and has 'Whenever this creature attacks, scry 1.'".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Enchantment],
                     status: PermanentStatus::default(),
@@ -1192,7 +1212,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Enchantment(EnchantmentType::Role)],
                     rules_text: "Enchant creature. Enchanted creature gets +1/+1 for each enchantment you control.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Enchantment],
                     status: PermanentStatus::default(),
@@ -1210,7 +1231,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Enchantment(EnchantmentType::Role)],
                     rules_text: "Enchant creature. Enchanted creature gets +1/+1. When this token is put into a graveyard from the battlefield, each opponent loses 1 life.".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Enchantment],
                     status: PermanentStatus::default(),
@@ -1228,7 +1250,8 @@ impl PredefinedToken {
                     supertypes: vec![],
                     subtypes: vec![Subtype::Enchantment(EnchantmentType::Role)],
                     rules_text: "Enchant creature. Enchanted creature has 'Whenever this creature attacks, if its toughness is 3 or less, put a +1/+1 counter on it.'".to_string(),
-                },
+                    faces: None,
+},
                 permanent: PermanentAttributes {
                     types: vec![PermanentType::Enchantment],
                     status: PermanentStatus::default(),
@@ -1277,5 +1300,40 @@ impl Card {
             Card::Class(attrs) => Some(&attrs.spell.cost),
         }
     }
+
+    pub fn get_attributes(&self) -> &CardAttributes {
+        match self {
+            Card::Artifact(attrs) => &attrs.card,
+            Card::Battle(attrs) => &attrs.card,
+            Card::Creature(attrs) => &attrs.card,
+            Card::Enchantment(attrs) => &attrs.card,
+            Card::Instant(attrs) => &attrs.card,
+            Card::Land(attrs) => &attrs.card,
+            Card::Planeswalker(attrs) => &attrs.card,
+            Card::Sorcery(attrs) => &attrs.card,
+            Card::Kindred(attrs) => &attrs.card,
+            Card::Leveler(attrs) => &attrs.card,
+            Card::Saga(attrs) => &attrs.card,
+            Card::Class(attrs) => &attrs.card,
+        }
+    }
+
+    pub fn get_attributes_mut(&mut self) -> &mut CardAttributes {
+        match self {
+            Card::Artifact(attrs) => &mut attrs.card,
+            Card::Battle(attrs) => &mut attrs.card,
+            Card::Creature(attrs) => &mut attrs.card,
+            Card::Enchantment(attrs) => &mut attrs.card,
+            Card::Instant(attrs) => &mut attrs.card,
+            Card::Land(attrs) => &mut attrs.card,
+            Card::Planeswalker(attrs) => &mut attrs.card,
+            Card::Sorcery(attrs) => &mut attrs.card,
+            Card::Kindred(attrs) => &mut attrs.card,
+            Card::Leveler(attrs) => &mut attrs.card,
+            Card::Saga(attrs) => &mut attrs.card,
+            Card::Class(attrs) => &mut attrs.card,
+        }
+    }
+
 }
 
