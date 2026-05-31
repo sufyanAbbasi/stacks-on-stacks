@@ -1,0 +1,3 @@
+[submodule "vendor/magic-card-parser"]
+	path = vendor/magic-card-parser
+	url = https://github.com/CubeArtisan/magic-card-parser
